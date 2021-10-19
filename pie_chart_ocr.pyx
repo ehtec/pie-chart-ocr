@@ -83,22 +83,6 @@ def white_or_black(pixel):
         return 1
 
 
-# def cached_color_distance(data, the_color, distance_dict):
-#
-#     pprint(data.shape)
-#
-#     if data in distance_dict.keys():
-#         the_color_distance = distance_dict[data]
-#
-#     else:
-#         the_color_distance = color_distance(data, the_color)
-#         distance_dict.update({data: the_color_distance})
-#
-#     # the_color_distance = color_distance(data, the_color)
-#
-#     return the_color_distance
-
-
 def row_1_calc(row, orig_pil_img, k):
 
     try:
@@ -126,35 +110,11 @@ def row_1_calc(row, orig_pil_img, k):
 
         pil_img_array = np.array(pil_img)
 
-        # for j in range(width):
-        #     for i in range(height):
-        #         # data = pil_img.getpixel((i, j))
-        #         data = tuple(pil_img_array[i][j])
-        #
-        #         # pprint(data)
-        #
-        #         if data in distance_dict.keys():
-        #             the_color_distance = distance_dict[data]
-        #
-        #         else:
-        #             the_color_distance = color_distance(data, the_color)
-        #             distance_dict.update({data: the_color_distance})
-        #
-        #         if the_color_distance > COLOR_DISTANCE_THRESHOLD:
-        #             # pil_img.putpixel((i, j), replace_color)
-        #             pil_img_array[i][j] = replace_color
-
         color_distances = cp.array_color_distance(the_color, pil_img_array)
 
         del cp
 
         pil_img_array[color_distances > COLOR_DISTANCE_THRESHOLD] = replace_color
-
-        # pil_img_array = np.array(pil_img)
-        #
-        # pprint(cached_color_distance(pil_img_array, the_color, distance_dict))
-        #
-        # pil_img_array[cached_color_distance(pil_img_array, the_color, distance_dict) > COLOR_DISTANCE_THRESHOLD] = replace_color
 
         pil_img = Image.fromarray(pil_img_array)
 
@@ -205,13 +165,6 @@ def row_1_calc(row, orig_pil_img, k):
             # print(elem_count / width / height)
 
             if elem_count > min_cluster_count:
-
-                # print('replace...')
-
-                # for i in range(width):
-                #     for j in range(height):
-                #         if lw[j][i] == elem:
-                #             pil_img.putpixel((i, j), 0)
 
                 pil_img_array[lw == elem] = 0
 
@@ -294,39 +247,7 @@ def row_2_calc(row, orig_pil_img, k):
         width = pil_img.size[0]
         height = pil_img.size[1]
 
-        # for i in range(width):
-        #     for j in range(height):
-        #         data = pil_img.getpixel((i, j))
-        #
-        #         if data in distance_dict.keys():
-        #             the_color_distance = distance_dict[data]
-        #
-        #         else:
-        #             the_color_distance = color_distance(data, the_color)
-        #             distance_dict.update({data: the_color_distance})
-        #
-        #         if the_color_distance > COLOR_DISTANCE_THRESHOLD:
-        #             pil_img.putpixel((i, j), replace_color)
-
         pil_img_array = np.array(pil_img)
-
-        # for j in range(width):
-        #     for i in range(height):
-        #         # data = pil_img.getpixel((i, j))
-        #         data = tuple(pil_img_array[i][j])
-        #
-        #         # pprint(data)
-        #
-        #         if data in distance_dict.keys():
-        #             the_color_distance = distance_dict[data]
-        #
-        #         else:
-        #             the_color_distance = color_distance(data, the_color)
-        #             distance_dict.update({data: the_color_distance})
-        #
-        #         if the_color_distance > COLOR_DISTANCE_THRESHOLD:
-        #             # pil_img.putpixel((i, j), replace_color)
-        #             pil_img_array[i][j] = replace_color
 
         cp = ColorProcesser()
 
@@ -370,23 +291,6 @@ def row_2_calc(row, orig_pil_img, k):
 
         min_cluster_count = LARGE_CLUSTER_RATIO * height * width
 
-        # for elem in list(set(list(lw.flatten()))):
-        #
-        #     # elem_count = len([item for item in list(lw.flatten()) if item == elem])
-        #
-        #     elem_count = list(lw.flatten()).count(elem)
-        #
-        #     # print(elem_count / width / height)
-        #
-        #     if elem_count > min_cluster_count:
-        #
-        #         # print('replace...')
-        #
-        #         for i in range(width):
-        #             for j in range(height):
-        #                 if lw[j][i] == elem:
-        #                     pil_img.putpixel((i, j), 0)
-
         pil_img_array = np.array(pil_img)
 
         for elem in list(set(list(lw.flatten()))):
@@ -400,13 +304,6 @@ def row_2_calc(row, orig_pil_img, k):
             # print(elem_count / width / height)
 
             if elem_count > min_cluster_count:
-                # print('replace...')
-
-                # for i in range(width):
-                #     for j in range(height):
-                #         if lw[j][i] == elem:
-                #             # pil_img.putpixel((i, j), 0)
-                #             pil_img_array[j][i] = 0
 
                 pil_img_array[lw == elem] = 0
 
@@ -637,20 +534,6 @@ def step3_iterator(comb):
         yield elem
 
 
-# # compute distance between colors
-# def color_distance(data1, data2):
-#     assert len(data1) == len(data2)
-#
-#     distance = 0
-#
-#     for i in range(len(data1)):
-#         distance += (data1[i] - data2[i])**2
-#
-#     return distance
-
-
-# img = cv2.imread('/home/elias/pdf_images/image-024.jpg')
-
 def main(path):
 
     start_time = datetime.now()
@@ -697,145 +580,6 @@ def main(path):
 
     print("Starting step 1...")
 
-    # for row in color_list:
-    #
-    #     orig_row = copy.deepcopy(row)
-    #
-    #     # the_color = row[1]
-    #     #
-    #     # distance_dict = {}
-    #     #
-    #     # pil_img = copy.deepcopy(orig_pil_img)
-    #     #
-    #     # replace_color = WHITE_PIXEL
-    #     #
-    #     # should_revert = False
-    #     #
-    #     # if white_or_black(the_color):
-    #     #     replace_color = BLACK_PIXEL
-    #     #     should_revert = True
-    #     #
-    #     # # exit()
-    #     #
-    #     # width = pil_img.size[0]
-    #     # height = pil_img.size[1]
-    #     #
-    #     # for i in range(width):
-    #     #     for j in range(height):
-    #     #         data = pil_img.getpixel((i, j))
-    #     #
-    #     #         if data in distance_dict.keys():
-    #     #             the_color_distance = distance_dict[data]
-    #     #
-    #     #         else:
-    #     #             the_color_distance = color_distance(data, the_color)
-    #     #             distance_dict.update({data: the_color_distance})
-    #     #
-    #     #         if the_color_distance > COLOR_DISTANCE_THRESHOLD:
-    #     #             pil_img.putpixel((i, j), replace_color)
-    #     #
-    #     # if should_revert:
-    #     #     pil_img = ImageOps.invert(pil_img)
-    #     #
-    #     # # img = np.array(pil_img)
-    #     # #
-    #     # # cv2.imshow('img', img)
-    #     # # cv2.waitKey(3)
-    #     # # time.sleep(3)
-    #     #
-    #     # pil_img = pil_img.convert('1', dither=Image.NONE) #.convert('RGB')
-    #     #
-    #     # # invert to remove clusters
-    #     # pil_img = ImageOps.invert(pil_img.convert('RGB')).convert('1', dither=Image.NONE).convert('RGB')
-    #     #
-    #     # # # add white border
-    #     # # new_img = Image.new('RGB', (width + 30, height + 30))
-    #     # # new_img.paste(pil_img, (15, 15))
-    #     # #
-    #     # # pil_img = new_img
-    #     #
-    #     # # remove noise
-    #     # # pil_img = pil_img.filter(ImageFilter.BLUR)
-    #     # # pil_img = pil_img.filter(ImageFilter.MinFilter(3))
-    #     # # pil_img = pil_img.filter(ImageFilter.MinFilter)
-    #     #
-    #     # pil_img = pil_img.filter(ImageFilter.MedianFilter())
-    #     # enhancer = ImageEnhance.Contrast(pil_img)
-    #     # pil_img = enhancer.enhance(2)
-    #     #
-    #     # pil_img = pil_img.convert('1', dither=Image.NONE)
-    #     #
-    #     # # remove large clusters
-    #     # pil_img_array = np.array(pil_img)
-    #     #
-    #     # lw, num = measurements.label(pil_img_array)
-    #     #
-    #     # min_cluster_count = LARGE_CLUSTER_RATIO * height * width
-    #     #
-    #     # for elem in list(set(list(lw.flatten()))):
-    #     #
-    #     #     # elem_count = len([item for item in list(lw.flatten()) if item == elem])
-    #     #
-    #     #     elem_count = list(lw.flatten()).count(elem)
-    #     #
-    #     #     # print(elem_count / width / height)
-    #     #
-    #     #     if elem_count > min_cluster_count:
-    #     #
-    #     #         # print('replace...')
-    #     #
-    #     #         for i in range(width):
-    #     #             for j in range(height):
-    #     #                 if lw[j][i] == elem:
-    #     #                     pil_img.putpixel((i, j), 0)
-    #     #
-    #     # # invert back
-    #     # pil_img = ImageOps.invert(pil_img.convert('RGB'))
-    #     #
-    #     # pil_img = pil_img.convert('RGB')
-    #     #
-    #     # # add white border
-    #     # # new_img = Image.new('RGB', (width + 30, height + 30))
-    #     # # new_img.paste(pil_img, (15, 15))
-    #     # #
-    #     # # pil_img = new_img
-    #     #
-    #     # pil_img = ImageOps.expand(pil_img, border=BORDER_WIDTH, fill='white')
-    #     #
-    #     # # img = np.array(pil_img)
-    #     # #
-    #     # # cv2.imshow('img', img)
-    #     # # cv2.waitKey(1)
-    #     #
-    #     # d = pytesseract.image_to_data(pil_img, output_type=Output.DICT)
-    #     #
-    #     # s = pytesseract.image_to_string(pil_img, lang='eng').strip()
-    #     #
-    #     # # img = np.array(pil_img)
-    #     # #
-    #     # # img = img[:, :, ::-1].copy()
-    #     # #
-    #     # # # pprint(d)
-    #     # # n_boxes = len(d['level'])
-    #     # # for i in range(n_boxes):
-    #     # #     (x, y, w, h) = (d['left'][i], d['top'][i], d['width'][i], d['height'][i])
-    #     # #     cv2.rectangle(img, (x, y), (x + w, y + h), (0, 255, 0), 2)
-    #     # #
-    #     # # cv2.imshow('img', img)
-    #     # # cv2.waitKey(0)
-    #
-    #     # if not s:
-    #     #     continue
-    #     #
-    #     # print(s)
-    #
-    #     res = row_1_calc(row, orig_pil_img)
-    #
-    #     if not res:
-    #         continue
-    #
-    #     new_rows.append(orig_row)
-
     new_rows = list(row_1_iterator(color_list, orig_pil_img))
 
     # img = np.array(pil_img)
@@ -850,177 +594,11 @@ def main(path):
 
     print("Starting with step 2...")
 
-    # img = np.array(orig_pil_img)
-    #
-    # img = img[:, :, ::-1].copy()
-
-    res_tuples = []
-
-    # for k in range(len(new_rows)):
-    #
-    #     row = new_rows[k]
-    #
-    #     # the_color = row[1]
-    #     #
-    #     # distance_dict = {}
-    #     #
-    #     # pil_img = copy.deepcopy(orig_pil_img)
-    #     #
-    #     # width = pil_img.size[0]
-    #     # height = pil_img.size[1]
-    #     #
-    #     # pil_img = pil_img.resize(SCALING_FACTOR * np.array((width, height)), Image.BICUBIC)
-    #     #
-    #     # replace_color = WHITE_PIXEL
-    #     #
-    #     # should_revert = False
-    #     #
-    #     # if white_or_black(the_color):
-    #     #     replace_color = BLACK_PIXEL
-    #     #     should_revert = True
-    #     #
-    #     # # exit()
-    #     #
-    #     # width = pil_img.size[0]
-    #     # height = pil_img.size[1]
-    #     #
-    #     # for i in range(width):
-    #     #     for j in range(height):
-    #     #         data = pil_img.getpixel((i, j))
-    #     #
-    #     #         if data in distance_dict.keys():
-    #     #             the_color_distance = distance_dict[data]
-    #     #
-    #     #         else:
-    #     #             the_color_distance = color_distance(data, the_color)
-    #     #             distance_dict.update({data: the_color_distance})
-    #     #
-    #     #         if the_color_distance > COLOR_DISTANCE_THRESHOLD:
-    #     #             pil_img.putpixel((i, j), replace_color)
-    #     #
-    #     # if should_revert:
-    #     #     pil_img = ImageOps.invert(pil_img)
-    #     #
-    #     # pil_img = pil_img.convert('1', dither=Image.NONE)  # .convert('RGB')
-    #     #
-    #     # # invert to remove clusters
-    #     # pil_img = ImageOps.invert(pil_img.convert('RGB')).convert('1', dither=Image.NONE).convert('RGB')
-    #     #
-    #     # # # add white border
-    #     # # new_img = Image.new('RGB', (width + 30, height + 30))
-    #     # # new_img.paste(pil_img, (15, 15))
-    #     # #
-    #     # # pil_img = new_img
-    #     #
-    #     # # remove noise
-    #     # # pil_img = pil_img.filter(ImageFilter.BLUR)
-    #     # # pil_img = pil_img.filter(ImageFilter.MinFilter(1))
-    #     # # pil_img = pil_img.filter(ImageFilter.MinFilter)
-    #     #
-    #     # # pil_img = pil_img.filter(ImageFilter.MedianFilter())
-    #     # # enhancer = ImageEnhance.Contrast(pil_img)
-    #     # # pil_img = enhancer.enhance(2)
-    #     #
-    #     # pil_img = pil_img.convert('1', dither=Image.NONE)
-    #     #
-    #     # # remove large clusters
-    #     # pil_img_array = np.array(pil_img)
-    #     #
-    #     # lw, num = measurements.label(pil_img_array)
-    #     #
-    #     # min_cluster_count = LARGE_CLUSTER_RATIO * height * width
-    #     #
-    #     # for elem in list(set(list(lw.flatten()))):
-    #     #
-    #     #     # elem_count = len([item for item in list(lw.flatten()) if item == elem])
-    #     #
-    #     #     elem_count = list(lw.flatten()).count(elem)
-    #     #
-    #     #     # print(elem_count / width / height)
-    #     #
-    #     #     if elem_count > min_cluster_count:
-    #     #
-    #     #         # print('replace...')
-    #     #
-    #     #         for i in range(width):
-    #     #             for j in range(height):
-    #     #                 if lw[j][i] == elem:
-    #     #                     pil_img.putpixel((i, j), 0)
-    #     #
-    #     # # invert back
-    #     # pil_img = ImageOps.invert(pil_img.convert('RGB'))
-    #     #
-    #     # pil_img = pil_img.convert('RGB')
-    #     #
-    #     # # add white border
-    #     # # new_img = Image.new('RGB', (width + 30, height + 30))
-    #     # # new_img.paste(pil_img, (15, 15))
-    #     # #
-    #     # # pil_img = new_img
-    #     #
-    #     # # img = np.array(pil_img)
-    #     # #
-    #     # # cv2.imshow('img', img)
-    #     # # cv2.waitKey(1)
-    #     #
-    #     # pil_img = ImageOps.expand(pil_img, border=15, fill='white')
-    #     #
-    #     # d = pytesseract.image_to_data(pil_img, output_type=Output.DICT)
-    #     #
-    #     # s = pytesseract.image_to_string(pil_img, lang='eng').strip()
-    #
-    #     d, s = row_2_calc(row, orig_pil_img)
-    #
-    #     if not s:
-    #         continue
-    #
-    #     # print(s)
-    #
-    #     # new_rows.append(row)
-    #
-    #     # img = np.array(pil_img)
-    #
-    #     # img = np.array(orig_pil_img)
-    #     #
-    #     # img = img[:, :, ::-1].copy()
-    #
-    #     # pprint(d)
-    #     n_boxes = len(d['text'])
-    #     for i in range(n_boxes):
-    #         if int(d['conf'][i]) > MIN_CONFIDENCE:
-    #             (x, y, w, h) = (d['left'][i] - BORDER_WIDTH, d['top'][i] - BORDER_WIDTH, d['width'][i], d['height'][i])
-    #             # cv2.rectangle(img, (x // SCALING_FACTOR, y // SCALING_FACTOR), ((x + w) // SCALING_FACTOR, (y + h) // SCALING_FACTOR), (0, 255, 0), 2)
-    #             # print(d['text'][i])
-    #             print("{0}             {1} {2} {3} {4}".format(d['text'][i], x // SCALING_FACTOR, y // SCALING_FACTOR, (x + w) // SCALING_FACTOR, (y + h) // SCALING_FACTOR))
-    #
-    #             res_tuple = (d['conf'][i], d['text'][i], x // SCALING_FACTOR, y // SCALING_FACTOR,
-    #                          (x + w) // SCALING_FACTOR, (y + h) // SCALING_FACTOR, 10000 * k + i)
-    #
-    #             res_tuples.append(res_tuple)
-
     res_tuples = list(row_2_iterator(new_rows, orig_pil_img, width=the_size[0], height=the_size[1]))
 
     pprint(res_tuples)
 
     print("Starting with step 3...")
-
-    zero_grouped_tuples = []
-
-    # for elem in res_tuples:
-    #
-    #     p1 = tuple(elem[2:6])
-    #     print("p1: {0}".format(p1))
-    #
-    #     for i in range(len(zero_grouped_tuples)):
-    #
-    #         item = zero_grouped_tuples[i]
-    #
-    #         p2 = tuple(item[2:6])
-    #         print("p2: {0}".format(p2))
-    #
-    #         min_dist = min_poly_distance(p1, p2)
-    #
-    #         if min_dist == 0:
 
     comb = list(itertools.combinations(res_tuples, 2))
 
@@ -1033,71 +611,6 @@ def main(path):
 
     # list for same paragraph detections
     L2 = []
-
-    # # list for word row detection
-    # L3 = []
-
-    # detect parts that belong to the same word
-    # for elem in comb:
-    #
-    #     pre_p1 = tuple(elem[0][2:6])
-    #     pre_p2 = tuple(elem[1][2:6])
-    #
-    #     # p1 = ((pre_p1[0], pre_p1[1]), (pre_p1[0], pre_p1[3]), (pre_p1[2], pre_p1[3]), (pre_p1[2], pre_p1[1]))
-    #     # p2 = ((pre_p2[0], pre_p2[1]), (pre_p2[0], pre_p2[3]), (pre_p2[2], pre_p2[3]), (pre_p2[2], pre_p2[1]))
-    #
-    #     p1 = rect_from_pre(pre_p1)
-    #     p2 = rect_from_pre(pre_p2)
-    #
-    #     # p1_height = pre_p1[3] - pre_p1[1]
-    #     # p2_height = pre_p2[3] - pre_p2[1]
-    #     #
-    #     # p_height = min(p1_height, p2_height)
-    #     #
-    #     # max_word_dist = MAX_WORD_DISTANCE_RATIO * p_height
-    #
-    #     # print("p1:")
-    #     # print(p1)
-    #
-    #     min_dist = min_poly_distance(p1, p2)
-    #
-    #     area_ratio = poly_intersection_area_ratio(p1, p2)
-    #
-    #     if all([min_dist == 0, area_ratio > MIN_INTERSECTION_AREA_RATIO]):
-    #
-    #         L.append(elem)
-    #
-    #     # elif min_dist < max_word_dist:
-    #     #
-    #     #     L2.append(elem)
-
-    L = list(step3_iterator(comb))
-
-    # L += [(a, b) for b, a in L]
-
-    # print("L: {0}".format(L))
-
-    # for a, b in L:
-    #     unrelated, related = partition(lambda group: any(aa == a or bb == b or aa == b or bb == a for aa, bb in group),
-    #                                    zero_grouped_tuples)
-    #     zero_grouped_tuples = [*unrelated, sum(related, [(a, b)])]
-    #
-    # old_zero_grouped_tuples = copy.deepcopy(zero_grouped_tuples)
-    # # zero_grouped_tuples = []
-    #
-    # for m in range(len(old_zero_grouped_tuples)):
-    #
-    #     elem = old_zero_grouped_tuples[m]
-    #
-    #     zero_grouped_tuples[m] = []
-    #
-    #     for el in elem:
-    #
-    #         for item in el:
-    #
-    #             if item not in zero_grouped_tuples[m]:
-    #
-    #                 zero_grouped_tuples[m].append(item)
 
     zero_grouped_tuples = group_pairs_to_nested_list(L)
 
@@ -1415,8 +928,5 @@ def main(path):
     # cv2.imshow('img', img)
     # cv2.waitKey(0)
 
-
-if __name__ == "__main__":
-    main()
 
 
