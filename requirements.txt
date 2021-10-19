@@ -1,0 +1,8 @@
+Cython
+cvxpy
+cvxopt
+numpy
+scipy
+pytesseract
+pillow
+opencv-python
