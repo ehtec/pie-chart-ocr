@@ -17,6 +17,8 @@ Compile libraries:
 
 `bash compile_colorprocesser.sh`
 
+Eventually change the `MAX_WORKERS` number in `pie_chart_ocr.pyx`
+
 Build Cython modules:
 
 `python3 setup.py build_ext --inplace`
