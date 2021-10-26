@@ -98,6 +98,13 @@ def row_1_calc(row, orig_pil_img, k):
 
         pil_img = copy.deepcopy(orig_pil_img)
 
+        # TEST: ALSO SCALE AT STEP 1
+        width = pil_img.size[0]
+        height = pil_img.size[1]
+
+        pil_img = pil_img.resize(SCALING_FACTOR * np.array((width, height)), Image.BICUBIC)
+        # END TEST: ALSO SCALE AT STEP 1
+
         replace_color = WHITE_PIXEL
 
         should_revert = False
