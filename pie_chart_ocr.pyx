@@ -267,6 +267,8 @@ def row_2_calc(row, orig_pil_img, k):
         if should_revert:
             pil_img = ImageOps.invert(pil_img)
 
+        pil_img.save("temp1/{0}.jpg".format(uuid.uuid4()))
+
         pil_img = pil_img.convert('1', dither=Image.NONE)  # .convert('RGB')
 
         # invert to remove clusters
