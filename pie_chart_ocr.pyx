@@ -7,7 +7,7 @@ import numpy as np
 import copy
 # from pylab import *
 from scipy.ndimage import measurements
-from helperfunctions import group_pairs_to_nested_list
+from helperfunctions import group_pairs_to_nested_list, clean_folder_contents
 from helperfunctions import pre_rectangle_center, rect_from_pre, detect_percentage, connect_polygon_cloud_2
 # import time
 import itertools
@@ -544,6 +544,9 @@ def step3_iterator(comb):
 
 
 def main(path):
+
+    clean_folder_contents('temp1')
+    clean_folder_contents('temp')
 
     start_time = datetime.now()
 
