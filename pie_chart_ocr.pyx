@@ -46,7 +46,7 @@ SCALING_FACTOR = 2  # 2
 BORDER_WIDTH = 15
 
 # contrast factor to apply to image
-CONTRAST_FACTOR = 1.2
+CONTRAST_FACTOR = 1.0  # 1.2
 
 # minimum area ratio to be covered to be counted as double detection of the same word
 MIN_INTERSECTION_AREA_RATIO = 0.75
