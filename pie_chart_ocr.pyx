@@ -497,9 +497,9 @@ def step3_calc(elem, pc):
     # area_ratio = poly_intersection_area_ratio(p1, p2)
     area_ratio = pc.poly_intersection_area_ratio(p1, p2)
 
-    if 'Development:' in [elem[0][1], elem[1][1]]:
-        if min_dist == 0:
-            print("min_dist: {0} - area_ratio: {1} - p1: {2} - p2: {3} - t1 {4} - t2 {5}".format(min_dist, area_ratio, p1, p2, elem[0][1], elem[1][1]))
+    # if 'Development:' in [elem[0][1], elem[1][1]]:
+    #     if min_dist == 0:
+    #         print("min_dist: {0} - area_ratio: {1} - p1: {2} - p2: {3} - t1 {4} - t2 {5}".format(min_dist, area_ratio, p1, p2, elem[0][1], elem[1][1]))
 
     if all([min_dist == 0, area_ratio > MIN_INTERSECTION_AREA_RATIO]):
         return elem
