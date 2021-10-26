@@ -148,9 +148,11 @@ def row_1_calc(row, orig_pil_img, k):
         # pil_img = pil_img.filter(ImageFilter.MinFilter(3))
         # pil_img = pil_img.filter(ImageFilter.MinFilter)
 
+        # FILTERS START
         pil_img = pil_img.filter(ImageFilter.MedianFilter())
         enhancer = ImageEnhance.Contrast(pil_img)
         pil_img = enhancer.enhance(2)
+        # FILTERS END
 
         pil_img = pil_img.convert('1', dither=Image.NONE)
 
