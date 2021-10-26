@@ -5,6 +5,21 @@ import re
 import itertools
 import cvxpy
 from polygon_calc_wrapper import PolygonCalc
+import os
+import shutil
+
+
+# equivalent to rm -rf
+def clean_folder_contents(folder):
+    for filename in os.listdir(folder):
+        file_path = os.path.join(folder, filename)
+        try:
+            if os.path.isfile(file_path) or os.path.islink(file_path):
+                os.unlink(file_path)
+            elif os.path.isdir(file_path):
+                shutil.rmtree(file_path)
+        except Exception as e:
+            logging.exception(e)
 
 
 # helper for grouping. Used by pie_chart_ocr.py
