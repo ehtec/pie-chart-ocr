@@ -31,7 +31,8 @@ def main(path):
 
     hulls = [cv2.convexHull(p.reshape(-1, 1, 2)) for p in regions]
 
-    cv2.polylines(vis, hulls, 1, (0, 255, 0))
+    cv2.polylines(vis, regions, 1, (0, 255, 0))
+    # cv2.polylines(vis, hulls, 1, (0, 255, 0))
 
     cv2.imshow('img', vis)
 
