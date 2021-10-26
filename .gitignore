@@ -134,3 +134,5 @@ dmypy.json
 # C++ extensions
 *.o
 /pie_chart_ocr.c
+
+/temp
