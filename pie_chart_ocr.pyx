@@ -18,6 +18,7 @@ import re
 from polygon_calc_wrapper import PolygonCalc
 from color_processer_wrapper import ColorProcesser
 import logging
+import uuid
 
 
 # white rgb pixel
@@ -328,6 +329,8 @@ def row_2_calc(row, orig_pil_img, k):
         #
         # cv2.imshow('img', img)
         # cv2.waitKey(1)
+
+        pil_img.save("temp/{0}.jpg".format(uuid.uuid4()))
 
         pil_img = ImageOps.expand(pil_img, border=15, fill='white')
 
