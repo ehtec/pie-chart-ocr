@@ -94,7 +94,7 @@ def row_1_calc(row, orig_pil_img, k):
 
         the_color = row[1]
 
-        distance_dict = {}
+        # distance_dict = {}
 
         pil_img = copy.deepcopy(orig_pil_img)
 
