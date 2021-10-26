@@ -30,7 +30,7 @@ BLACK_PIXEL = (0, 0, 0)
 COLOR_DISTANCE_THRESHOLD = 18.0
 
 # color threshold for cluster detection
-CLUSTER_COLOR_DISTANCE_THRESHOLD = 11.0
+# CLUSTER_COLOR_DISTANCE_THRESHOLD = 11.0
 
 # minimum ratio of the total pixels to be a large cluster
 LARGE_CLUSTER_RATIO = 0.005
