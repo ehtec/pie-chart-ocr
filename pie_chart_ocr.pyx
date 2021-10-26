@@ -607,11 +607,11 @@ def main(path):
     comb = list(itertools.combinations(res_tuples, 2))
 
     # list for same word detections
-    L = []
+    L = list(step3_iterator(comb))
 
     for res_tuple in res_tuples:
 
-        comb.append((res_tuple, res_tuple))
+        L.append((res_tuple, res_tuple))
 
     # list for same paragraph detections
     L2 = []
