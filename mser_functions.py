@@ -4,6 +4,7 @@ import re
 import pytesseract
 from pytesseract import image_to_string
 from PIL import Image
+from pprint import pprint
 
 
 def main(path):
@@ -22,11 +23,11 @@ def main(path):
     # detect regions in gray scale image
     regions, bounding_boxes = mser.detectRegions(gray)
 
-    for box in bounding_boxes:
-
-        x, y, w, h = box
-
-        cv2.rectangle(vis, (x, y), (x + w, y + h), (0, 255, 0), 1)
+    # for box in bounding_boxes:
+    #
+    #     x, y, w, h = box
+    #
+    #     cv2.rectangle(vis, (x, y), (x + w, y + h), (0, 255, 0), 1)
 
     hulls = [cv2.convexHull(p.reshape(-1, 1, 2)) for p in regions]
 
@@ -41,9 +42,31 @@ def main(path):
     for contour in hulls:
 
         cv2.drawContours(mask, [contour], -1, (255, 255, 255), -1)
+        # cv2.drawContours(mask, [contour], -1, (255, 255, 255), -1)
 
     # this is used to find only text regions, remaining are ignored
     text_only = cv2.bitwise_and(img, img, mask=mask)
+
+    # pprint(mask)
+
+    pprint(list(set(list(mask.flatten()))))
+
+    pil_img = Image.fromarray(img)
+
+    pprint(np.array(mask).shape)
+
+    # mask[mask == 0] = np.array([0, 0, 0])
+    # mask[mask == 255] = np.array([255, 255, 255])
+
+    mask = np.repeat(mask, repeats=3, axis=2)
+
+    pprint(np.array(mask).shape)
+
+    # pil_img_array = np.array(pil_img)
+
+    text_only[mask == 0] = 255  # np.array([255, 255, 255])
+
+    # text_only[mask == (255, 255, 255)] = (255, 255, 255)
 
     cv2.imshow("text only", text_only)
 
