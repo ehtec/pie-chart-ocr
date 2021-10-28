@@ -7,6 +7,10 @@ from PIL import Image
 from pprint import pprint
 
 
+# maximum percentage of the total are a mser box might take
+MAX_MSER_BOX_RATIO = 0.01
+
+
 def main(path):
 
     # Create MSER object
@@ -14,6 +18,8 @@ def main(path):
 
     # Your image path i-e receipt path
     img = cv2.imread(path)
+
+    total_area = img.shape[0] * img.shape[1]
 
     # Convert to gray scale
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
@@ -23,15 +29,20 @@ def main(path):
     # detect regions in gray scale image
     regions, bounding_boxes = mser.detectRegions(gray)
 
-    # for box in bounding_boxes:
-    #
-    #     x, y, w, h = box
-    #
-    #     cv2.rectangle(vis, (x, y), (x + w, y + h), (0, 255, 0), 1)
+    for box in bounding_boxes:
+
+        x, y, w, h = box
+
+        area = w * h
+
+        if area / total_area > MAX_MSER_BOX_RATIO:
+            continue
+
+        cv2.rectangle(vis, (x, y), (x + w, y + h), (0, 255, 0), 1)
 
     hulls = [cv2.convexHull(p.reshape(-1, 1, 2)) for p in regions]
 
-    cv2.polylines(vis, regions, 1, (0, 255, 0))
+    # cv2.polylines(vis, regions, 1, (0, 255, 0))
     # cv2.polylines(vis, hulls, 1, (0, 255, 0))
 
     cv2.imshow('img', vis)
