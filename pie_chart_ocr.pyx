@@ -37,7 +37,7 @@ COLOR_DISTANCE_THRESHOLD = 18.0
 LARGE_CLUSTER_RATIO = 0.005
 
 # minimum confidence for text to be used
-MIN_CONFIDENCE = 40  # 30
+MIN_CONFIDENCE = 50  # 40  # 30
 
 # factor for image up / downscaling before ocr step 2
 SCALING_FACTOR = 2  # 2
