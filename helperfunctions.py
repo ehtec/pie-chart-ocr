@@ -131,7 +131,7 @@ def connect_polygon_cloud_2(points1, points2):
 #   OCR.
 def detect_percentage(s):
 
-    res = re.findall(r'[A-z]', s)
+    res = re.findall(r'[A-Za-z]', s)
 
     if bool(res):
         logging.debug("Letters found in string {0}".format(s))
