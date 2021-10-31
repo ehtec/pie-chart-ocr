@@ -224,6 +224,8 @@ def test_data_percentages(approximation_inaccuracy=0.02):
     print("")
     print("wrong_numbers_2: {0}".format(wrong_numbers_2))
 
+    return correct_numbers_2
+
 
 # IMG_INPUT_PATH = '/home/elias/pdf_images/saved_images/image-019_1.png'
 # IMG_INPUT_PATH = '/home/elias/pdf_images/saved_images/image-019.png'
@@ -241,9 +243,15 @@ def test_data_percentages(approximation_inaccuracy=0.02):
 # IMG_INPUT_PATH = "/home/elias/pie-chart-ocr/pie_charts/test_9.png"  # good, but a few false positives
 # IMG_INPUT_PATH = "/home/elias/pie-chart-ocr/pie_charts/test_10.png"
 
-csvpath, IMG_INPUT_PATH = get_steph_test_path(3)
+# i = int(input("Chart number: "))
 
-pie_chart_ocr.main(IMG_INPUT_PATH)
+correct_numbers = test_data_percentages()
+
+for i in correct_numbers:
+
+    csvpath, IMG_INPUT_PATH = get_steph_test_path(i)
+
+    pie_chart_ocr.main(IMG_INPUT_PATH)
 
 # print(load_annotations_from_csv(csvpath))
 
