@@ -140,6 +140,46 @@ def test_data_duplicates():
     print("")
     print("{0} file duplicates found!".format(len(file_duplicates)))
     print(file_duplicates)
+    print("")
+
+    remaining_annotation_duplicates = []
+    remaining_file_duplicates = []
+
+    remaining_annotations = []
+    remaining_files = []
+
+    deleted_annotation_duplicates = []
+    deleted_file_duplicates = []
+
+    for el in annotation_duplicates:
+
+        if el[1] in remaining_annotations:
+
+            deleted_annotation_duplicates.append(el[0])
+
+        else:
+
+            remaining_annotation_duplicates.append(el[0])
+            remaining_annotations.append(el[1])
+
+    for el in file_duplicates:
+
+        if el[1] in remaining_files:
+
+            deleted_file_duplicates.append(el[0])
+
+        else:
+
+            remaining_file_duplicates.append(el[0])
+            remaining_files.append(el[1])
+
+    # annotation duplicates are most of the time ok
+    print("Remaining annotation duplicates: {0}".format(remaining_annotation_duplicates))
+    print("Deleted annotation duplicates: {0}".format(deleted_annotation_duplicates))
+    print("")
+    print("Remaining file duplicates: {0}".format(remaining_file_duplicates))
+    print("Deleted file duplicates: {0}".format(deleted_file_duplicates))
+    print("")
 
 
 # IMG_INPUT_PATH = '/home/elias/pdf_images/saved_images/image-019_1.png'
