@@ -58,7 +58,7 @@ MAX_WORD_DISTANCE_RATIO = 0.75
 COLORS_NUM = 120
 
 # maximum number of concurrent processes to launch
-MAX_WORKERS = 14
+MAX_WORKERS = 10  # 14
 
 # # override scaling factor dynamically
 # OVERRIDE_SCALING_FACTOR = True
