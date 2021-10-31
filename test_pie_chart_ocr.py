@@ -72,11 +72,18 @@ def test_data_format():
 
     for i in range(1, 401):
 
-        total_count += 1
+        # total_count += 1
 
         try:
 
-            csvpath, IMG_INPUT_PATH = get_steph_test_path(i)
+            try:
+
+                csvpath, IMG_INPUT_PATH = get_steph_test_path(i)
+
+            except Exception as e:
+                continue
+
+            total_count += 1
 
             annotations = load_annotations_from_csv(csvpath)
 
