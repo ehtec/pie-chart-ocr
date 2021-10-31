@@ -5,6 +5,7 @@ logging.basicConfig(level=logging.WARNING)
 import pie_chart_ocr
 import os
 import csv
+from helperfunctions import hash_file
 
 
 # get (csvpath, imagepath) by number from stephs first test dataset
@@ -105,6 +106,42 @@ def test_data_format():
 
     return correct_numbers
 
+
+# check if test data contains duplicates
+def test_data_duplicates():
+
+    correct_numbers = test_data_format()
+
+    all_annotation_tuples = []
+    all_file_tuples = []
+
+    all_annotations = []
+    all_files = []
+
+    for i in correct_numbers:
+
+        csvpath, imagepath = get_steph_test_path(i)
+
+        annotations = load_annotations_from_csv(csvpath)
+
+        all_annotation_tuples.append((i, set(annotations)))
+        all_annotations.append(set(annotations))
+
+        the_hash = hash_file(imagepath)
+
+        all_file_tuples.append((i, the_hash))
+        all_files.append(the_hash)
+
+    annotation_duplicates = [el for el in all_annotation_tuples if all_annotations.count(el[1]) > 1]
+    file_duplicates = [el for el in all_file_tuples if all_files.count(el[1]) > 1]
+
+    print("{0} annotation duplicates found!".format(len(annotation_duplicates)))
+    print(annotation_duplicates)
+    print("")
+    print("{0} file duplicates found!".format(len(file_duplicates)))
+    print(file_duplicates)
+
+
 # IMG_INPUT_PATH = '/home/elias/pdf_images/saved_images/image-019_1.png'
 # IMG_INPUT_PATH = '/home/elias/pdf_images/saved_images/image-019.png'
 # IMG_INPUT_PATH = '/home/elias/pdf_images/saved_images/image-024.jpg'
@@ -127,6 +164,7 @@ def test_data_format():
 
 # print(load_annotations_from_csv(csvpath))
 
-test_data_format()
+# test_data_format()
 
+test_data_duplicates()
 
