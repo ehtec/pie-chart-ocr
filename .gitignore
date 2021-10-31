@@ -137,3 +137,7 @@ dmypy.json
 
 /temp
 /temp1
+
+# test data charts
+/data
+!*.zip
