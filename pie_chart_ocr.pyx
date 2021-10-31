@@ -917,7 +917,14 @@ def main(path):
 
             polygons_text.append(p1)
 
-    pairs = connect_polygon_cloud_2(polygons_percent, polygons_text)
+    if any([
+        not bool(polygons_percent),
+        not bool(polygons_text)
+    ]):
+        pairs = []
+
+    else:
+        pairs = connect_polygon_cloud_2(polygons_percent, polygons_text)
 
     print("pairs:")
     pprint(pairs)
