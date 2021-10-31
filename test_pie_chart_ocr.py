@@ -196,11 +196,14 @@ def test_data_percentages():
 
     for i in correct_numbers:
 
+        total_count += 1
+
         csvpath, imagepath = get_steph_test_path(i)
 
         annotations = load_annotations_from_csv(csvpath)
 
-        if sum([el[1] for el in annotations]) != 1.0:
+        # allow some approximation inaccuracy
+        if not 0.98 < sum([el[1] for el in annotations]) < 1.02:
             wrong_count += 1
             wrong_numbers_2.append(i)
 
@@ -242,5 +245,6 @@ def test_data_percentages():
 
 # test_data_format()
 
-test_data_duplicates()
+# test_data_duplicates()
 
+test_data_percentages()
