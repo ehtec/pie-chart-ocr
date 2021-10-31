@@ -7,6 +7,7 @@ import cvxpy
 from polygon_calc_wrapper import PolygonCalc
 import os
 import shutil
+import hashlib
 
 
 # equivalent to rm -rf
@@ -171,5 +172,18 @@ def rect_from_pre(pre_p1):
     p1 = ((pre_p1[0], pre_p1[1]), (pre_p1[0], pre_p1[3]), (pre_p1[2], pre_p1[3]), (pre_p1[2], pre_p1[1]))
 
     return p1
+
+
+# compute sha256 hash of file
+def hash_file(path):
+
+    with open(path, 'rb') as bytesfile:
+        the_bytes = bytesfile.read()
+
+    h = hashlib.sha256()
+
+    h.update(the_bytes)
+
+    return h.hexdigest()
 
 
