@@ -4,6 +4,7 @@ logging.basicConfig(level=logging.WARNING)
 
 import pie_chart_ocr
 import os
+import csv
 
 
 # get (csvpath, imagepath) by number from stephs first test dataset
@@ -37,6 +38,25 @@ def get_steph_test_path(n):
     return csvpath, imagepath
 
 
+# load annotations csv into tuples with percentages as ratios
+def load_annotations_from_csv(csvpath):
+
+    res_tuples = []
+
+    with open(csvpath, 'r') as csvfile:
+        spamreader = csv.reader(csvfile, delimiter=',')
+
+        for row in spamreader:
+
+            logging.debug(row)
+
+            res_tuples.append((row[0].strip(), float(row[1].strip()) / 100.0))
+
+    logging.debug("res_tuples: {0}".format(res_tuples))
+
+    return res_tuples
+
+
 # IMG_INPUT_PATH = '/home/elias/pdf_images/saved_images/image-019_1.png'
 # IMG_INPUT_PATH = '/home/elias/pdf_images/saved_images/image-019.png'
 # IMG_INPUT_PATH = '/home/elias/pdf_images/saved_images/image-024.jpg'
@@ -53,8 +73,9 @@ def get_steph_test_path(n):
 # IMG_INPUT_PATH = "/home/elias/pie-chart-ocr/pie_charts/test_9.png"  # good, but a few false positives
 # IMG_INPUT_PATH = "/home/elias/pie-chart-ocr/pie_charts/test_10.png"
 
-IMG_INPUT_PATH = get_steph_test_path(1)[1]
+csvpath, IMG_INPUT_PATH = get_steph_test_path(1)
 
-pie_chart_ocr.main(IMG_INPUT_PATH)
+# pie_chart_ocr.main(IMG_INPUT_PATH)
 
+print(load_annotations_from_csv(csvpath))
 
