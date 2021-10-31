@@ -676,7 +676,7 @@ def main(path):
 
         max_text = max(elem, key=lambda x: sum([el[0]**2 for el in elem if el[1] == x[1]]))
 
-        if not bool(re.findall(r'[A-z0-9%]+', max_text)):
+        if not bool(re.findall(r'[A-z0-9%]+', max_text[1])):
             print("Discarding {0} because it does not have at least one needed character.".format(res_tuple))
             continue
 
