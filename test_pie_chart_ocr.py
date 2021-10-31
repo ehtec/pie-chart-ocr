@@ -183,7 +183,7 @@ def test_data_duplicates():
 
 
 # check if percentages add up to 1
-def test_data_percentages():
+def test_data_percentages(approximation_inaccuracy=0.02):
 
     correct_numbers = test_data_format()
 
@@ -203,7 +203,11 @@ def test_data_percentages():
         annotations = load_annotations_from_csv(csvpath)
 
         # allow some approximation inaccuracy
-        if not 0.98 < sum([el[1] for el in annotations]) < 1.02:
+
+        lower_bounds = 1.0 - approximation_inaccuracy
+        upper_bounds = 1.0 + approximation_inaccuracy
+
+        if not lower_bounds < sum([el[1] for el in annotations]) < upper_bounds:
             wrong_count += 1
             wrong_numbers_2.append(i)
 
