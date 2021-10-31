@@ -50,6 +50,9 @@ def load_annotations_from_csv(csvpath):
 
             logging.debug(row)
 
+            if not bool(row):
+                continue
+
             res_tuples.append((row[0].strip(), float(row[1].strip()) / 100.0))
 
     logging.debug("res_tuples: {0}".format(res_tuples))
