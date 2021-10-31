@@ -57,6 +57,44 @@ def load_annotations_from_csv(csvpath):
     return res_tuples
 
 
+# test for formatting errors in stephs work
+def test_data_format():
+
+    correct_count = 0
+    wrong_count = 0
+    total_count = 0
+
+    correct_numbers = []
+    failed_numbers = []
+
+    for i in range(1, 401):
+
+        total_count += 1
+
+        try:
+
+            csvpath, IMG_INPUT_PATH = get_steph_test_path(i)
+
+            annotations = load_annotations_from_csv(csvpath)
+
+            correct_count += 1
+            correct_numbers.append(i)
+
+        except Exception as e:
+            wrong_count += 1
+            failed_numbers.append(i)
+
+    correct_percentage = round(100 * correct_count / total_count, 2)
+    wrong_percentage = round(100 * wrong_count / total_count, 2)
+
+    print("total_count: {0}".format(total_count))
+    print("correct_count: {0} ({1}%)".format(correct_count, correct_percentage))
+    print("wrong_count: {0} ({1}%)".format(wrong_count, wrong_percentage))
+    print("")
+    print("failed_numbers: {0}".format(failed_numbers))
+
+    return correct_numbers
+
 # IMG_INPUT_PATH = '/home/elias/pdf_images/saved_images/image-019_1.png'
 # IMG_INPUT_PATH = '/home/elias/pdf_images/saved_images/image-019.png'
 # IMG_INPUT_PATH = '/home/elias/pdf_images/saved_images/image-024.jpg'
@@ -73,9 +111,12 @@ def load_annotations_from_csv(csvpath):
 # IMG_INPUT_PATH = "/home/elias/pie-chart-ocr/pie_charts/test_9.png"  # good, but a few false positives
 # IMG_INPUT_PATH = "/home/elias/pie-chart-ocr/pie_charts/test_10.png"
 
-csvpath, IMG_INPUT_PATH = get_steph_test_path(1)
+# csvpath, IMG_INPUT_PATH = get_steph_test_path(1)
 
 # pie_chart_ocr.main(IMG_INPUT_PATH)
 
-print(load_annotations_from_csv(csvpath))
+# print(load_annotations_from_csv(csvpath))
+
+test_data_format()
+
 
