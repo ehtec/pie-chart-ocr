@@ -137,6 +137,7 @@ dmypy.json
 
 /temp
 /temp1
+/temp2
 
 # test data charts
 /data
