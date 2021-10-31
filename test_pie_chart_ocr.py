@@ -182,6 +182,42 @@ def test_data_duplicates():
     print("")
 
 
+# check if percentages add up to 1
+def test_data_percentages():
+
+    correct_numbers = test_data_format()
+
+    correct_numbers_2 = []
+    wrong_numbers_2 = []
+
+    total_count = 0
+    correct_count = 0
+    wrong_count = 0
+
+    for i in correct_numbers:
+
+        csvpath, imagepath = get_steph_test_path(i)
+
+        annotations = load_annotations_from_csv(csvpath)
+
+        if sum([el[1] for el in annotations]) != 1.0:
+            wrong_count += 1
+            wrong_numbers_2.append(i)
+
+        else:
+            correct_count += 1
+            correct_numbers_2.append(i)
+
+    correct_percentage = round(100 * correct_count / total_count, 2)
+    wrong_percentage = round(100 * wrong_count / total_count, 2)
+
+    print("total_count: {0}".format(total_count))
+    print("correct_count: {0} ({1}%)".format(correct_count, correct_percentage))
+    print("wrong_count: {0} ({1}%)".format(wrong_count, wrong_percentage))
+    print("")
+    print("wrong_numbers_2: {0}".format(wrong_numbers_2))
+
+
 # IMG_INPUT_PATH = '/home/elias/pdf_images/saved_images/image-019_1.png'
 # IMG_INPUT_PATH = '/home/elias/pdf_images/saved_images/image-019.png'
 # IMG_INPUT_PATH = '/home/elias/pdf_images/saved_images/image-024.jpg'
