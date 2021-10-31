@@ -241,9 +241,9 @@ def test_data_percentages(approximation_inaccuracy=0.02):
 # IMG_INPUT_PATH = "/home/elias/pie-chart-ocr/pie_charts/test_9.png"  # good, but a few false positives
 # IMG_INPUT_PATH = "/home/elias/pie-chart-ocr/pie_charts/test_10.png"
 
-# csvpath, IMG_INPUT_PATH = get_steph_test_path(1)
+csvpath, IMG_INPUT_PATH = get_steph_test_path(3)
 
-# pie_chart_ocr.main(IMG_INPUT_PATH)
+pie_chart_ocr.main(IMG_INPUT_PATH)
 
 # print(load_annotations_from_csv(csvpath))
 
@@ -251,4 +251,4 @@ def test_data_percentages(approximation_inaccuracy=0.02):
 
 # test_data_duplicates()
 
-test_data_percentages()
+# test_data_percentages()
