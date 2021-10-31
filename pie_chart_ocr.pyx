@@ -69,6 +69,9 @@ TARGET_PIXEL_SIZE = 8000*800
 # maximum area ratio of a single word
 MAX_WORD_AREA_RATIO = 0.05
 
+# save temporary images
+SAVE_TEMP_IMAGES = True
+
 
 # def partition(pred, iterable):
 #     t1, t2 = itertools.tee(iterable)
@@ -276,7 +279,8 @@ def row_2_calc(row, orig_pil_img, k):
         if should_revert:
             pil_img = ImageOps.invert(pil_img)
 
-        pil_img.save("temp1/{0}.jpg".format(uuid.uuid4()))
+        if SAVE_TEMP_IMAGES:
+            pil_img.save("temp1/{0}.jpg".format(uuid.uuid4()))
 
         pil_img = pil_img.convert('1', dither=Image.NONE)  # .convert('RGB')
 
@@ -341,7 +345,8 @@ def row_2_calc(row, orig_pil_img, k):
         # cv2.imshow('img', img)
         # cv2.waitKey(1)
 
-        pil_img.save("temp/{0}.jpg".format(uuid.uuid4()))
+        if SAVE_TEMP_IMAGES:
+            pil_img.save("temp/{0}.jpg".format(uuid.uuid4()))
 
         pil_img = ImageOps.expand(pil_img, border=15, fill='white')
 
@@ -670,6 +675,10 @@ def main(path):
         elem.sort(key=lambda x: x[0], reverse=True)
 
         max_text = max(elem, key=lambda x: sum([el[0]**2 for el in elem if el[1] == x[1]]))
+
+        if not bool(re.findall(r'[A-z0-9%]+', max_text)):
+            print("Discarding {0} because it does not have at least one needed character.".format(res_tuple))
+            continue
 
         print("max_text: {0}".format(max_text))
 
