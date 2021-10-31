@@ -6,6 +6,7 @@ import pie_chart_ocr
 import os
 import csv
 from helperfunctions import hash_file
+import mser_functions
 
 
 # get (csvpath, imagepath) by number from stephs first test dataset
@@ -251,7 +252,9 @@ for i in correct_numbers:
 
     csvpath, IMG_INPUT_PATH = get_steph_test_path(i)
 
-    pie_chart_ocr.main(IMG_INPUT_PATH)
+    # pie_chart_ocr.main(IMG_INPUT_PATH)
+
+    mser_functions.main(IMG_INPUT_PATH)
 
 # print(load_annotations_from_csv(csvpath))
 

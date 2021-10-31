@@ -10,16 +10,22 @@ from pprint import pprint
 # maximum percentage of the total are a mser box might take
 MAX_MSER_BOX_RATIO = 0.01
 
+SCALING_FACTOR = 2
+
 
 def main(path):
-
-    # Create MSER object
-    mser = cv2.MSER_create()
 
     # Your image path i-e receipt path
     img = cv2.imread(path)
 
+    img = cv2.resize(img, (img.shape[1] * SCALING_FACTOR, img.shape[0] * SCALING_FACTOR), interpolation=cv2.INTER_AREA)
+
     total_area = img.shape[0] * img.shape[1]
+
+    print("MAX AREA: {0}".format(total_area * MAX_MSER_BOX_RATIO))
+
+    # Create MSER object
+    mser = cv2.MSER_create(max_area=int(MAX_MSER_BOX_RATIO * total_area))
 
     # Convert to gray scale
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
@@ -38,23 +44,50 @@ def main(path):
         if area / total_area > MAX_MSER_BOX_RATIO:
             continue
 
-        cv2.rectangle(vis, (x, y), (x + w, y + h), (0, 255, 0), 1)
+        # cv2.rectangle(vis, (x, y), (x + w, y + h), (0, 255, 0), 1)
 
-    hulls = [cv2.convexHull(p.reshape(-1, 1, 2)) for p in regions]
+    hulls = [cv2.convexHull(p.reshape(-1, 1, 2)) for p in regions]  # regions
+
+    # # cv2.polylines(vis, regions, 1, (0, 255, 0))
+    # cv2.polylines(vis, hulls, 1, (0, 255, 0))
+    #
+    # cv2.imshow('img', vis)
+    #
+    # cv2.waitKey(0)
+
+    mask = np.zeros((img.shape[0], img.shape[1], 1), dtype=np.uint8)
+
+    new_hulls = []
+
+    areas = []
+
+    for contour in hulls:  # hulls
+
+        area = cv2.contourArea(contour)
+
+        # print(area)
+
+        areas.append(area)
+
+        if area > total_area * MAX_MSER_BOX_RATIO:
+            continue
+
+        new_hulls.append(contour)
+
+        cv2.drawContours(mask, [contour], -1, (255, 255, 255), -1)
+        # cv2.drawContours(mask, [contour], -1, (255, 255, 255), -1)
+
+    areas.sort(reverse=True)
+
+    for i in range(5):
+        print(areas[i])
 
     # cv2.polylines(vis, regions, 1, (0, 255, 0))
-    # cv2.polylines(vis, hulls, 1, (0, 255, 0))
+    cv2.polylines(vis, new_hulls, 1, (0, 255, 0))
 
     cv2.imshow('img', vis)
 
     cv2.waitKey(0)
-
-    mask = np.zeros((img.shape[0], img.shape[1], 1), dtype=np.uint8)
-
-    for contour in hulls:
-
-        cv2.drawContours(mask, [contour], -1, (255, 255, 255), -1)
-        # cv2.drawContours(mask, [contour], -1, (255, 255, 255), -1)
 
     # this is used to find only text regions, remaining are ignored
     text_only = cv2.bitwise_and(img, img, mask=mask)
