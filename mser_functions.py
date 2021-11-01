@@ -11,8 +11,14 @@ from helperfunctions import get_cv2_dominant_color, get_cv2_dominant_color_2, ge
     get_cv2_dominant_color_4, get_cv2_dominant_color_5
 
 
-# maximum percentage of the total are a mser box might take
+# maximum ratio of the total area a mser box might take
 MAX_MSER_BOX_RATIO = 0.01
+
+# maximum ratio of the total height a mser box might take
+MAX_MSER_BOX_HEIGHT = 0.2
+
+# maximum ratio of the total width a mser box might take
+MAX_MSER_BOX_WIDTH = 0.1
 
 # number of colors for adaptive palette when finding dominant color
 COLORS_NUM = 3
@@ -38,13 +44,19 @@ def main(path):
     # Your image path i-e receipt path
     img = cv2.imread(path)
 
+    shape = img.shape
+
+    height, width = shape[0], shape[1]
+
     # dominant_color = get_cv2_dominant_color(img, colors_num=COLORS_NUM)
     #
     # print("Dominant color: {0}".format(dominant_color))
 
     # img = cv2.resize(img, (img.shape[1] * SCALING_FACTOR, img.shape[0] * SCALING_FACTOR), interpolation=cv2.INTER_AREA)
 
-    total_area = img.shape[0] * img.shape[1]
+    # total_area = img.shape[0] * img.shape[1]
+
+    total_area = height * width
 
     # print("MAX AREA: {0}".format(total_area * MAX_MSER_BOX_RATIO))
 
@@ -65,47 +77,53 @@ def main(path):
 
         x, y, w, h = box
 
-        print(box)
-
-        # total margin height
-        tmh = PADDING_HEIGHT + MEASUREMENT_HEIGHT
-
-        img2 = img[y - tmh: y + h + tmh, x: x + w]
-
-        img2_1 = img[y - tmh: y - PADDING_HEIGHT, x: x + w]
-
-        img2_2 = img[y + h + PADDING_HEIGHT: y + h + tmh, x: x + w]
-
-        print(img2_1.shape)
-        print(img2_2.shape)
-
-        img_sum = np.append(img2_1, img2_2, axis=0)
-
-        print(img_sum.shape)
-
-        dominant_color_1 = get_cv2_dominant_color(img_sum, colors_num=COLORS_NUM)
-        dominant_color_2 = get_cv2_dominant_color_2(img_sum, colors_num=COLORS_NUM)
-        dominant_color_3 = get_cv2_dominant_color_3(img_sum, colors_num=COLORS_NUM)
-        dominant_color_4 = get_cv2_dominant_color_4(img_sum, colors_num=COLORS_NUM)
-        dominant_color_5 = get_cv2_dominant_color_5(img_sum)
-
-        print("Dominant color 1: {0}".format(dominant_color_1))
-        print("Dominant color 2: {0}".format(dominant_color_2))
-        print("Dominant color 3: {0}".format(dominant_color_3))
-        print("Dominant color 4: {0}".format(dominant_color_4))
-        print("Dominant color 5: {0}".format(dominant_color_5))
-
-        cv2.imshow('img2', img2)
-
+        # print(box)
+        #
+        # # total margin height
+        # tmh = PADDING_HEIGHT + MEASUREMENT_HEIGHT
+        #
+        # img2 = img[y - tmh: y + h + tmh, x: x + w]
+        #
+        # img2_1 = img[y - tmh: y - PADDING_HEIGHT, x: x + w]
+        #
+        # img2_2 = img[y + h + PADDING_HEIGHT: y + h + tmh, x: x + w]
+        #
+        # print(img2_1.shape)
+        # print(img2_2.shape)
+        #
+        # img_sum = np.append(img2_1, img2_2, axis=0)
+        #
+        # print(img_sum.shape)
+        #
+        # dominant_color_1 = get_cv2_dominant_color(img_sum, colors_num=COLORS_NUM)
+        # dominant_color_2 = get_cv2_dominant_color_2(img_sum, colors_num=COLORS_NUM)
+        # dominant_color_3 = get_cv2_dominant_color_3(img_sum, colors_num=COLORS_NUM)
+        # dominant_color_4 = get_cv2_dominant_color_4(img_sum, colors_num=COLORS_NUM)
+        # dominant_color_5 = get_cv2_dominant_color_5(img_sum)
+        #
+        # print("Dominant color 1: {0}".format(dominant_color_1))
+        # print("Dominant color 2: {0}".format(dominant_color_2))
+        # print("Dominant color 3: {0}".format(dominant_color_3))
+        # print("Dominant color 4: {0}".format(dominant_color_4))
+        # print("Dominant color 5: {0}".format(dominant_color_5))
+        #
+        # cv2.imshow('img2', img2)
+        #
+        # # cv2.waitKey(0)
+        #
+        # cv2.imshow('img_sum', img_sum)
+        #
         # cv2.waitKey(0)
-
-        cv2.imshow('img_sum', img_sum)
-
-        cv2.waitKey(0)
 
         area = w * h
 
         if area / total_area > MAX_MSER_BOX_RATIO:
+            continue
+
+        if w / width > MAX_MSER_BOX_WIDTH:
+            continue
+
+        if h / height > MEASUREMENT_HEIGHT:
             continue
 
         cv2.rectangle(vis, (x, y), (x + w, y + h), (0, 255, 0), 1)
