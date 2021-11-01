@@ -5,6 +5,7 @@ import pytesseract
 from pytesseract import image_to_string
 from PIL import Image
 from pprint import pprint
+from colorthief import ColorThief
 
 
 # maximum percentage of the total are a mser box might take
@@ -14,6 +15,12 @@ MAX_MSER_BOX_RATIO = 0.01
 
 
 def main(path):
+
+    color_thief = ColorThief(path)
+
+    dominant_color = color_thief.get_color(quality=1)
+
+    print("Dominant color: {0}".format(dominant_color))
 
     # Your image path i-e receipt path
     img = cv2.imread(path)
