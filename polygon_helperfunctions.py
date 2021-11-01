@@ -8,7 +8,7 @@ MAX_WORD_DISTANCE_RATIO = 0.75
 
 
 # group ocr detected letters that belong to the same word together
-def group_words(filtered_res_tuples, max_word_distance_ratio=MAX_WORD_DISTANCE_RATIO):
+def group_words(filtered_res_tuples, max_word_distance_ratio=MAX_WORD_DISTANCE_RATIO, pos_start_index=0):
 
     L2 = []
 
@@ -18,8 +18,8 @@ def group_words(filtered_res_tuples, max_word_distance_ratio=MAX_WORD_DISTANCE_R
 
     for elem in comb:
 
-        pre_p1 = tuple(elem[0][2:6])
-        pre_p2 = tuple(elem[1][2:6])
+        pre_p1 = tuple(elem[0][pos_start_index: pos_start_index + 4])
+        pre_p2 = tuple(elem[1][pos_start_index: pos_start_index + 4])
 
         p1 = rect_from_pre(pre_p1)
         p2 = rect_from_pre(pre_p2)
