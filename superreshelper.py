@@ -3,7 +3,7 @@ from cv2 import dnn_superres
 from data_helpers import get_steph_test_path
 import mser_functions
 
-n = 4
+n = int(input("Image id: "))
 
 sr = dnn_superres.DnnSuperResImpl_create()
 
