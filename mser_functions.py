@@ -5,25 +5,58 @@ import pytesseract
 from pytesseract import image_to_string
 from PIL import Image
 from pprint import pprint
-from colorthief import ColorThief
+# from colorthief import ColorThief, MMCQ
+from PIL import Image
 
 
 # maximum percentage of the total are a mser box might take
 MAX_MSER_BOX_RATIO = 0.01
+
+COLORS_NUM = 10
 
 # SCALING_FACTOR = 2
 
 
 def main(path):
 
-    color_thief = ColorThief(path)
+    # color_thief = ColorThief(path)
 
-    dominant_color = color_thief.get_color(quality=1)
-
-    print("Dominant color: {0}".format(dominant_color))
+    # dominant_color = color_thief.get_color(quality=1)
+    #
+    # print("Dominant color: {0}".format(dominant_color))
 
     # Your image path i-e receipt path
     img = cv2.imread(path)
+
+    pil_img = Image.fromarray(img)
+
+    # pil_img_array = np.array(pil_img)
+    #
+    # shape = pil_img_array.shape
+    #
+    # pil_img_pixel_array = pil_img_array.reshape(shape[0] * shape[1], shape[2])
+    #
+    # # print(list(pil_img_array))
+    #
+    # valid_pixels = list(pil_img_pixel_array)
+    #
+    # valid_pixels = [[255, 255, 255] for i in range(1000)]
+    #
+    # cmap = MMCQ.quantize(valid_pixels, 10)
+    #
+    # palette = cmap.palette
+    #
+    # dominant_color = palette[0]
+
+    pil_img = pil_img.convert('P', dither=Image.NONE, palette=Image.ADAPTIVE, colors=COLORS_NUM).convert('RGB')
+
+    color_list = pil_img.getcolors(maxcolors=1000)
+
+    color_list.sort(key=lambda x: x[0], reverse=True)
+
+    dominant_color = color_list[0]
+
+    print("Dominant color: {0}".format(dominant_color))
 
     # img = cv2.resize(img, (img.shape[1] * SCALING_FACTOR, img.shape[0] * SCALING_FACTOR), interpolation=cv2.INTER_AREA)
 
