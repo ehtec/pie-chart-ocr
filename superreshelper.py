@@ -5,6 +5,7 @@ sr = dnn_superres.DnnSuperResImpl_create()
 
 image = cv2.imread('./pie_charts/image-024.jpg')
 
+# models taken from https://github.com/Saafke/EDSR_Tensorflow
 path = "EDSR_x3.pb"
 
 sr.readModel(path)
