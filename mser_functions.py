@@ -83,9 +83,17 @@ def main(path):
 
         print(img_sum.shape)
 
-        dominant_color = get_cv2_dominant_color_5(img_sum)
+        dominant_color_1 = get_cv2_dominant_color(img_sum, colors_num=COLORS_NUM)
+        dominant_color_2 = get_cv2_dominant_color_2(img_sum, colors_num=COLORS_NUM)
+        dominant_color_3 = get_cv2_dominant_color_3(img_sum, colors_num=COLORS_NUM)
+        dominant_color_4 = get_cv2_dominant_color_4(img_sum, colors_num=COLORS_NUM)
+        dominant_color_5 = get_cv2_dominant_color_5(img_sum)
 
-        print("Dominant color: {0}".format(dominant_color))
+        print("Dominant color 1: {0}".format(dominant_color_1))
+        print("Dominant color 2: {0}".format(dominant_color_2))
+        print("Dominant color 3: {0}".format(dominant_color_3))
+        print("Dominant color 4: {0}".format(dominant_color_4))
+        print("Dominant color 5: {0}".format(dominant_color_5))
 
         cv2.imshow('img2', img2)
 
