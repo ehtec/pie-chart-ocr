@@ -200,7 +200,7 @@ def integerize(l):
     return [int(el) for el in l]
 
 
-# get dominant color from cv2 image
+# get dominant color from cv2 image by counting
 # !!! ALL THE DOMINANT COLOR FUNCTIONS RETURN BGR VALUES, NOT RGB !!!
 def get_cv2_dominant_color(img, colors_num):
 
