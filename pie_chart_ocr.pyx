@@ -51,7 +51,7 @@ CONTRAST_FACTOR = 1.0  # 1.2
 # minimum area ratio to be covered to be counted as double detection of the same word
 MIN_INTERSECTION_AREA_RATIO = 0.75
 
-# maximum distance of words to be recognized as belonging to the same paragraph in terms of letter height
+# maximum distance of words to be recognized as belonging to the same word in terms of letter height
 MAX_WORD_DISTANCE_RATIO = 0.75
 
 # number of colors to use
