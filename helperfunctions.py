@@ -13,6 +13,8 @@ from colorthief import MMCQ
 import scipy
 import scipy.misc
 import scipy.cluster
+from colormath.color_objects import sRGBColor, LabColor
+from colormath.color_conversions import convert_color
 
 
 # equivalent to rm -rf
@@ -193,6 +195,7 @@ def hash_file(path):
 
 
 # get dominant color from cv2 image
+# !!! ALL THE DOMINANT COLOR FUNCTIONS RETURN BGR VALUES, NOT RGB !!!
 def get_cv2_dominant_color(img, colors_num):
 
     pil_img = Image.fromarray(img)
@@ -228,11 +231,13 @@ def get_cv2_dominant_color_2(img, colors_num):
 
 
 # get dominant color from cv2 image using K-means clustering
-def get_cv2_dominant_color_3(img, colors_num):
+def get_cv2_dominant_color_3(img, colors_num, reshape=True):
 
-    shape = img.shape
+    if reshape:
 
-    img = img.reshape(scipy.product(shape[:2]), shape[2]).astype(float)
+        shape = img.shape
+
+        img = img.reshape(scipy.product(shape[:2]), shape[2]).astype(float)
 
     codes, dist = scipy.cluster.vq.kmeans(img, colors_num)
 
@@ -246,3 +251,50 @@ def get_cv2_dominant_color_3(img, colors_num):
 
     return peak
 
+
+# get dominant color from cv2 image using cie lab space
+def get_cv2_dominant_color_4(img, colors_num):
+
+    shape = img.shape
+
+    linear_array = img.reshape(shape[0] * shape[1], shape[2])
+
+    valid_pixels = list(linear_array)
+
+    new_valid_pixels = []
+
+    for c in valid_pixels:
+
+        sc = tuple(np.array(c) / 255.0)
+
+        color_rgb = sRGBColor(*sc)
+
+        color_lab = convert_color(color_rgb, LabColor)
+
+        new_valid_pixels.append([color_lab.lab_l, color_lab.lab_a, color_lab.lab_b])
+
+    new_img = np.array(new_valid_pixels)
+
+    # print(new_valid_pixels)
+
+    # print(new_img.shape)
+
+    dominant_lab_color = get_cv2_dominant_color_3(new_img, colors_num, reshape=False)
+
+    # return dominant_lab_color
+
+    dominant_srgb_color = convert_color(LabColor(*dominant_lab_color), sRGBColor)
+
+    # sRGBColor.clamped_rgb_b
+
+    dominant_rgb_color = tuple(np.array([dominant_srgb_color.clamped_rgb_r,
+                                         dominant_srgb_color.clamped_rgb_g,
+                                         dominant_srgb_color.clamped_rgb_b]) * 255.0)
+
+    return dominant_rgb_color
+
+
+# calculate average color of cv2 image
+def get_cv2_dominant_color_5(img):
+
+    return list(img.mean(axis=0).mean(axis=0))

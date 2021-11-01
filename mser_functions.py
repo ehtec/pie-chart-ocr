@@ -7,14 +7,15 @@ from PIL import Image
 from pprint import pprint
 # from colorthief import ColorThief, MMCQ
 from PIL import Image
-from helperfunctions import get_cv2_dominant_color, get_cv2_dominant_color_2, get_cv2_dominant_color_3
+from helperfunctions import get_cv2_dominant_color, get_cv2_dominant_color_2, get_cv2_dominant_color_3,\
+    get_cv2_dominant_color_4, get_cv2_dominant_color_5
 
 
 # maximum percentage of the total are a mser box might take
 MAX_MSER_BOX_RATIO = 0.01
 
 # number of colors for adaptive palette when finding dominant color
-COLORS_NUM = 256
+COLORS_NUM = 3
 
 # padding height when finding surrounding color. The padding height is applied between the measurement height and the
 #   object
@@ -82,7 +83,7 @@ def main(path):
 
         print(img_sum.shape)
 
-        dominant_color = get_cv2_dominant_color(img_sum, colors_num=COLORS_NUM)
+        dominant_color = get_cv2_dominant_color_5(img_sum)
 
         print("Dominant color: {0}".format(dominant_color))
 
