@@ -4,11 +4,11 @@ from polygon_calc_wrapper import PolygonCalc
 
 
 # maximum distance of words to be recognized as belonging to the same word in terms of letter height
-MAX_WORD_DISTANCE_RATIO = 0.75
+MAX_CHARACTER_DISTANCE_RATIO = 0.10
 
 
 # group ocr detected letters that belong to the same word together
-def group_words(filtered_res_tuples, max_word_distance_ratio=MAX_WORD_DISTANCE_RATIO, pos_start_index=0):
+def group_words(filtered_res_tuples, max_word_distance_ratio=MAX_CHARACTER_DISTANCE_RATIO, pos_start_index=0):
 
     L2 = []
 
