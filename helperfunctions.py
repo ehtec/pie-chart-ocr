@@ -194,6 +194,12 @@ def hash_file(path):
     return h.hexdigest()
 
 
+# convert list of floats to integers
+def integerize(l):
+
+    return [int(el) for el in l]
+
+
 # get dominant color from cv2 image
 # !!! ALL THE DOMINANT COLOR FUNCTIONS RETURN BGR VALUES, NOT RGB !!!
 def get_cv2_dominant_color(img, colors_num):
@@ -231,7 +237,7 @@ def get_cv2_dominant_color_2(img, colors_num):
 
 
 # get dominant color from cv2 image using K-means clustering
-def get_cv2_dominant_color_3(img, colors_num, reshape=True):
+def get_cv2_dominant_color_3(img, colors_num, reshape=True, return_integers=True):
 
     if reshape:
 
@@ -249,11 +255,14 @@ def get_cv2_dominant_color_3(img, colors_num, reshape=True):
 
     peak = codes[index_max]
 
+    if return_integers:
+        peak = integerize(peak)
+
     return peak
 
 
 # get dominant color from cv2 image using cie lab space
-def get_cv2_dominant_color_4(img, colors_num):
+def get_cv2_dominant_color_4(img, colors_num, return_integers=True):
 
     shape = img.shape
 
@@ -279,7 +288,7 @@ def get_cv2_dominant_color_4(img, colors_num):
 
     # print(new_img.shape)
 
-    dominant_lab_color = get_cv2_dominant_color_3(new_img, colors_num, reshape=False)
+    dominant_lab_color = get_cv2_dominant_color_3(new_img, colors_num, reshape=False, return_integers=False)
 
     # return dominant_lab_color
 
@@ -291,10 +300,18 @@ def get_cv2_dominant_color_4(img, colors_num):
                                          dominant_srgb_color.clamped_rgb_g,
                                          dominant_srgb_color.clamped_rgb_b]) * 255.0)
 
+    if return_integers:
+        dominant_rgb_color = integerize(dominant_rgb_color)
+
     return dominant_rgb_color
 
 
 # calculate average color of cv2 image
-def get_cv2_dominant_color_5(img):
+def get_cv2_dominant_color_5(img, return_integers=True):
 
-    return list(img.mean(axis=0).mean(axis=0))
+    res =  list(img.mean(axis=0).mean(axis=0))
+
+    if return_integers:
+        res = integerize(res)
+
+    return res
