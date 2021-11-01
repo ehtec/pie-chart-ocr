@@ -8,6 +8,8 @@ from polygon_calc_wrapper import PolygonCalc
 import os
 import shutil
 import hashlib
+from PIL import Image
+from colorthief import MMCQ
 
 
 # equivalent to rm -rf
@@ -186,4 +188,37 @@ def hash_file(path):
 
     return h.hexdigest()
 
+
+# get dominant color from cv2 image
+def get_cv2_dominant_color(img, colors_num):
+
+    pil_img = Image.fromarray(img)
+
+    pil_img = pil_img.convert('P', dither=Image.NONE, palette=Image.ADAPTIVE, colors=colors_num).convert('RGB')
+
+    color_list = pil_img.getcolors(maxcolors=1000)
+
+    color_list.sort(key=lambda x: x[0], reverse=True)
+
+    dominant_color = color_list[0][1]
+
+    logging.debug("Dominant color: {0}".format(dominant_color))
+
+    return dominant_color
+
+
+# get dominant color from cv2 image using colorthief
+def get_cv2_dominant_color_2(img, colors_num):
+
+    shape = img.shape
+
+    linear_array = img.reshape(shape[0] * shape[1], shape[2])
+
+    valid_pixels = list(linear_array)
+
+    cmap = MMCQ.quantize(valid_pixels, colors_num)
+
+    palette = cmap.palette
+
+    return palette[0]
 

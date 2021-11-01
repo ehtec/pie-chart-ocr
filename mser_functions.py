@@ -7,12 +7,21 @@ from PIL import Image
 from pprint import pprint
 # from colorthief import ColorThief, MMCQ
 from PIL import Image
+from helperfunctions import get_cv2_dominant_color, get_cv2_dominant_color_2
 
 
 # maximum percentage of the total are a mser box might take
 MAX_MSER_BOX_RATIO = 0.01
 
+# number of colors for adaptive palette when finding dominant color
 COLORS_NUM = 10
+
+# padding height when finding surrounding color. The padding height is applied between the measurement height and the
+#   object
+PADDING_HEIGHT = 10
+
+# measurement height when finding surrounding color
+MEASUREMENT_HEIGHT = 10
 
 # SCALING_FACTOR = 2
 
@@ -28,35 +37,9 @@ def main(path):
     # Your image path i-e receipt path
     img = cv2.imread(path)
 
-    pil_img = Image.fromarray(img)
-
-    # pil_img_array = np.array(pil_img)
+    # dominant_color = get_cv2_dominant_color(img, colors_num=COLORS_NUM)
     #
-    # shape = pil_img_array.shape
-    #
-    # pil_img_pixel_array = pil_img_array.reshape(shape[0] * shape[1], shape[2])
-    #
-    # # print(list(pil_img_array))
-    #
-    # valid_pixels = list(pil_img_pixel_array)
-    #
-    # valid_pixels = [[255, 255, 255] for i in range(1000)]
-    #
-    # cmap = MMCQ.quantize(valid_pixels, 10)
-    #
-    # palette = cmap.palette
-    #
-    # dominant_color = palette[0]
-
-    pil_img = pil_img.convert('P', dither=Image.NONE, palette=Image.ADAPTIVE, colors=COLORS_NUM).convert('RGB')
-
-    color_list = pil_img.getcolors(maxcolors=1000)
-
-    color_list.sort(key=lambda x: x[0], reverse=True)
-
-    dominant_color = color_list[0]
-
-    print("Dominant color: {0}".format(dominant_color))
+    # print("Dominant color: {0}".format(dominant_color))
 
     # img = cv2.resize(img, (img.shape[1] * SCALING_FACTOR, img.shape[0] * SCALING_FACTOR), interpolation=cv2.INTER_AREA)
 
@@ -75,9 +58,41 @@ def main(path):
     # detect regions in gray scale image
     regions, bounding_boxes = mser.detectRegions(gray)
 
+    print(img.shape)
+
     for box in bounding_boxes:
 
         x, y, w, h = box
+
+        print(box)
+
+        # total margin height
+        tmh = PADDING_HEIGHT + MEASUREMENT_HEIGHT
+
+        img2 = img[y - tmh: y + h + tmh, x: x + w]
+
+        img2_1 = img[y - tmh: y - PADDING_HEIGHT, x: x + w]
+
+        img2_2 = img[y + h + PADDING_HEIGHT: y + h + tmh, x: x + w]
+
+        print(img2_1.shape)
+        print(img2_2.shape)
+
+        img_sum = np.append(img2_1, img2_2, axis=0)
+
+        print(img_sum.shape)
+
+        dominant_color = get_cv2_dominant_color_2(img_sum, colors_num=COLORS_NUM)
+
+        print("Dominant color: {0}".format(dominant_color))
+
+        cv2.imshow('img2', img2)
+
+        # cv2.waitKey(0)
+
+        cv2.imshow('img_sum', img_sum)
+
+        cv2.waitKey(0)
 
         area = w * h
 
