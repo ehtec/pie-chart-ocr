@@ -2,28 +2,32 @@ import cv2
 from cv2 import dnn_superres
 from data_helpers import get_steph_test_path
 import mser_functions
+import os
+
 
 n = int(input("Image id: "))
 
-sr = dnn_superres.DnnSuperResImpl_create()
+if not os.path.isfile('temp2/upscaled{0}.png'.format(n)):
 
-csvpath, imagepath = get_steph_test_path(n)
+    sr = dnn_superres.DnnSuperResImpl_create()
 
-image = cv2.imread(imagepath)
+    csvpath, imagepath = get_steph_test_path(n)
 
-# models taken from https://github.com/Saafke/EDSR_Tensorflow
-path = "EDSR_x3.pb"
+    image = cv2.imread(imagepath)
 
-sr.readModel(path)
+    # models taken from https://github.com/Saafke/EDSR_Tensorflow
+    path = "EDSR_x3.pb"
 
-sr.setModel("edsr", 3)
+    sr.readModel(path)
 
-result = sr.upsample(image)
+    sr.setModel("edsr", 3)
 
-# cv2.imshow(result)
-#
-# cv2.waitkey(0)
+    result = sr.upsample(image)
 
-cv2.imwrite('temp2/upscaled{0}.png'.format(n), result)
+    # cv2.imshow(result)
+    #
+    # cv2.waitkey(0)
+
+    cv2.imwrite('temp2/upscaled{0}.png'.format(n), result)
 
 mser_functions.main('temp2/upscaled{0}.png'.format(n))
