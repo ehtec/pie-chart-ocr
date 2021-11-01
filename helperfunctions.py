@@ -39,7 +39,7 @@ def partition(pred, iterable):
 # group pairs to a nested list. used in pie_chart_ocr.py
 def group_pairs_to_nested_list(L):
 
-    print(L)
+    # print(L)
 
     zero_grouped_tuples = []
 
@@ -200,6 +200,28 @@ def hash_file(path):
 def integerize(l):
 
     return [int(el) for el in l]
+
+
+# helper to put characters together to words after MSER
+def grouper(iterable, interval=2):
+
+    prev = None
+
+    group = []
+
+    for item in iterable:
+
+        if not prev or abs(item[1] - prev[1]) <= interval:
+            group.append(item)
+
+        else:
+            yield group
+            group = [item]
+
+        prev = item
+
+    if group:
+        yield group
 
 
 # !!! ALL THE DOMINANT COLOR FUNCTIONS RETURN BGR VALUES, NOT RGB !!!
