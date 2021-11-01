@@ -39,6 +39,8 @@ def partition(pred, iterable):
 # group pairs to a nested list. used in pie_chart_ocr.py
 def group_pairs_to_nested_list(L):
 
+    print(L)
+
     zero_grouped_tuples = []
 
     for a, b in L:

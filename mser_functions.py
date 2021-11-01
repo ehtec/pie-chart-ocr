@@ -9,6 +9,7 @@ from pprint import pprint
 from PIL import Image
 from helperfunctions import get_cv2_dominant_color, get_cv2_dominant_color_2, get_cv2_dominant_color_3,\
     get_cv2_dominant_color_4, get_cv2_dominant_color_5
+from polygon_helperfunctions import group_words
 
 
 # maximum ratio of the total area a mser box might take
@@ -73,6 +74,8 @@ def main(path):
 
     print(img.shape)
 
+    filtered_res_tuples = []
+
     for box in bounding_boxes:
 
         x, y, w, h = box
@@ -127,6 +130,12 @@ def main(path):
             continue
 
         cv2.rectangle(vis, (x, y), (x + w, y + h), (0, 255, 0), 1)
+
+        filtered_res_tuples.append((x, y, x + w, y + h))
+
+    word_grouped_tuples = group_words(filtered_res_tuples)
+
+    pprint(word_grouped_tuples)
 
     hulls = [cv2.convexHull(p.reshape(-1, 1, 2)) for p in regions]  # regions
 
