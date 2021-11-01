@@ -129,13 +129,32 @@ def main(path):
         if h / height > MEASUREMENT_HEIGHT:
             continue
 
-        cv2.rectangle(vis, (x, y), (x + w, y + h), (0, 255, 0), 1)
+        # cv2.rectangle(vis, (x, y), (x + w, y + h), (0, 255, 0), 1)
 
         filtered_res_tuples.append((x, y, x + w, y + h))
 
     word_grouped_tuples = group_words(filtered_res_tuples)
 
     pprint(word_grouped_tuples)
+
+    print(len(word_grouped_tuples))
+
+    for word in word_grouped_tuples:
+
+        vis = img.copy()
+
+        for box in word:
+
+            x, y, a, b = box
+
+            w = a - x
+            h = b - y
+
+            cv2.rectangle(vis, (x, y), (x + w, y + h), (0, 255, 0), 1)
+
+        cv2.imshow('vis', vis)
+
+        cv2.waitKey(0)
 
     hulls = [cv2.convexHull(p.reshape(-1, 1, 2)) for p in regions]  # regions
 
