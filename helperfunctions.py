@@ -10,6 +10,9 @@ import shutil
 import hashlib
 from PIL import Image
 from colorthief import MMCQ
+import scipy
+import scipy.misc
+import scipy.cluster
 
 
 # equivalent to rm -rf
@@ -194,7 +197,8 @@ def get_cv2_dominant_color(img, colors_num):
 
     pil_img = Image.fromarray(img)
 
-    pil_img = pil_img.convert('P', dither=Image.NONE, palette=Image.ADAPTIVE, colors=colors_num).convert('RGB')
+    pil_img = pil_img.convert('P', dither=Image.NONE, palette=Image.WEB, colors=colors_num).convert('RGB')
+    # pil_img = pil_img.convert('P', dither=Image.NONE, palette=Image.ADAPTIVE, colors=colors_num).convert('RGB')
 
     color_list = pil_img.getcolors(maxcolors=1000)
 
@@ -221,4 +225,24 @@ def get_cv2_dominant_color_2(img, colors_num):
     palette = cmap.palette
 
     return palette[0]
+
+
+# get dominant color from cv2 image using K-means clustering
+def get_cv2_dominant_color_3(img, colors_num):
+
+    shape = img.shape
+
+    img = img.reshape(scipy.product(shape[:2]), shape[2]).astype(float)
+
+    codes, dist = scipy.cluster.vq.kmeans(img, colors_num)
+
+    vecs, dist = scipy.cluster.vq.vq(img, codes)
+
+    counts, bins = scipy.histogram(vecs, len(codes))
+
+    index_max = scipy.argmax(counts)
+
+    peak = codes[index_max]
+
+    return peak
 
