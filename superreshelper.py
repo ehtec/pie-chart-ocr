@@ -1,9 +1,12 @@
 import cv2
 from cv2 import dnn_superres
+from data_helpers import get_steph_test_path
 
 sr = dnn_superres.DnnSuperResImpl_create()
 
-image = cv2.imread('./pie_charts/image-024.jpg')
+csvpath, imagepath = get_steph_test_path(2)
+
+image = cv2.imread(imagepath)
 
 # models taken from https://github.com/Saafke/EDSR_Tensorflow
 path = "EDSR_x3.pb"
