@@ -1,6 +1,7 @@
 import cv2
 from cv2 import dnn_superres
 from data_helpers import get_steph_test_path
+import mser_functions
 
 n = 4
 
@@ -24,3 +25,5 @@ result = sr.upsample(image)
 # cv2.waitkey(0)
 
 cv2.imwrite('temp2/upscaled{0}.png'.format(n), result)
+
+mser_functions.main('temp2/upscaled{0}.png'.format(n))
