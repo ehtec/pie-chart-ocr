@@ -230,7 +230,7 @@ def test_data_percentages(approximation_inaccuracy=0.02):
 
 # IMG_INPUT_PATH = '/home/elias/pdf_images/saved_images/image-019_1.png'
 # IMG_INPUT_PATH = '/home/elias/pdf_images/saved_images/image-019.png'
-# IMG_INPUT_PATH = '/home/elias/pdf_images/saved_images/image-024.jpg'
+IMG_INPUT_PATH = '/home/elias/pdf_images/saved_images/image-024.jpg'
 # IMG_INPUT_PATH = '/home/elias/pdf_images/saved_images/image-038.jpg'
 
 # IMG_INPUT_PATH = "/home/elias/pie-chart-ocr/pie_charts/test_1.png"  # 30 misdetected for 20 with 0.5 accuracy setting
@@ -246,20 +246,24 @@ def test_data_percentages(approximation_inaccuracy=0.02):
 
 # i = int(input("Chart number: "))
 
-correct_numbers = test_data_percentages()
+mser_functions.main(IMG_INPUT_PATH)
 
-for i in correct_numbers:
-
-    csvpath, IMG_INPUT_PATH = get_steph_test_path(i)
-
-    # pie_chart_ocr.main(IMG_INPUT_PATH)
-
-    mser_functions.main(IMG_INPUT_PATH)
+# correct_numbers = test_data_percentages()
+#
+# for i in correct_numbers:
+#
+#     print("PROCESSING IMAGE: {0}".format(i))
+#
+#     csvpath, IMG_INPUT_PATH = get_steph_test_path(i)
+#
+#     # pie_chart_ocr.main(IMG_INPUT_PATH)
+#
+#     mser_functions.main(IMG_INPUT_PATH)
 
 # print(load_annotations_from_csv(csvpath))
-
+#
 # test_data_format()
-
+#
 # test_data_duplicates()
-
+#
 # test_data_percentages()
