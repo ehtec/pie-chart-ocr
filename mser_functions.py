@@ -136,18 +136,18 @@ def main(path):
 
     # pprint(mask)
 
-    pprint(list(set(list(mask.flatten()))))
+    # pprint(list(set(list(mask.flatten()))))
 
-    pil_img = Image.fromarray(img)
+    # pil_img = Image.fromarray(img)
 
-    pprint(np.array(mask).shape)
+    # pprint(np.array(mask).shape)
 
     # mask[mask == 0] = np.array([0, 0, 0])
     # mask[mask == 255] = np.array([255, 255, 255])
 
     mask = np.repeat(mask, repeats=3, axis=2)
 
-    pprint(np.array(mask).shape)
+    # pprint(np.array(mask).shape)
 
     # pil_img_array = np.array(pil_img)
 
