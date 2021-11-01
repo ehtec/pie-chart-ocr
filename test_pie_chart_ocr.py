@@ -246,19 +246,19 @@ IMG_INPUT_PATH = '/home/elias/pdf_images/saved_images/image-024.jpg'
 
 # i = int(input("Chart number: "))
 
-mser_functions.main(IMG_INPUT_PATH)
+# mser_functions.main(IMG_INPUT_PATH)
 
-# correct_numbers = test_data_percentages()
-#
-# for i in correct_numbers:
-#
-#     print("PROCESSING IMAGE: {0}".format(i))
-#
-#     csvpath, IMG_INPUT_PATH = get_steph_test_path(i)
-#
-#     # pie_chart_ocr.main(IMG_INPUT_PATH)
-#
-#     mser_functions.main(IMG_INPUT_PATH)
+correct_numbers = test_data_percentages()
+
+for i in correct_numbers:
+
+    print("PROCESSING IMAGE: {0}".format(i))
+
+    csvpath, IMG_INPUT_PATH = get_steph_test_path(i)
+
+    # pie_chart_ocr.main(IMG_INPUT_PATH)
+
+    mser_functions.main(IMG_INPUT_PATH)
 
 # print(load_annotations_from_csv(csvpath))
 #
