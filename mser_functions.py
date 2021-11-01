@@ -10,7 +10,7 @@ from pprint import pprint
 # maximum percentage of the total are a mser box might take
 MAX_MSER_BOX_RATIO = 0.01
 
-SCALING_FACTOR = 2
+# SCALING_FACTOR = 2
 
 
 def main(path):
@@ -18,7 +18,7 @@ def main(path):
     # Your image path i-e receipt path
     img = cv2.imread(path)
 
-    img = cv2.resize(img, (img.shape[1] * SCALING_FACTOR, img.shape[0] * SCALING_FACTOR), interpolation=cv2.INTER_AREA)
+    # img = cv2.resize(img, (img.shape[1] * SCALING_FACTOR, img.shape[0] * SCALING_FACTOR), interpolation=cv2.INTER_AREA)
 
     total_area = img.shape[0] * img.shape[1]
 
@@ -85,6 +85,8 @@ def main(path):
     # cv2.polylines(vis, regions, 1, (0, 255, 0))
     cv2.polylines(vis, new_hulls, 1, (0, 255, 0))
 
+    cv2.imwrite('temp2/mser_result.png', vis)
+
     cv2.imshow('img', vis)
 
     cv2.waitKey(0)
@@ -112,6 +114,8 @@ def main(path):
     text_only[mask == 0] = 255  # np.array([255, 255, 255])
 
     # text_only[mask == (255, 255, 255)] = (255, 255, 255)
+
+    cv2.imwrite('temp2/mser_result_text_only.png', text_only)
 
     cv2.imshow("text only", text_only)
 
