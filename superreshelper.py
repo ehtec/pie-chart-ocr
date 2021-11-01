@@ -2,9 +2,11 @@ import cv2
 from cv2 import dnn_superres
 from data_helpers import get_steph_test_path
 
+n = 4
+
 sr = dnn_superres.DnnSuperResImpl_create()
 
-csvpath, imagepath = get_steph_test_path(2)
+csvpath, imagepath = get_steph_test_path(n)
 
 image = cv2.imread(imagepath)
 
@@ -21,4 +23,4 @@ result = sr.upsample(image)
 #
 # cv2.waitkey(0)
 
-cv2.imwrite('temp2/upscaled.png', result)
+cv2.imwrite('temp2/upscaled{0}.png'.format(n), result)
