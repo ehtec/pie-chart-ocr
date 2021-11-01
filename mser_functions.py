@@ -22,7 +22,7 @@ def main(path):
 
     total_area = img.shape[0] * img.shape[1]
 
-    print("MAX AREA: {0}".format(total_area * MAX_MSER_BOX_RATIO))
+    # print("MAX AREA: {0}".format(total_area * MAX_MSER_BOX_RATIO))
 
     # Create MSER object
     mser = cv2.MSER_create(max_area=int(MAX_MSER_BOX_RATIO * total_area))
@@ -44,7 +44,7 @@ def main(path):
         if area / total_area > MAX_MSER_BOX_RATIO:
             continue
 
-        # cv2.rectangle(vis, (x, y), (x + w, y + h), (0, 255, 0), 1)
+        cv2.rectangle(vis, (x, y), (x + w, y + h), (0, 255, 0), 1)
 
     hulls = [cv2.convexHull(p.reshape(-1, 1, 2)) for p in regions]  # regions
 
@@ -79,11 +79,11 @@ def main(path):
 
     areas.sort(reverse=True)
 
-    for i in range(5):
-        print(areas[i])
+    # for i in range(5):
+    #     print(areas[i])
 
-    # cv2.polylines(vis, regions, 1, (0, 255, 0))
-    cv2.polylines(vis, new_hulls, 1, (0, 255, 0))
+    # # cv2.polylines(vis, regions, 1, (0, 255, 0))
+    # cv2.polylines(vis, new_hulls, 1, (0, 255, 0))
 
     cv2.imwrite('temp2/mser_result.png', vis)
 
