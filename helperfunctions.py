@@ -211,7 +211,7 @@ def grouper(iterable, interval=2):
 
     for item in iterable:
 
-        if not prev or abs(item[1] - prev[1]) <= interval:
+        if not prev or abs(item[1] - prev[1]) <= interval or abs(item[3] - prev[3] <= interval):
             group.append(item)
 
         else:
