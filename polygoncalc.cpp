@@ -1,6 +1,8 @@
 #include <iostream>
 #include <list>
 #include <vector>
+#include <algorithm>
+#include <set>
 
 #include <boost/geometry.hpp>
 #include <boost/geometry/geometries/geometries.hpp>
@@ -32,6 +34,34 @@ typedef boost::geometry::model::d2::point_xy<double> point_type;
 typedef bg::model::polygon<point_type> polygon_type;
 
 //typedef std::vector< std::vector<double>> Matrix;
+
+
+void dump( const std::string & label, const std::list< std::set< int > > & values )
+{
+    std::cout << label << std::endl;
+    for( auto iter : values )
+    {
+        std::cout << "{ ";
+        for( auto val : iter )
+            std::cout << val << ", ";
+        std::cout << "}, ";
+    }
+    std::cout << std::endl;
+}
+
+
+void combine( std::list< std::set< int > > & values )
+{
+    for( std::list< std::set< int > >::iterator iter = values.begin(); iter != values.end(); ++iter )
+        for( std::list< std::set< int > >::iterator niter( iter ); ++niter != values.end(); )
+            if( std::find_first_of( iter->begin(), iter->end(), niter->begin(), niter->end() ) != iter->end() )
+            {
+                iter->insert( niter->begin(), niter->end() );
+                values.erase( niter );
+                niter = iter;
+            }
+}
+
 
 class PolygonCalc{
 
