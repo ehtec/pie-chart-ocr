@@ -5,7 +5,7 @@ from tqdm import tqdm
 
 
 # maximum distance of words to be recognized as belonging to the same word in terms of letter height
-MAX_CHARACTER_DISTANCE_RATIO = 0.10
+MAX_CHARACTER_DISTANCE_RATIO = 0.20
 
 # maximum distance used for the grouper. Increasing it will remove possible false positives, making it smaller decreases
 #   the execution time.
