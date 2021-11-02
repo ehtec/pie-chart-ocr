@@ -9,7 +9,7 @@ MAX_CHARACTER_DISTANCE_RATIO = 0.20
 
 # maximum distance used for the grouper. Increasing it will remove possible false positives, making it smaller decreases
 #   the execution time.
-MAX_PRE_GROUPING_CHARACTER_DISTANCE_RATIO = 0.5
+MAX_PRE_GROUPING_CHARACTER_DISTANCE_RATIO = 0.25
 
 
 # group ocr detected letters that belong to the same word together
