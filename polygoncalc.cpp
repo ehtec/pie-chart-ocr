@@ -313,17 +313,30 @@ class PolygonCalc{
             std::vector<bool> v(n);
             std::fill(v.begin(), v.begin() + 2, true);
             
+            std::vector<unsigned long> w(2);
+            
             do {
+                
+                // std::cout << "v: " << v << std::endl;
+                
+                w = {};
                 
                 for (i = 0; i < n; i++) {
                     
                     if (v[i]) {
-                        std::cout << (i + 1) << " ";
+                        // std::cout << (i + 1) << " ";
+                        w.push_back(i);
                     }
                                         
                 }
                 
-                std::cout << std::endl;
+                std::cout << "w: ";
+                
+                for (auto j: w) {
+                    std::cout << j << " ";
+                }
+                
+                std::cout << std::endl << std::endl;
                 
             } while (std::prev_permutation(v.begin(), v.end()));
             
