@@ -302,15 +302,20 @@ class PolygonCalc{
             
             unsigned long *element_groups = new unsigned long[n];
             
+            unsigned long i;
+            
+            for (i = 0; i < n; i++) {
+                // for testing
+                std::cout << "itest: " << i << std::endl;
+                element_groups[i] = i;
+            }
+            
             std::vector<bool> v(n);
             std::fill(v.begin(), v.begin() + 2, true);
             
             do {
                 
-                for (unsigned long i = 0; i < n; i++) {
-                    
-                    // for testing
-                    element_groups[i] = i;
+                for (i = 0; i < n; i++) {
                     
                     if (v[i]) {
                         std::cout << (i + 1) << " ";
