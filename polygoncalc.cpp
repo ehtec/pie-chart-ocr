@@ -347,5 +347,11 @@ extern "C" {
         return polygoncalc->poly_intersection_area_ratio(poly1x, poly1y, poly2x, poly2y, m, n);
 
     }
+    
+    unsigned int* PolygonCalc_group_elements(PolygonCalc* polygoncalc, unsigned int *a, unsigned int *b, unsigned int *c, unsigned int *d, unsigned int n) {
+        
+        return polygoncalc->group_elements(a, b, c, d, n);
+        
+    }
 }
 
