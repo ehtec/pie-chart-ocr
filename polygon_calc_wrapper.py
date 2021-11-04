@@ -1,7 +1,9 @@
-from ctypes import cdll, c_double
+from ctypes import cdll, c_double, c_uint
 import ctypes
 # from numpy.ctypeslib import as_ctypes, as_array, as_ctypes_type
 import numpy as np
+import copy
+
 
 lib = cdll.LoadLibrary('./libpolygoncalc.so')
 
@@ -157,4 +159,41 @@ class PolygonCalc(object):
             n
         )
 
+    def group_elements(self, elements):
+
+        a = []
+        b = []
+        c = []
+        d = []
+
+        for elem in elements:
+
+            a.append(elem[0])
+            b.append(elem[1])
+            c.append(elem[2])
+            d.append(elem[3])
+
+        n = len(elements)
+
+        a = np.ascontiguousarray(a, dtype=np.uint)
+        b = np.ascontiguousarray(b, dtype=np.uint)
+        c = np.ascontiguousarray(c, dtype=np.uint)
+        d = np.ascontiguousarray(d, dtype=np.uint)
+
+        res_array = lib.PolygonCalc_group_elements(
+            self.obj,
+            ctypes.c_void_p(a.ctypes.data),
+            ctypes.c_void_p(b.ctypes.data),
+            ctypes.c_void_p(c.ctypes.data),
+            ctypes.c_void_p(d.ctypes.data),
+            n
+        )
+
+        res_array_copy = copy.deepcopy(res_array)
+
+        res_array_p = res_array.ctypes.data_as(ctypes.POINTER(c_uint))
+
+        lib.free_long_array(res_array_p)
+
+        return res_array_copy
 
