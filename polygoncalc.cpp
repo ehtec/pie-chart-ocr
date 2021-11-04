@@ -309,6 +309,9 @@ class PolygonCalc{
                 
                 for (unsigned long i = 0; i < n; i++) {
                     
+                    // for testing
+                    element_groups[i] = i;
+                    
                     if (v[i]) {
                         std::cout << (i + 1) << " ";
                     }
