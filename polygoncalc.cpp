@@ -353,5 +353,12 @@ extern "C" {
         return polygoncalc->group_elements(a, b, c, d, n);
         
     }
+    
+    void free_long_array(unsigned long* pointer){
+
+        delete[] pointer;
+
+    }
+    
 }
 
