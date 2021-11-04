@@ -142,3 +142,6 @@ dmypy.json
 # test data charts
 /data
 !*.zip
+
+# netbeans IDE
+/nbproject
