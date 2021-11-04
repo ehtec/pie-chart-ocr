@@ -297,6 +297,32 @@ class PolygonCalc{
 
         }
 
+        unsigned int* group_elements(unsigned int *a, unsigned int *b, unsigned int *c, unsigned int *d, unsigned int n)
+        {
+            
+            unsigned int *element_groups = new unsigned int[n];
+            
+            std::vector<bool> v(n);
+            std::fill(v.begin(), v.begin() + 2, true);
+            
+            do {
+                
+                for (unsigned int i = 0; i < n; i++) {
+                    
+                    if (v[i]) {
+                        std::cout << (i + 1) << " ";
+                    }
+                                        
+                }
+                
+                std::cout << std::endl;
+                
+            } while (std::prev_permutation(v.begin(), v.end()));
+            
+            return element_groups;
+            
+        }
+        
 };
 
 
