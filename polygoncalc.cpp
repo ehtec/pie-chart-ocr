@@ -315,11 +315,19 @@ class PolygonCalc{
             
             std::vector<unsigned long> w(2);
             
+            std::vector<point_type> points1;
+            std::vector<point_type> points2;
+            
+            int j;
+            
             do {
                 
                 // std::cout << "v: " << v << std::endl;
                 
                 w = {};
+                
+                points1 = {};
+                points2 = {};
                 
                 for (i = 0; i < n; i++) {
                     
@@ -337,6 +345,8 @@ class PolygonCalc{
                 }
                 
                 std::cout << std::endl << std::endl;
+                
+                
                 
             } while (std::prev_permutation(v.begin(), v.end()));
             
