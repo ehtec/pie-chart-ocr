@@ -297,17 +297,17 @@ class PolygonCalc{
 
         }
 
-        unsigned int* group_elements(unsigned int *a, unsigned int *b, unsigned int *c, unsigned int *d, unsigned int n)
+        unsigned long* group_elements(unsigned long *a, unsigned long *b, unsigned long *c, unsigned long *d, unsigned long n)
         {
             
-            unsigned int *element_groups = new unsigned int[n];
+            unsigned long *element_groups = new unsigned long[n];
             
             std::vector<bool> v(n);
             std::fill(v.begin(), v.begin() + 2, true);
             
             do {
                 
-                for (unsigned int i = 0; i < n; i++) {
+                for (unsigned long i = 0; i < n; i++) {
                     
                     if (v[i]) {
                         std::cout << (i + 1) << " ";
@@ -348,7 +348,7 @@ extern "C" {
 
     }
     
-    unsigned int* PolygonCalc_group_elements(PolygonCalc* polygoncalc, unsigned int *a, unsigned int *b, unsigned int *c, unsigned int *d, unsigned int n) {
+    unsigned long* PolygonCalc_group_elements(PolygonCalc* polygoncalc, unsigned long *a, unsigned long *b, unsigned long *c, unsigned long *d, unsigned long n) {
         
         return polygoncalc->group_elements(a, b, c, d, n);
         
