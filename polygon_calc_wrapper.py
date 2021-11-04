@@ -1,8 +1,9 @@
-from ctypes import cdll, c_double, c_uint
+from ctypes import cdll, c_double, c_uint, c_long, c_ulong
 import ctypes
 # from numpy.ctypeslib import as_ctypes, as_array, as_ctypes_type
 import numpy as np
 import copy
+from numpy.ctypeslib import ndpointer
 
 
 lib = cdll.LoadLibrary('./libpolygoncalc.so')
@@ -180,6 +181,8 @@ class PolygonCalc(object):
         c = np.ascontiguousarray(c, dtype=np.uint)
         d = np.ascontiguousarray(d, dtype=np.uint)
 
+        lib.PolygonCalc_group_elements.restype = ndpointer(dtype=c_ulong, shape=(n,))
+
         res_array = lib.PolygonCalc_group_elements(
             self.obj,
             ctypes.c_void_p(a.ctypes.data),
@@ -191,7 +194,7 @@ class PolygonCalc(object):
 
         res_array_copy = copy.deepcopy(res_array)
 
-        res_array_p = res_array.ctypes.data_as(ctypes.POINTER(c_uint))
+        res_array_p = res_array.ctypes.data_as(ctypes.POINTER(c_ulong))
 
         lib.free_long_array(res_array_p)
 
