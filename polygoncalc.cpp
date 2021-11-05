@@ -50,10 +50,10 @@ void dump( const std::string & label, const std::list< std::set< unsigned long >
 }
 
 
-void combine( std::list< std::set< int > > & values )
+void combine( std::list< std::set< unsigned long > > & values )
 {
-    for( std::list< std::set< int > >::iterator iter = values.begin(); iter != values.end(); ++iter )
-        for( std::list< std::set< int > >::iterator niter( iter ); ++niter != values.end(); )
+    for( std::list< std::set< unsigned long > >::iterator iter = values.begin(); iter != values.end(); ++iter )
+        for( std::list< std::set< unsigned long > >::iterator niter( iter ); ++niter != values.end(); )
             if( std::find_first_of( iter->begin(), iter->end(), niter->begin(), niter->end() ) != iter->end() )
             {
                 iter->insert( niter->begin(), niter->end() );
@@ -307,7 +307,7 @@ class PolygonCalc{
             for (i = 0; i < n; i++) {
                 // for testing
                 std::cout << "itest: " << i << std::endl;
-                element_groups[i] = i;
+                element_groups[i] = 55555;
             }
             
             std::vector<bool> v(n);
@@ -406,6 +406,25 @@ class PolygonCalc{
             } while (std::prev_permutation(v.begin(), v.end()));
             
             dump("Before", to_process);
+            
+            combine(to_process);
+            
+            dump("After", to_process);
+            
+            // std::cout << "test: " << to_process[0][1] << std::endl;
+            
+            i = 0;
+            
+            for (auto const& el: to_process) {
+                
+                for (auto const& itm: el) {
+                    // std::cout << "itm: " << itm << std::endl;
+                    element_groups[itm] = i;
+                }
+                
+                i++;
+                
+            }
             
             return element_groups;
             
