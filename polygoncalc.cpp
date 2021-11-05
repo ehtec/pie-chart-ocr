@@ -338,15 +338,29 @@ class PolygonCalc{
                                         
                 }
                 
-                std::cout << "w: ";
+                // std::cout << "w: ";
                 
-                for (auto j: w) {
-                    std::cout << j << " ";
-                }
+//                for (auto j: w) {
+//                    std::cout << j << " ";
+//                }
                 
-                std::cout << std::endl << std::endl;
+                std::cout << "w[0]: " << w[0] << std::endl;
+                std::cout << "w[1]: " << w[1] << std::endl;
                 
+                // std::cout << std::endl << std::endl;
                 
+                // assign the points
+                
+                points1.push_back(point_type(a[w[0]], b[w[0]]));
+                points1.push_back(point_type(c[w[0]], b[w[0]]));
+                points1.push_back(point_type(a[w[0]], d[w[0]]));
+                points1.push_back(point_type(c[w[0]], d[w[0]]));
+                
+                points2.push_back(point_type(a[w[1]], b[w[1]]));
+                points2.push_back(point_type(c[w[1]], b[w[1]]));
+                points2.push_back(point_type(a[w[1]], d[w[1]]));
+                points2.push_back(point_type(c[w[1]], d[w[1]]));
+                        
                 
             } while (std::prev_permutation(v.begin(), v.end()));
             
