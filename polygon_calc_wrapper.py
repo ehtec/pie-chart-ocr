@@ -160,7 +160,7 @@ class PolygonCalc(object):
             n
         )
 
-    def group_elements(self, elements, threshold_dist):
+    def group_elements(self, elements, threshold_dist, return_indices=False):
 
         a = []
         b = []
@@ -199,5 +199,16 @@ class PolygonCalc(object):
 
         lib.free_long_array(res_array_p)
 
-        return res_array_copy
+        res_array_copy = [int(i) for i in res_array_copy]
+
+        if return_indices:
+            return res_array_copy
+
+        res_list = [[] for i in range(max(res_array_copy) + 1)]
+
+        for i in res_array_copy:
+
+            res_list[i].append(elements[i])
+
+        return res_list
 
