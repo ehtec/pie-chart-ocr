@@ -297,7 +297,7 @@ class PolygonCalc{
 
         }
 
-        unsigned long* group_elements(unsigned long *a, unsigned long *b, unsigned long *c, unsigned long *d, unsigned long n)
+        unsigned long* group_elements(unsigned long *a, unsigned long *b, unsigned long *c, unsigned long *d, unsigned long n, double threshold_dist)
         {
             
             unsigned long *element_groups = new unsigned long[n];
@@ -428,9 +428,9 @@ extern "C" {
 
     }
     
-    unsigned long* PolygonCalc_group_elements(PolygonCalc* polygoncalc, unsigned long *a, unsigned long *b, unsigned long *c, unsigned long *d, unsigned long n) {
+    unsigned long* PolygonCalc_group_elements(PolygonCalc* polygoncalc, unsigned long *a, unsigned long *b, unsigned long *c, unsigned long *d, unsigned long n, double threshold_dist) {
         
-        return polygoncalc->group_elements(a, b, c, d, n);
+        return polygoncalc->group_elements(a, b, c, d, n, threshold_dist);
         
     }
     
