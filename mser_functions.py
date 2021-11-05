@@ -10,6 +10,7 @@ from PIL import Image
 from helperfunctions import get_cv2_dominant_color, get_cv2_dominant_color_2, get_cv2_dominant_color_3,\
     get_cv2_dominant_color_4, get_cv2_dominant_color_5
 from polygon_helperfunctions import group_words
+from polygon_calc_wrapper import PolygonCalc
 
 
 # maximum ratio of the total area a mser box might take
@@ -133,7 +134,11 @@ def main(path):
 
         filtered_res_tuples.append((x, y, x + w, y + h))
 
-    word_grouped_tuples = group_words(filtered_res_tuples)
+    # word_grouped_tuples = group_words(filtered_res_tuples)
+
+    pc = PolygonCalc()
+
+    word_grouped_tuples = pc.group_elements(filtered_res_tuples, 0.2)
 
     pprint(word_grouped_tuples)
 
