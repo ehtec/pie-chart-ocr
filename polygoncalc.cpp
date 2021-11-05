@@ -304,11 +304,11 @@ class PolygonCalc{
             
             unsigned long i;
             
-            for (i = 0; i < n; i++) {
-                // for testing
-                std::cout << "itest: " << i << std::endl;
-                element_groups[i] = 55555;
-            }
+//            for (i = 0; i < n; i++) {
+//                // for testing
+//                std::cout << "itest: " << i << std::endl;
+//                element_groups[i] = 55555;
+//            }
             
             std::vector<bool> v(n);
             std::fill(v.begin(), v.begin() + 2, true);
@@ -358,8 +358,8 @@ class PolygonCalc{
 //                    std::cout << j << " ";
 //                }
                 
-                std::cout << "w[0]: " << w[0] << std::endl;
-                std::cout << "w[1]: " << w[1] << std::endl;
+                // std::cout << "w[0]: " << w[0] << std::endl;
+                // std::cout << "w[1]: " << w[1] << std::endl;
                 
                 // std::cout << std::endl << std::endl;
                 
@@ -406,7 +406,7 @@ class PolygonCalc{
                     dist = bg::distance(poly1, poly2);
                 }
                 
-                std::cout << "distance: " << dist << std::endl;
+                // std::cout << "distance: " << dist << std::endl;
                 
                 if (dist <= threshold_dist * height) {
                     to_process.push_back({w[0], w[1]});
@@ -415,11 +415,11 @@ class PolygonCalc{
                 
             } while (std::prev_permutation(v.begin(), v.end()));
             
-            dump("Before", to_process);
+            // dump("Before", to_process);
             
             combine(to_process);
             
-            dump("After", to_process);
+            // dump("After", to_process);
             
             // std::cout << "test: " << to_process[0][1] << std::endl;
             
