@@ -36,7 +36,7 @@ typedef bg::model::polygon<point_type> polygon_type;
 //typedef std::vector< std::vector<double>> Matrix;
 
 
-void dump( const std::string & label, const std::list< std::set< int > > & values )
+void dump( const std::string & label, const std::list< std::set< unsigned long > > & values )
 {
     std::cout << label << std::endl;
     for( auto iter : values )
@@ -324,6 +324,8 @@ class PolygonCalc{
             
             double totalArea;
             
+            std::list< std::set<unsigned long> > to_process = {};
+            
             do {
                 
                 // std::cout << "v: " << v << std::endl;
@@ -332,7 +334,7 @@ class PolygonCalc{
                 
                 points1 = {};
                 points2 = {};
-                
+                                
                 for (i = 0; i < n; i++) {
                     
                     if (v[i]) {
@@ -395,9 +397,15 @@ class PolygonCalc{
                 }
                 
                 std::cout << "distance: " << dist << std::endl;
+                
+                if (dist <= threshold_dist) {
+                    to_process.push_back({w[0], w[1]});
+                }
                         
                 
             } while (std::prev_permutation(v.begin(), v.end()));
+            
+            dump("Before", to_process);
             
             return element_groups;
             
