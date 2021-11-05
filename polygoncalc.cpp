@@ -320,6 +320,10 @@ class PolygonCalc{
             
             int j;
             
+            double dist;
+            
+            double totalArea;
+            
             do {
                 
                 // std::cout << "v: " << v << std::endl;
@@ -360,6 +364,37 @@ class PolygonCalc{
                 points2.push_back(point_type(c[w[1]], b[w[1]]));
                 points2.push_back(point_type(a[w[1]], d[w[1]]));
                 points2.push_back(point_type(c[w[1]], d[w[1]]));
+                
+                // create the polygons
+                
+                polygon_type poly1;
+                polygon_type poly2;
+
+                bg::assign_points(poly1, points1);
+                bg::assign_points(poly2, points2);
+
+                bg::correct(poly1);
+                bg::correct(poly2);
+                
+                // calculate intersection area and distance
+                
+                std::deque<polygon_type> output;
+                bg::intersection(poly1, poly2, output);
+
+                totalArea = 0.0;
+
+                BOOST_FOREACH(polygon_type const& p, output)
+                {
+                    totalArea += bg::area(p);
+                }
+
+                if (totalArea > 0.0){
+                    dist = 0.0;
+                } else {
+                    dist = bg::distance(poly1, poly2);
+                }
+                
+                std::cout << "distance: " << dist << std::endl;
                         
                 
             } while (std::prev_permutation(v.begin(), v.end()));
