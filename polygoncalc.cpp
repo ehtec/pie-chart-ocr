@@ -328,6 +328,8 @@ class PolygonCalc{
             
             std::list< std::set<unsigned long> > to_process = {};
             
+            std::cout << "Computing polygon distances..." << std::endl;
+            
             for (i = 0; i < n; i++) {
                 
                 to_process.push_back({i, i});
@@ -416,6 +418,8 @@ class PolygonCalc{
             } while (std::prev_permutation(v.begin(), v.end()));
             
             // dump("Before", to_process);
+            
+            std::cout << "Combining to nested list..." << std::endl;
             
             combine(to_process);
             
