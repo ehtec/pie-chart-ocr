@@ -326,6 +326,12 @@ class PolygonCalc{
             
             std::list< std::set<unsigned long> > to_process = {};
             
+            for (i = 0; i < n; i++) {
+                
+                to_process.push_back({i, i});
+                
+            }
+            
             do {
                 
                 // std::cout << "v: " << v << std::endl;
