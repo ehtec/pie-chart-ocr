@@ -318,6 +318,8 @@ class PolygonCalc{
             std::vector<point_type> points1;
             std::vector<point_type> points2;
             
+            double height;
+                        
             int j;
             
             double dist;
@@ -384,6 +386,8 @@ class PolygonCalc{
                 bg::correct(poly1);
                 bg::correct(poly2);
                 
+                height = std::min(d[w[0]] - b[w[0]], d[w[1]] - b[w[1]]);
+                
                 // calculate intersection area and distance
                 
                 std::deque<polygon_type> output;
@@ -404,7 +408,7 @@ class PolygonCalc{
                 
                 std::cout << "distance: " << dist << std::endl;
                 
-                if (dist <= threshold_dist) {
+                if (dist <= threshold_dist * height) {
                     to_process.push_back({w[0], w[1]});
                 }
                         
