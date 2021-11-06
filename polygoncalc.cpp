@@ -328,6 +328,8 @@ class PolygonCalc{
             
             std::list< std::set<unsigned long> > to_process = {};
             
+            std::cout << "threshold_dist: " << threshold_dist << std::endl;
+            
             std::cout << "Computing polygon distances..." << std::endl;
             
             for (i = 0; i < n; i++) {
