@@ -284,7 +284,7 @@ class PolygonCalc{
 
         }
 
-        unsigned long* group_elements(unsigned long *a, unsigned long *b, unsigned long *c, unsigned long *d, unsigned long n, double threshold_dist)
+        unsigned long* old_group_elements(unsigned long *a, unsigned long *b, unsigned long *c, unsigned long *d, unsigned long n, double threshold_dist)
         {
             
             unsigned long *element_groups = new unsigned long[n];
@@ -373,6 +373,144 @@ class PolygonCalc{
                 } else {
                     dist = bg::distance(poly1, poly2);
                 }
+                                
+                if (dist <= threshold_dist * height) {
+                    to_process.push_back(w);
+                }
+                        
+                
+            } while (std::prev_permutation(v.begin(), v.end()));
+                        
+            std::cout << "Combining to nested list..." << std::endl;
+            
+            connectedcomponents(n, to_process, res);
+            
+            i = 0;
+            
+            for (auto const& el: res) {
+                
+                for (auto const& itm: el) {
+                    element_groups[itm] = i;
+                }
+                
+                i++;
+                
+            }
+            
+            return element_groups;
+            
+        }
+        
+        unsigned long* group_elements(unsigned long *a, unsigned long *b, unsigned long *c, unsigned long *d, unsigned long n, double threshold_dist)
+        {
+            
+            unsigned long *element_groups = new unsigned long[n];
+            
+            unsigned long i;
+            
+            std::vector<bool> v(n);
+            std::fill(v.begin(), v.begin() + 2, true);
+            
+            std::vector<unsigned long> w(2);
+            
+            std::vector<point_type> points1;
+            std::vector<point_type> points2;
+            
+            double height;
+                        
+            int j;
+            
+            double dist;
+            
+            double totalArea;
+            
+            unsigned long y1, y2;
+            
+            std::vector< std::vector<unsigned long> > to_process = {};
+            
+            std::list< std::list<unsigned long> > res = {};
+
+            
+            std::cout << "threshold_dist: " << threshold_dist << std::endl;
+            
+            std::cout << "Computing polygon distances..." << std::endl;
+            
+            for (i = 0; i < n; i++) {
+                
+                to_process.push_back({i, i});
+                
+            }
+            
+            do {
+                                
+                w = {};
+                
+                points1 = {};
+                points2 = {};
+                                
+                for (i = 0; i < n; i++) {
+                    
+                    if (v[i]) {
+                        w.push_back(i);
+                    }
+                                        
+                }
+
+                points1.push_back(point_type(a[w[0]], b[w[0]]));
+                points1.push_back(point_type(c[w[0]], b[w[0]]));
+                points1.push_back(point_type(a[w[0]], d[w[0]]));
+                points1.push_back(point_type(c[w[0]], d[w[0]]));
+                
+                points2.push_back(point_type(a[w[1]], b[w[1]]));
+                points2.push_back(point_type(c[w[1]], b[w[1]]));
+                points2.push_back(point_type(a[w[1]], d[w[1]]));
+                points2.push_back(point_type(c[w[1]], d[w[1]]));
+                                
+                polygon_type poly1;
+                polygon_type poly2;
+
+                bg::assign_points(poly1, points1);
+                bg::assign_points(poly2, points2);
+
+                bg::correct(poly1);
+                bg::correct(poly2);
+                
+                height = std::min(abs(double(d[w[0]] - b[w[0]])), abs(double(d[w[1]] - b[w[1]])));
+                                
+                std::deque<polygon_type> output;
+                bg::intersection(poly1, poly2, output);
+
+                totalArea = 0.0;
+
+                BOOST_FOREACH(polygon_type const& p, output)
+                {
+                    totalArea += bg::area(p);
+                }
+
+                if (totalArea > 0.0){
+                    dist = 0.0;
+                } else {
+                    dist = bg::distance(poly1, poly2);
+                }
+                
+                if (dist == 0) {
+                    to_process.push_back(w);
+                    continue;
+                }
+                
+                if (b[w[0]] < d[w[0]]) {
+                    y1 = b[w[0]];
+                    y2 = d[w[0]];
+                } else {
+                    y1 = d[w[0]];
+                    y2 = b[w[0]];
+                }
+                
+                if (not ((y1 <= b[w[1]] <= y2) or (y1 <= d[w[1]] <= y2) or ((y1 <= b[w[1]]) and (y1 <= d[w[1]]) and (y2 >= b[w[1]]) and (y2 >= d[w[1]])))) {
+                    continue;
+                }
+                
+                // if double()
                                 
                 if (dist <= threshold_dist * height) {
                     to_process.push_back(w);
