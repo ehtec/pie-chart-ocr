@@ -146,7 +146,19 @@ def main(path):
 
     for word in word_grouped_tuples:
 
+        x1 = min([elem[0] for elem in word])
+
+        x2 = max([elem[2] for elem in word])
+
+        y1 = min([elem[1] for elem in word])
+
+        y2 = max([elem[3] for elem in word])
+
+        coord = (x1, y1, x2, y2)
+
         vis = img.copy()
+
+        cv2.rectangle(vis, (x1, y1), (x2, y2), (0, 255, 0), 1)
 
         for box in word:
 
@@ -155,7 +167,7 @@ def main(path):
             w = a - x
             h = b - y
 
-            cv2.rectangle(vis, (x, y), (x + w, y + h), (0, 255, 0), 1)
+            # cv2.rectangle(vis, (x, y), (x + w, y + h), (0, 255, 0), 1)
 
         cv2.imshow('vis', vis)
 
