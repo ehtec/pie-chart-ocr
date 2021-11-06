@@ -782,7 +782,7 @@ def main(path):
 
             else:
                 y1 = pre_p1[3]
-                y2 = pre_p1[3]
+                y2 = pre_p1[1]
 
             # if pre_p1[-1] == 10023:
             # print(elem)
