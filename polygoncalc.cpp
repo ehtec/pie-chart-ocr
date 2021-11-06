@@ -22,8 +22,6 @@
 #include <bits/stdc++.h>
 
 
-//#include "ndarray.h"
-
 namespace bg = boost::geometry;
 
 // use the following two commands to compile:
@@ -34,10 +32,8 @@ namespace bg = boost::geometry;
 // if it does not work, add -std=c++14 and add -I and -L directories
 
 typedef boost::geometry::model::d2::point_xy<double> point_type;
-//typedef bg::model::point<double, 2, bg::cs::cartesian> point_type;
-typedef bg::model::polygon<point_type> polygon_type;
 
-//typedef std::vector< std::vector<double>> Matrix;
+typedef bg::model::polygon<point_type> polygon_type;
 
 
 void dump( const std::string & label, const std::list< std::set< unsigned long > > & values )
@@ -75,9 +71,7 @@ unsigned long merge(unsigned long* parent, unsigned long x)
 
 void connectedcomponents(unsigned long n, std::vector<std::vector<unsigned long> >& edges, std::list<std::list<unsigned long>>& res)
 {
-    
-    // std::list<std::list<unsigned long>> res = {};
-    
+        
     unsigned long parent[n];
     for (unsigned long i = 0; i < n; i++) {
         parent[i] = i;
@@ -109,64 +103,25 @@ class PolygonCalc{
 
     public:
         const double helloworld(){
-//            std::cout << "Hello World" << std::endl;
             return 0.123;
         }
 
         double test_calc(){
 
-//            Point points[] = {Point(0,0), Point(1,0), Point(1,1), Point(0,1)};
-//            Point points2[] = {Point(0.5,0.5), Point(1.5,0.5), Point(1.5, 1.5), Point(0.5,1.5)};
-
             polygon_type poly1 {{{0.0, 0.0}, {1.0, 0.0}, {1.0, 1.0}, {0.0, 1.0}}};
             polygon_type poly2 {{{5.5, 0.5}, {6.5, 0.5}, {6.5, 1.5}, {5.5, 1.5}}};
-
-//            polygon_type poly1 {{{0.0, 1.0}, {1.0, 1.0}, {1.0, 0.0}, {0.0, 0.0}, {0.0, 1.0}}};
-//            polygon_type poly2 {{{0.5, 1.5}, {1.5, 1.5}, {1.5, 0.5}, {0.5, 0.5}, {0.5, 1.5}}};
 
             bg::correct(poly1);
             bg::correct(poly2);
 
-//            std::vector<point_type> points1;
-//            std::vector<point_type> points2;
-//
-//            points1.push_back(point_type(0.0,0.0));
-//            points1.push_back(point_type(1.0, 0.0));
-//            points1.push_back(point_type(1.0, 1.0));
-//            points1.push_back(point_type(0.0, 1.0));
-//
-//            points2.push_back(point_type(0.5, 0.5));
-//            points2.push_back(point_type(1.5, 0.5));
-//            points2.push_back(point_type(1.5, 1.5));
-//            points2.push_back(point_type(0.5, 1.5));
-
-//            boost::geometry::read_wkt(
-//                "POLYGON((2 1.3,2.4 1.7,2.8 1.8,3.4 1.2,3.7 1.6,3.4 2,4.1 3,5.3 2.6,5.4 1.2,4.9 0.8,2.9 0.7,2 1.3)"
-//                    "(4.0 2.0, 4.2 1.4, 4.8 1.9, 4.4 2.2, 4.0 2.0))", poly1);
-//
-//            boost::geometry::read_wkt(
-//                "POLYGON((4.0 -0.5 , 3.5 1.0 , 2.0 1.5 , 3.5 2.0 , 4.0 3.5 , 4.5 2.0 , 6.0 1.5 , 4.5 1.0 , 4.0 -0.5))", poly2);
-
-//            polygon_type poly1;
-//            polygon_type poly2;
-//
-//            bg::assign_points(poly1, points1);
-//            bg::assign_points(poly2, points2);
-
             std::deque<polygon_type> output;
             bg::intersection(poly1, poly2, output);
-
-//            std::cout << bg::area(poly1) <<std::endl;
-//            std::cout << bg::area(poly2) <<std::endl;
-
 
             double totalArea = 0.0;
 
             int i = 0;
             BOOST_FOREACH(polygon_type const& p, output)
             {
-
-//                std::cout << i++ << ": " << boost::geometry::area(p) << std::endl;
 
                 totalArea += bg::area(p);
             }
@@ -180,13 +135,6 @@ class PolygonCalc{
         }
 
         int test_nparray(double *A, int n){
-
-//        int M, N;
-//
-//        M = poly1.size();
-//        N = poly1[0].size();
-//
-//        std::cout << M << std::endl << N << std::endl;
 
             int i;
             double sum = 0.0;
@@ -214,7 +162,6 @@ class PolygonCalc{
 
             for (i=0; i<m; i++) {
                 points1.push_back(point_type(poly1x[i], poly1y[i]));
-//                std::cout << poly1x[i] << " " << poly1y[i] << std::endl;
             }
 
             for (i=0; i<n; i++) {
@@ -257,7 +204,6 @@ class PolygonCalc{
 
             for (i=0; i<m; i++) {
                 points1.push_back(point_type(poly1x[i], poly1y[i]));
-//                std::cout << poly1x[i] << " " << poly1y[i] << std::endl;
             }
 
             for (i=0; i<n; i++) {
@@ -296,7 +242,6 @@ class PolygonCalc{
 
             for (i=0; i<m; i++) {
                 points1.push_back(point_type(poly1x[i], poly1y[i]));
-//                std::cout << poly1x[i] << " " << poly1y[i] << std::endl;
             }
 
             for (i=0; i<n; i++) {
@@ -345,12 +290,6 @@ class PolygonCalc{
             unsigned long *element_groups = new unsigned long[n];
             
             unsigned long i;
-                        
-//            for (i = 0; i < n; i++) {
-//                // for testing
-//                std::cout << "itest: " << i << std::endl;
-//                element_groups[i] = 55555;
-//            }
             
             std::vector<bool> v(n);
             std::fill(v.begin(), v.begin() + 2, true);
@@ -369,7 +308,6 @@ class PolygonCalc{
             double totalArea;
             
             std::vector< std::vector<unsigned long> > to_process = {};
-            // std::list< std::set<unsigned long> > to_process = {};
             
             std::list< std::list<unsigned long> > res = {};
 
@@ -385,9 +323,7 @@ class PolygonCalc{
             }
             
             do {
-                
-                // std::cout << "v: " << v << std::endl;
-                
+                                
                 w = {};
                 
                 points1 = {};
@@ -396,25 +332,11 @@ class PolygonCalc{
                 for (i = 0; i < n; i++) {
                     
                     if (v[i]) {
-                        // std::cout << (i + 1) << " ";
                         w.push_back(i);
                     }
                                         
                 }
-                
-                // std::cout << "w: ";
-                
-//                for (auto j: w) {
-//                    std::cout << j << " ";
-//                }
-                
-                // std::cout << "w[0]: " << w[0] << std::endl;
-                // std::cout << "w[1]: " << w[1] << std::endl;
-                
-                // std::cout << std::endl << std::endl;
-                
-                // assign the points
-                
+
                 points1.push_back(point_type(a[w[0]], b[w[0]]));
                 points1.push_back(point_type(c[w[0]], b[w[0]]));
                 points1.push_back(point_type(a[w[0]], d[w[0]]));
@@ -424,9 +346,7 @@ class PolygonCalc{
                 points2.push_back(point_type(c[w[1]], b[w[1]]));
                 points2.push_back(point_type(a[w[1]], d[w[1]]));
                 points2.push_back(point_type(c[w[1]], d[w[1]]));
-                
-                // create the polygons
-                
+                                
                 polygon_type poly1;
                 polygon_type poly2;
 
@@ -437,9 +357,7 @@ class PolygonCalc{
                 bg::correct(poly2);
                 
                 height = std::min(abs(double(d[w[0]] - b[w[0]])), abs(double(d[w[1]] - b[w[1]])));
-                
-                // calculate intersection area and distance
-                
+                                
                 std::deque<polygon_type> output;
                 bg::intersection(poly1, poly2, output);
 
@@ -455,33 +373,23 @@ class PolygonCalc{
                 } else {
                     dist = bg::distance(poly1, poly2);
                 }
-                
-                // std::cout << "distance: " << dist << std::endl;
-                
+                                
                 if (dist <= threshold_dist * height) {
                     to_process.push_back(w);
                 }
                         
                 
             } while (std::prev_permutation(v.begin(), v.end()));
-            
-            // dump("Before", to_process);
-            
+                        
             std::cout << "Combining to nested list..." << std::endl;
             
-            // combine(to_process);
             connectedcomponents(n, to_process, res);
-            
-            // dump("After", to_process);
-            
-            // std::cout << "test: " << to_process[0][1] << std::endl;
             
             i = 0;
             
             for (auto const& el: res) {
                 
                 for (auto const& itm: el) {
-                    // std::cout << "itm: " << itm << std::endl;
                     element_groups[itm] = i;
                 }
                 
