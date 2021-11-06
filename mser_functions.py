@@ -138,7 +138,7 @@ def main(path):
 
     pc = PolygonCalc()
 
-    word_grouped_tuples = pc.group_elements(filtered_res_tuples, 0.2)
+    word_grouped_tuples = pc.group_elements(filtered_res_tuples, 0.4)
 
     pprint(word_grouped_tuples)
 
