@@ -19,6 +19,8 @@
 #include <boost/foreach.hpp>
 
 #include <stdlib.h>
+#include <bits/stdc++.h>
+
 
 //#include "ndarray.h"
 
@@ -64,6 +66,44 @@ void combine( std::list< std::set< unsigned long > > & values )
             }
 }
 
+unsigned long merge(unsigned long* parent, unsigned long x)
+{
+    if (parent[x] == x)
+        return x;
+    return merge(parent, parent[x]);
+}
+
+void connectedcomponents(unsigned long n, std::vector<std::vector<unsigned long> >& edges, std::list<std::list<unsigned long>>& res)
+{
+    
+    // std::list<std::list<unsigned long>> res = {};
+    
+    unsigned long parent[n];
+    for (unsigned long i = 0; i < n; i++) {
+        parent[i] = i;
+    }
+    for (auto x : edges) {
+        parent[merge(parent, x[0])] = merge(parent, x[1]);
+    }
+
+    for (unsigned long i = 0; i < n; i++) {
+        parent[i] = merge(parent, parent[i]);
+    }
+    std::map<unsigned long, std::list<unsigned long> > m;
+    for (unsigned long i = 0; i < n; i++) {
+        m[parent[i]].push_back(i);
+    }
+    for (auto it = m.begin(); it != m.end(); it++) {
+        std::list<unsigned long> l = it->second;
+
+        for (auto x : l) {
+            std::cout << x << " ";
+        }
+        std::cout << std::endl;
+        
+        res.push_back(l);
+    }
+}
 
 class PolygonCalc{
 
@@ -306,6 +346,8 @@ class PolygonCalc{
             
             unsigned long i;
             
+            unsigned long graph_count = 0;
+            
 //            for (i = 0; i < n; i++) {
 //                // for testing
 //                std::cout << "itest: " << i << std::endl;
@@ -328,7 +370,11 @@ class PolygonCalc{
             
             double totalArea;
             
-            std::list< std::set<unsigned long> > to_process = {};
+            std::vector< std::vector<unsigned long> > to_process = {};
+            // std::list< std::set<unsigned long> > to_process = {};
+            
+            std::list< std::list<unsigned long> > res = {};
+
             
             std::cout << "threshold_dist: " << threshold_dist << std::endl;
             
@@ -337,6 +383,7 @@ class PolygonCalc{
             for (i = 0; i < n; i++) {
                 
                 to_process.push_back({i, i});
+                graph_count++;
                 
             }
             
@@ -416,6 +463,7 @@ class PolygonCalc{
                 
                 if (dist <= threshold_dist * height) {
                     to_process.push_back({w[0], w[1]});
+                    graph_count++;
                 }
                         
                 
@@ -425,7 +473,8 @@ class PolygonCalc{
             
             std::cout << "Combining to nested list..." << std::endl;
             
-            combine(to_process);
+            // combine(to_process);
+            connectedcomponents(n, to_process, res);
             
             // dump("After", to_process);
             
@@ -433,7 +482,7 @@ class PolygonCalc{
             
             i = 0;
             
-            for (auto const& el: to_process) {
+            for (auto const& el: res) {
                 
                 for (auto const& itm: el) {
                     // std::cout << "itm: " << itm << std::endl;
