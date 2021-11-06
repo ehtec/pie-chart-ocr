@@ -18,6 +18,8 @@
 
 #include <boost/foreach.hpp>
 
+#include <stdlib.h>
+
 //#include "ndarray.h"
 
 namespace bg = boost::geometry;
@@ -390,7 +392,7 @@ class PolygonCalc{
                 bg::correct(poly1);
                 bg::correct(poly2);
                 
-                height = std::min(d[w[0]] - b[w[0]], d[w[1]] - b[w[1]]);
+                height = std::min(abs(d[w[0]] - b[w[0]]), abs(d[w[1]] - b[w[1]]));
                 
                 // calculate intersection area and distance
                 
