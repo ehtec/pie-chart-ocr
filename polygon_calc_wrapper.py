@@ -206,9 +206,11 @@ class PolygonCalc(object):
 
         res_list = [[] for i in range(max(res_array_copy) + 1)]
 
-        for i in res_array_copy:
+        for i in range(len(res_array_copy)):
 
-            res_list[i].append(elements[i])
+            j = res_array_copy[i]
+
+            res_list[j].append(elements[i])
 
         return res_list
 
