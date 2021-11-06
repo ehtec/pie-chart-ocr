@@ -416,7 +416,7 @@ class PolygonCalc{
             std::vector<point_type> points1;
             std::vector<point_type> points2;
             
-            double height;
+            double height, width, size_metric;
                         
             int j;
             
@@ -475,7 +475,11 @@ class PolygonCalc{
                 bg::correct(poly1);
                 bg::correct(poly2);
                 
-                height = std::min(abs(double(d[w[0]] - b[w[0]])), abs(double(d[w[1]] - b[w[1]])));
+                height = std::max(abs(double(d[w[0]] - b[w[0]])), abs(double(d[w[1]] - b[w[1]])));
+                
+                width = std::max(abs(double(c[w[0]] - a[w[0]])), abs(double(c[w[1]] - a[w[1]])));
+                
+                size_metric = std::max(height, width);
                                 
                 std::deque<polygon_type> output;
                 bg::intersection(poly1, poly2, output);
@@ -505,14 +509,12 @@ class PolygonCalc{
                     y1 = d[w[0]];
                     y2 = b[w[0]];
                 }
-                
-                if (not ((y1 <= b[w[1]] <= y2) or (y1 <= d[w[1]] <= y2) or ((y1 <= b[w[1]]) and (y1 <= d[w[1]]) and (y2 >= b[w[1]]) and (y2 >= d[w[1]])))) {
+                                
+                if (! ((y1 <= b[w[1]] && b[w[1]] <= y2) || (y1 <= d[w[1]] && d[w[1]] <= y2) || ((y1 <= b[w[1]]) && (y1 <= d[w[1]]) && (y2 >= b[w[1]]) && (y2 >= d[w[1]])))) {
                     continue;
                 }
-                
-                // if double()
                                 
-                if (dist <= threshold_dist * height) {
+                if (dist <= threshold_dist * size_metric) {
                     to_process.push_back(w);
                 }
                         
