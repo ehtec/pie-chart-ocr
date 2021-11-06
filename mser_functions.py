@@ -11,6 +11,8 @@ from helperfunctions import get_cv2_dominant_color, get_cv2_dominant_color_2, ge
     get_cv2_dominant_color_4, get_cv2_dominant_color_5
 from polygon_helperfunctions import group_words
 from polygon_calc_wrapper import PolygonCalc
+from pytesseract import Output
+import pytesseract
 
 
 # maximum ratio of the total area a mser box might take
@@ -144,6 +146,8 @@ def main(path):
 
     print(len(word_grouped_tuples))
 
+    res_tuples = []
+
     for word in word_grouped_tuples:
 
         x1 = min([elem[0] for elem in word])
@@ -160,6 +164,20 @@ def main(path):
 
         cv2.rectangle(vis, (x1, y1), (x2, y2), (0, 255, 0), 1)
 
+        cropped_img = img[y1: y2, x1: x2]
+
+        im_gray = cv2.cvtColor(cropped_img, cv2.COLOR_BGR2GRAY)
+
+        th, im_gray_th_otsu = cv2.threshold(im_gray, 127, 255, cv2.THRESH_BINARY)
+
+        im_gray_th_otsu = cv2.copyMakeBorder(im_gray_th_otsu, 15, 15, 15, 15, cv2.BORDER_CONSTANT, value=(255, 255, 255))
+
+        d = pytesseract.image_to_data(im_gray_th_otsu, lang='eng', output_type=Output.DICT)
+
+        res_tuples.append(d)
+
+        cv2.imshow('cropped', im_gray_th_otsu)
+
         for box in word:
 
             x, y, a, b = box
@@ -172,6 +190,8 @@ def main(path):
         cv2.imshow('vis', vis)
 
         cv2.waitKey(0)
+
+    pprint(res_tuples)
 
     hulls = [cv2.convexHull(p.reshape(-1, 1, 2)) for p in regions]  # regions
 
