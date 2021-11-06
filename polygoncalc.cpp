@@ -345,9 +345,7 @@ class PolygonCalc{
             unsigned long *element_groups = new unsigned long[n];
             
             unsigned long i;
-            
-            unsigned long graph_count = 0;
-            
+                        
 //            for (i = 0; i < n; i++) {
 //                // for testing
 //                std::cout << "itest: " << i << std::endl;
@@ -383,7 +381,6 @@ class PolygonCalc{
             for (i = 0; i < n; i++) {
                 
                 to_process.push_back({i, i});
-                graph_count++;
                 
             }
             
@@ -462,8 +459,7 @@ class PolygonCalc{
                 // std::cout << "distance: " << dist << std::endl;
                 
                 if (dist <= threshold_dist * height) {
-                    to_process.push_back({w[0], w[1]});
-                    graph_count++;
+                    to_process.push_back(w);
                 }
                         
                 
