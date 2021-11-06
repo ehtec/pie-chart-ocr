@@ -8,6 +8,9 @@ unsigned long merge(unsigned long* parent, unsigned long x)
 }
 unsigned long connectedcomponents(unsigned long n, std::vector<std::vector<unsigned long> >& edges)
 {
+    
+    std::list<std::list<unsigned long>> res = {};
+    
     unsigned long parent[n];
     for (unsigned long i = 0; i < n; i++) {
         parent[i] = i;
@@ -28,10 +31,13 @@ unsigned long connectedcomponents(unsigned long n, std::vector<std::vector<unsig
     }
     for (auto it = m.begin(); it != m.end(); it++) {
         std::list<unsigned long> l = it->second;
+
         for (auto x : l) {
             std::cout << x << " ";
         }
         std::cout << std::endl;
+        
+        res.push_back(l);
     }
     return ans;
 }
