@@ -28,6 +28,12 @@ MAX_MSER_BOX_HEIGHT = 0.2
 # maximum ratio of the total width a mser box might take
 MAX_MSER_BOX_WIDTH = 0.1
 
+# absolute minimum mser box height in pixels
+ABSOLUTE_MIN_MSER_BOX_HEIGHT = 8
+
+# absolute minimum mser box width in pixels
+ABSOLUTE_MIN_MSER_BOX_WIDTH = 8
+
 # number of colors for adaptive palette when finding dominant color
 COLORS_NUM = 3
 
@@ -227,6 +233,12 @@ def main(path):
             continue
 
         if h / height > MEASUREMENT_HEIGHT:
+            continue
+
+        if w < ABSOLUTE_MIN_MSER_BOX_WIDTH:
+            continue
+
+        if h < ABSOLUTE_MIN_MSER_BOX_HEIGHT:
             continue
 
         # cv2.rectangle(vis, (x, y), (x + w, y + h), (0, 255, 0), 1)
