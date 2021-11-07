@@ -89,11 +89,6 @@ void connectedcomponents(unsigned long n, std::vector<std::vector<unsigned long>
     }
     for (auto it = m.begin(); it != m.end(); it++) {
         std::list<unsigned long> l = it->second;
-
-        for (auto x : l) {
-            std::cout << x << " ";
-        }
-        std::cout << std::endl;
         
         res.push_back(l);
     }
