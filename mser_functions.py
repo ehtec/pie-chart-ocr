@@ -29,10 +29,10 @@ MAX_MSER_BOX_HEIGHT = 0.2
 MAX_MSER_BOX_WIDTH = 0.1
 
 # absolute minimum mser box height in pixels
-ABSOLUTE_MIN_MSER_BOX_HEIGHT = 8
+ABSOLUTE_MIN_MSER_BOX_HEIGHT = 8  # 8
 
 # absolute minimum mser box width in pixels
-ABSOLUTE_MIN_MSER_BOX_WIDTH = 8
+ABSOLUTE_MIN_MSER_BOX_WIDTH = 3  # 8
 
 # number of colors for adaptive palette when finding dominant color
 COLORS_NUM = 3
@@ -57,7 +57,7 @@ BG_COLOR_DISTANCE = 13.0
 MIN_CONFIDENCE = 20
 
 # maximum ratio between distance and the size_metric in group_elements when grouping letters
-MAX_LETTER_DISTANCE_RATIO = 3.0
+MAX_LETTER_DISTANCE_RATIO = 0.8  # 3.0
 
 # same line overlap ratio
 SLOV_RATIO = 0.75
