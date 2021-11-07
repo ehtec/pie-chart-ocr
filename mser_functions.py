@@ -142,7 +142,7 @@ def main(path):
 
     word_grouped_tuples = pc.group_elements(filtered_res_tuples, 0.4)
 
-    pprint(word_grouped_tuples)
+    # pprint(word_grouped_tuples)
 
     print(len(word_grouped_tuples))
 
