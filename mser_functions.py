@@ -90,7 +90,7 @@ def get_background_color(img, padding_height=PADDING_HEIGHT, measurement_height=
 
         print("Shape before reshape: {0}".format(cropped_image.shape))
 
-        cropped_image = cropped_image.reshape((-1, 1))
+        cropped_image = cropped_image.reshape((-1, 1, 3))
 
         print("Shape after reshape: {0}".format(cropped_image.shape))
 
@@ -139,6 +139,10 @@ def main(path):
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
     vis = img.copy()
+
+    full_background_color = get_background_color(img)
+
+    print("full_background_color: {0}".format(full_background_color))
 
     # detect regions in gray scale image
     regions, bounding_boxes = mser.detectRegions(gray)
