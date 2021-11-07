@@ -53,6 +53,9 @@ OUTER_BORDER_WIDTH = 22
 # color distance difference (CIE2000) for background color check
 BG_COLOR_DISTANCE = 13.0
 
+# set minimum confidence threshold
+MIN_CONFIDENCE = 50
+
 # SCALING_FACTOR = 2
 
 
@@ -257,6 +260,8 @@ def main(path):
 
     res_tuples = []
 
+    k = 0
+
     for word in word_grouped_tuples:
 
         x1 = min([elem[0] for elem in word])
@@ -326,7 +331,7 @@ def main(path):
 
         d = pytesseract.image_to_data(im_gray_th_otsu, lang='eng', output_type=Output.DICT)
 
-        res_tuples.append(d)
+        # res_tuples.append(d)
 
         cv2.imshow('cropped', im_gray_th_otsu)
 
@@ -341,15 +346,57 @@ def main(path):
         #
         #     # cv2.rectangle(vis, (x, y), (x + w, y + h), (0, 255, 0), 1)
 
+        n_boxes = len(d['text'])
+        for i in range(n_boxes):
+            if int(d['conf'][i]) > MIN_CONFIDENCE:
+                (x, y, w, h) = (d['left'][i] - BORDER_WIDTH + x1,
+                                d['top'][i] - BORDER_WIDTH + y1,
+                                d['width'][i],
+                                d['height'][i])
+
+                # cv2.rectangle(img, (x // SCALING_FACTOR, y // SCALING_FACTOR), ((x + w) // SCALING_FACTOR, (y + h) // SCALING_FACTOR), (0, 255, 0), 2)
+                # print(d['text'][i])
+                print("{0}             {1} {2} {3} {4}".format(d['text'][i], x, y, (x + w), (y + h)))
+
+                res_tuple = (d['conf'][i], d['text'][i].strip(), x, y, (x + w), (y + h), 10000 * k + i)
+
+                the_str = d['text'][i].strip()
+
+                if not bool(re.findall(r'[A-z0-9%]+', the_str)):
+                    print("Discarding {0} because it does not have at least one needed character.".format(res_tuple))
+                    continue
+
+                # res_tuples.append(res_tuple)
+
+                # res_tuple[1] = res_tuple[1].strip()
+
+                if not bool(res_tuple[1]):
+                    continue
+
+                res_tuples.append(res_tuple)
+
+        k += 1
+
+    vis = img.copy()
+
+    for res_tuple in res_tuples:
+
+        x1 = res_tuple[2]
+        y1 = res_tuple[3]
+        x2 = res_tuple[4]
+        y2 = res_tuple[5]
+
+        cv2.rectangle(vis, (x1, y1), (x2, y2), (0, 255, 0), 1)
+
     cv2.imshow('vis', vis)
 
     cv2.waitKey(0)
 
     pprint(res_tuples)
 
-    print("")
+    # print("")
 
-    pprint([el['text'] for el in res_tuples if bool(el['text'])])
+    # pprint([el['text'] for el in res_tuples if bool(el['text'])])
 
     hulls = [cv2.convexHull(p.reshape(-1, 1, 2)) for p in regions]  # regions
 
