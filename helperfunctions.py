@@ -263,7 +263,7 @@ def get_cv2_dominant_color_2(img, colors_num):
 
 
 # get dominant color from cv2 image using K-means clustering
-def get_cv2_dominant_color_3(img, colors_num, reshape=True, return_integers=True):
+def get_cv2_dominant_color_3(img, colors_num, reshape=True, return_integers=True, return_peak_only=True):
 
     if reshape:
 
@@ -277,14 +277,28 @@ def get_cv2_dominant_color_3(img, colors_num, reshape=True, return_integers=True
 
     counts, bins = scipy.histogram(vecs, len(codes))
 
-    index_max = scipy.argmax(counts)
+    # index_max = scipy.argmax(counts)
+    #
+    # peak = codes[index_max]
+    #
+    # if return_integers:
+    #     peak = integerize(peak)
+    #
+    # return peak
 
-    peak = codes[index_max]
+    counts_and_codes = list(zip(codes, counts))
+
+    counts_and_codes.sort(reverse=True, key=lambda x: x[1])
+
+    codes_sorted = [el[0] for el in counts_and_codes]
 
     if return_integers:
-        peak = integerize(peak)
+        codes_sorted = [integerize(el) for el in codes_sorted]
 
-    return peak
+    if return_peak_only:
+        return codes_sorted[0]
+
+    return codes_sorted
 
 
 # get dominant color from cv2 image using cie lab space
