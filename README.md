@@ -1,5 +1,13 @@
 # pie-chart-ocr
-A tool to extract tabular data from pie charts.
+A tool to extract tabular data from pie charts, developed as a component of the Finomena toolkit.
+
+Get more information here:
+
+https://finminity.com
+
+https://analytics.finminity.finance
+
+https://t.me/FinminityOfficial
 
 # Installation
 
