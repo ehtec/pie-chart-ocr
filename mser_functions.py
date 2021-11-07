@@ -199,6 +199,18 @@ def main(path):
         #
         # cv2.waitKey(0)
 
+        if x < OUTER_BORDER_WIDTH:
+            continue
+
+        if y < OUTER_BORDER_WIDTH:
+            continue
+
+        if x + w > width - OUTER_BORDER_WIDTH:
+            continue
+
+        if y + h > height - OUTER_BORDER_WIDTH:
+            continue
+
         area = w * h
 
         if area / total_area > MAX_MSER_BOX_RATIO:
