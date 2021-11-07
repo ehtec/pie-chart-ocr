@@ -1,3 +1,5 @@
+import logging
+
 import cv2
 import numpy as np
 import re
@@ -58,6 +60,45 @@ def get_text_background_color(img, x, y, w, h, padding_height=PADDING_HEIGHT, me
     img_sum = np.append(img2_1, img2_2, axis=0)
 
     print(img_sum.shape)
+
+    dominant_color = get_cv2_dominant_color_3(img_sum, colors_num=COLORS_NUM)
+
+    return dominant_color
+
+
+# get the BGR background color of a cropped cv2 image (by using the outmost surroundings)
+def get_background_color(img, padding_height=PADDING_HEIGHT, measurement_height=MEASUREMENT_HEIGHT):
+
+    # total margin height
+    tmh = padding_height + measurement_height
+
+    image_list = []
+
+    height = img.shape[0]
+    width = img.shape[1]
+
+    coord_list = [
+        (padding_height, padding_height, width - 2 * padding_height, measurement_height),
+        (width - tmh, tmh, measurement_height, height - 2 * tmh),
+        (padding_height, height - tmh, width - 2 * padding_height, measurement_height),
+        (padding_height, tmh, measurement_height, height - 2 * tmh)
+    ]
+
+    for x, y, w, h in coord_list:
+
+        cropped_image = img[y: y + h, x: x + w]
+
+        print("Shape before reshape: {0}".format(cropped_image.shape))
+
+        cropped_image = cropped_image.reshape((-1, 1))
+
+        print("Shape after reshape: {0}".format(cropped_image.shape))
+
+        image_list.append(cropped_image)
+
+    img_sum = np.concatenate(image_list, axis=0)
+
+    print("sum shape: {0}".format(img_sum.shape))
 
     dominant_color = get_cv2_dominant_color_3(img_sum, colors_num=COLORS_NUM)
 
@@ -192,6 +233,15 @@ def main(path):
         cv2.rectangle(vis, (x1, y1), (x2, y2), (0, 255, 0), 1)
 
         cropped_img = img[y1: y2, x1: x2]
+
+        try:
+
+            background_color = get_text_background_color(img, x1, y1, x2 - x1, y2 - y1)
+
+            print("background_color: {0}".format(background_color))
+
+        except Exception as e:
+            logging.exception(e)
 
         im_gray = cv2.cvtColor(cropped_img, cv2.COLOR_BGR2GRAY)
 
