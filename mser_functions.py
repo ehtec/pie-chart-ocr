@@ -57,7 +57,10 @@ BG_COLOR_DISTANCE = 13.0
 MIN_CONFIDENCE = 20
 
 # maximum ratio between distance and the size_metric in group_elements when grouping letters
-MAX_LETTER_DISTANCE_RATIO = 0.8
+MAX_LETTER_DISTANCE_RATIO = 3.0
+
+# same line overlap ratio
+SLOV_RATIO = 0.75
 
 # SCALING_FACTOR = 2
 
@@ -255,7 +258,7 @@ def main(path):
 
     pc = PolygonCalc()
 
-    word_grouped_tuples = pc.group_elements(filtered_res_tuples, MAX_LETTER_DISTANCE_RATIO)
+    word_grouped_tuples = pc.group_elements(filtered_res_tuples, MAX_LETTER_DISTANCE_RATIO, SLOV_RATIO)
 
     # pprint(word_grouped_tuples)
 

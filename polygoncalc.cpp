@@ -279,7 +279,9 @@ class PolygonCalc{
 
         }
 
-        unsigned long* old_group_elements(unsigned long *a, unsigned long *b, unsigned long *c, unsigned long *d, unsigned long n, double threshold_dist)
+        unsigned long* old_group_elements(unsigned long *a, unsigned long *b,
+            unsigned long *c, unsigned long *d, unsigned long n,
+            double threshold_dist)
         {
             
             unsigned long *element_groups = new unsigned long[n];
@@ -396,7 +398,9 @@ class PolygonCalc{
             
         }
         
-        unsigned long* group_elements(unsigned long *a, unsigned long *b, unsigned long *c, unsigned long *d, unsigned long n, double threshold_dist)
+        unsigned long* group_elements(unsigned long *a, unsigned long *b,
+            unsigned long *c, unsigned long *d, unsigned long n,
+            double threshold_dist, double slov_ratio)
         {
             
             unsigned long *element_groups = new unsigned long[n];
@@ -411,7 +415,7 @@ class PolygonCalc{
             std::vector<point_type> points1;
             std::vector<point_type> points2;
             
-            double height, width, size_metric;
+            double height, width, size_metric, min_height;
                         
             int j;
             
@@ -472,6 +476,8 @@ class PolygonCalc{
                 
                 height = std::max(abs(double(d[w[0]] - b[w[0]])), abs(double(d[w[1]] - b[w[1]])));
                 
+                min_height = std::min(abs(double(d[w[0]] - b[w[0]])), abs(double(d[w[1]] - b[w[1]])));
+                
                 width = std::max(abs(double(c[w[0]] - a[w[0]])), abs(double(c[w[1]] - a[w[1]])));
                 
                 size_metric = std::max(height, width);
@@ -505,7 +511,7 @@ class PolygonCalc{
                     y2 = b[w[0]];
                 }
                                 
-                if (! ((y1 <= b[w[1]] && b[w[1]] <= y2) || (y1 <= d[w[1]] && d[w[1]] <= y2) || ((y1 <= b[w[1]]) && (y1 <= d[w[1]]) && (y2 >= b[w[1]]) && (y2 >= d[w[1]])))) {
+                if (! (((y1 <= b[w[1]] && b[w[1]] <= y2) && (y2 - b[w[1]]) / min_height >= slov_ratio ) || ((y1 <= d[w[1]] && d[w[1]] <= y2) && (y2 - d[w[1]]) / min_height >= slov_ratio) || ((y1 <= b[w[1]]) && (y1 <= d[w[1]]) && (y2 >= b[w[1]]) && (y2 >= d[w[1]])))) {
                     continue;
                 }
                                 
@@ -561,9 +567,9 @@ extern "C" {
 
     }
     
-    unsigned long* PolygonCalc_group_elements(PolygonCalc* polygoncalc, unsigned long *a, unsigned long *b, unsigned long *c, unsigned long *d, unsigned long n, double threshold_dist) {
+    unsigned long* PolygonCalc_group_elements(PolygonCalc* polygoncalc, unsigned long *a, unsigned long *b, unsigned long *c, unsigned long *d, unsigned long n, double threshold_dist, double slov_ratio) {
         
-        return polygoncalc->group_elements(a, b, c, d, n, threshold_dist);
+        return polygoncalc->group_elements(a, b, c, d, n, threshold_dist, slov_ratio);
         
     }
     
