@@ -54,7 +54,10 @@ OUTER_BORDER_WIDTH = 22
 BG_COLOR_DISTANCE = 13.0
 
 # set minimum confidence threshold
-MIN_CONFIDENCE = 50
+MIN_CONFIDENCE = 20
+
+# maximum ratio between distance and the size_metric in group_elements when grouping letters
+MAX_LETTER_DISTANCE_RATIO = 0.8
 
 # SCALING_FACTOR = 2
 
@@ -252,7 +255,7 @@ def main(path):
 
     pc = PolygonCalc()
 
-    word_grouped_tuples = pc.group_elements(filtered_res_tuples, 0.4)
+    word_grouped_tuples = pc.group_elements(filtered_res_tuples, MAX_LETTER_DISTANCE_RATIO)
 
     # pprint(word_grouped_tuples)
 
