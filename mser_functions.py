@@ -148,7 +148,7 @@ def main(path):
     # print("MAX AREA: {0}".format(total_area * MAX_MSER_BOX_RATIO))
 
     # Create MSER object
-    mser = cv2.MSER_create(max_area=int(MAX_MSER_BOX_RATIO * total_area))
+    mser = cv2.MSER_create(max_area=int(MAX_MSER_BOX_RATIO * total_area))  # delta = 20
 
     # Convert to gray scale
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
@@ -157,6 +157,8 @@ def main(path):
 
     # detect regions in gray scale image
     regions, bounding_boxes = mser.detectRegions(gray)
+
+    print("NUMBER OF BOUNDING BOXES: {0}".format(len(bounding_boxes)))
 
     print(img.shape)
 
