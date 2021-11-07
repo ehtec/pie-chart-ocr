@@ -39,7 +39,7 @@ MEASUREMENT_HEIGHT = 10
 # padding width in pixels of border before OCR
 BORDER_WIDTH = 15
 
-# outer padding pixels border of full picture
+# outer padding pixels border of full picture. Should be at least MEASUREMENT_HEIGHT + PADDING_HEIGHT
 OUTER_BORDER_WIDTH = 22
 
 # SCALING_FACTOR = 2
