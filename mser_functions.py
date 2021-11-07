@@ -332,7 +332,7 @@ def main(path):
 
         print("im_gray_th_otsu.shape: {0}".format(im_gray_th_otsu.shape))
 
-        d = pytesseract.image_to_data(im_gray_th_otsu, lang='eng', output_type=Output.DICT)
+        d = pytesseract.image_to_data(im_gray_th_otsu, lang='eng', output_type=Output.DICT, config='--psm 7')
 
         # res_tuples.append(d)
 
