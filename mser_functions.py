@@ -57,10 +57,10 @@ BG_COLOR_DISTANCE = 13.0
 MIN_CONFIDENCE = 20
 
 # maximum ratio between distance and the size_metric in group_elements when grouping letters
-MAX_LETTER_DISTANCE_RATIO = 0.8  # 3.0
+MAX_LETTER_DISTANCE_RATIO = 0.4  # 0.8  # 3.0
 
 # same line overlap ratio
-SLOV_RATIO = 0.75
+SLOV_RATIO = 0.92
 
 # SCALING_FACTOR = 2
 
@@ -241,7 +241,7 @@ def main(path):
         if w / width > MAX_MSER_BOX_WIDTH:
             continue
 
-        if h / height > MEASUREMENT_HEIGHT:
+        if h / height > MAX_MSER_BOX_HEIGHT:
             continue
 
         if w < ABSOLUTE_MIN_MSER_BOX_WIDTH:
@@ -250,9 +250,19 @@ def main(path):
         if h < ABSOLUTE_MIN_MSER_BOX_HEIGHT:
             continue
 
+        # print(h/height)
+        #
+        # print(box)
+
         # cv2.rectangle(vis, (x, y), (x + w, y + h), (0, 255, 0), 1)
 
         filtered_res_tuples.append((x, y, x + w, y + h))
+
+    # cv2.imshow('vis', vis)
+    #
+    # cv2.waitKey(0)
+    #
+    # vis = img.copy()
 
     # word_grouped_tuples = group_words(filtered_res_tuples)
 
@@ -278,11 +288,10 @@ def main(path):
 
         y2 = max([elem[3] for elem in word])
 
-        # coord = (x1, y1, x2, y2)
+        # for elem in word:
+        #     cv2.rectangle(vis, (elem[0], elem[1]), (elem[2], elem[3]), (0, 255, 0), 1)
         #
-        # vis = img.copy()
-
-        cv2.rectangle(vis, (x1, y1), (x2, y2), (0, 255, 0), 1)
+        # cv2.rectangle(vis, (x1, y1), (x2, y2), (0, 255, 0), 1)
 
         cropped_img = img[y1: y2, x1: x2]
 
@@ -338,6 +347,11 @@ def main(path):
         d = pytesseract.image_to_data(im_gray_th_otsu, lang='eng', output_type=Output.DICT, config='--psm 7')
 
         # res_tuples.append(d)
+
+        # for elem in word:
+        #     cv2.rectangle(im_gray_th_otsu, (elem[0] - x1, elem[1] - y1), (elem[2], elem[3]), (0, 255, 0), 1)
+
+        # cv2.rectangle(im_gray_th_otsu, (x1, y1), (x2, y2), (0, 255, 0), 1)
 
         cv2.imshow('cropped', im_gray_th_otsu)
 
