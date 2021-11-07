@@ -40,6 +40,30 @@ BORDER_WIDTH = 15
 # SCALING_FACTOR = 2
 
 
+# get BGR background color of a cropped cv2 text image (by using space slightly above and below)
+def get_text_background_color(img, x, y, w, h, padding_height=PADDING_HEIGHT, measurement_height=MEASUREMENT_HEIGHT):
+
+    # total margin height
+    tmh = PADDING_HEIGHT + MEASUREMENT_HEIGHT
+
+    # img2 = img[y - tmh: y + h + tmh, x: x + w]
+
+    img2_1 = img[y - tmh: y - PADDING_HEIGHT, x: x + w]
+
+    img2_2 = img[y + h + PADDING_HEIGHT: y + h + tmh, x: x + w]
+
+    print(img2_1.shape)
+    print(img2_2.shape)
+
+    img_sum = np.append(img2_1, img2_2, axis=0)
+
+    print(img_sum.shape)
+
+    dominant_color = get_cv2_dominant_color_3(img_sum, colors_num=COLORS_NUM)
+
+    return dominant_color
+
+
 def main(path):
 
     # color_thief = ColorThief(path)
