@@ -1,6 +1,7 @@
 import logging
 
 import cv2
+import cv2.cv2
 import numpy as np
 import re
 import pytesseract
@@ -15,6 +16,7 @@ from polygon_helperfunctions import group_words
 from polygon_calc_wrapper import PolygonCalc
 from pytesseract import Output
 import pytesseract
+from color_processer_wrapper import ColorProcesser
 
 
 # maximum ratio of the total area a mser box might take
@@ -41,6 +43,9 @@ BORDER_WIDTH = 15
 
 # outer padding pixels border of full picture. Should be at least MEASUREMENT_HEIGHT + PADDING_HEIGHT
 OUTER_BORDER_WIDTH = 22
+
+# color distance difference (CIE2000) for background color check
+BG_COLOR_DISTANCE = 13.0
 
 # SCALING_FACTOR = 2
 
@@ -256,27 +261,48 @@ def main(path):
 
         cropped_img = img[y1: y2, x1: x2]
 
-        try:
+        background_color = get_text_background_color(img, x1, y1, x2 - x1, y2 - y1)
 
-            background_color = get_text_background_color(img, x1, y1, x2 - x1, y2 - y1)
+        print("background_color: {0}".format(background_color))
 
-            print("background_color: {0}".format(background_color))
+        cropped_img_rgb = cv2.cvtColor(cropped_img, cv2.COLOR_BGR2RGB)
 
-        except Exception as e:
-            logging.exception(e)
+        cp = ColorProcesser()
 
-        im_gray = cv2.cvtColor(cropped_img, cv2.COLOR_BGR2GRAY)
+        the_color = (background_color[2], background_color[1], background_color[0])
+
+        color_distances = cp.array_color_distance(the_color, cropped_img_rgb)
+
+        cropped_img_bin = cropped_img.copy()  # np.zeros(cropped_img.shape)
+
+        cropped_img_bin[color_distances <= BG_COLOR_DISTANCE] = (255, 255, 255)  # set background to white
+
+        cropped_img_bin[color_distances > BG_COLOR_DISTANCE] = (0, 0, 0)  # set foreground to black
+
+        # pprint(cropped_img_bin)
+
+        print("cropped_img.shape: {0}".format(cropped_img.shape))
+        print("color_distances.shape: {0}".format(color_distances.shape))
+        print("cropped_img_bin.shape: {0}".format(cropped_img_bin.shape))
+
+        im_gray = cv2.cvtColor(cropped_img_bin, cv2.COLOR_BGR2GRAY)
 
         th, im_gray_th_otsu = cv2.threshold(im_gray, 127, 255, cv2.THRESH_BINARY)
 
+        # pprint(im_gray_th_otsu)
+
         im_gray_th_otsu = cv2.copyMakeBorder(im_gray_th_otsu, BORDER_WIDTH, BORDER_WIDTH, BORDER_WIDTH, BORDER_WIDTH,
                                              cv2.BORDER_CONSTANT, value=(255, 255, 255))
+
+        print("im_gray_th_otsu.shape: {0}".format(im_gray_th_otsu.shape))
 
         d = pytesseract.image_to_data(im_gray_th_otsu, lang='eng', output_type=Output.DICT)
 
         res_tuples.append(d)
 
         cv2.imshow('cropped', im_gray_th_otsu)
+
+        cv2.waitKey(0)
 
         # for box in word:
         #
