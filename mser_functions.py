@@ -193,6 +193,10 @@ def main(path):
 
     pprint(res_tuples)
 
+    print("")
+
+    pprint([el['text'] for el in res_tuples if bool(el['text'])])
+
     hulls = [cv2.convexHull(p.reshape(-1, 1, 2)) for p in regions]  # regions
 
     # # cv2.polylines(vis, regions, 1, (0, 255, 0))
