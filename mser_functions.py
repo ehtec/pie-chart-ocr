@@ -6,10 +6,10 @@ import numpy as np
 import re
 import pytesseract
 from pytesseract import image_to_string
-from PIL import Image
+from PIL import Image, ImageOps, ImageEnhance
 from pprint import pprint
 # from colorthief import ColorThief, MMCQ
-from PIL import Image
+from PIL import Image, ImageFilter
 from helperfunctions import get_cv2_dominant_color, get_cv2_dominant_color_2, get_cv2_dominant_color_3,\
     get_cv2_dominant_color_4, get_cv2_dominant_color_5
 from polygon_helperfunctions import group_words
@@ -292,6 +292,20 @@ def main(path):
         cropped_img_bin[color_distances <= BG_COLOR_DISTANCE] = (255, 255, 255)  # set background to white
 
         cropped_img_bin[color_distances > BG_COLOR_DISTANCE] = (0, 0, 0)  # set foreground to black
+
+        pil_img = Image.fromarray(cropped_img_bin)
+
+        # FILTERS START
+        # pil_img = pil_img.filter(ImageFilter.BLUR)
+        # pil_img = pil_img.filter(ImageFilter.MinFilter(3))
+        # pil_img = pil_img.filter(ImageFilter.MinFilter)
+
+        pil_img = pil_img.filter(ImageFilter.MedianFilter())
+        enhancer = ImageEnhance.Contrast(pil_img)
+        pil_img = enhancer.enhance(3)
+        # FILTERS END
+
+        cropped_img_bin = np.array(pil_img)
 
         # pprint(cropped_img_bin)
 
