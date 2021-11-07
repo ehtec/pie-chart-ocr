@@ -178,14 +178,14 @@ def main(path):
 
         cv2.imshow('cropped', im_gray_th_otsu)
 
-        for box in word:
-
-            x, y, a, b = box
-
-            w = a - x
-            h = b - y
-
-            # cv2.rectangle(vis, (x, y), (x + w, y + h), (0, 255, 0), 1)
+        # for box in word:
+        #
+        #     x, y, a, b = box
+        #
+        #     w = a - x
+        #     h = b - y
+        #
+        #     # cv2.rectangle(vis, (x, y), (x + w, y + h), (0, 255, 0), 1)
 
     cv2.imshow('vis', vis)
 
