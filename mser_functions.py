@@ -34,6 +34,9 @@ PADDING_HEIGHT = 10
 # measurement height when finding surrounding color
 MEASUREMENT_HEIGHT = 10
 
+# padding width in pixels of border before OCR
+BORDER_WIDTH = 15
+
 # SCALING_FACTOR = 2
 
 
@@ -170,7 +173,8 @@ def main(path):
 
         th, im_gray_th_otsu = cv2.threshold(im_gray, 127, 255, cv2.THRESH_BINARY)
 
-        im_gray_th_otsu = cv2.copyMakeBorder(im_gray_th_otsu, 15, 15, 15, 15, cv2.BORDER_CONSTANT, value=(255, 255, 255))
+        im_gray_th_otsu = cv2.copyMakeBorder(im_gray_th_otsu, BORDER_WIDTH, BORDER_WIDTH, BORDER_WIDTH, BORDER_WIDTH,
+                                             cv2.BORDER_CONSTANT, value=(255, 255, 255))
 
         d = pytesseract.image_to_data(im_gray_th_otsu, lang='eng', output_type=Output.DICT)
 
