@@ -158,9 +158,9 @@ def main(path):
 
         y2 = max([elem[3] for elem in word])
 
-        coord = (x1, y1, x2, y2)
-
-        vis = img.copy()
+        # coord = (x1, y1, x2, y2)
+        #
+        # vis = img.copy()
 
         cv2.rectangle(vis, (x1, y1), (x2, y2), (0, 255, 0), 1)
 
@@ -187,9 +187,9 @@ def main(path):
 
             # cv2.rectangle(vis, (x, y), (x + w, y + h), (0, 255, 0), 1)
 
-        cv2.imshow('vis', vis)
+    cv2.imshow('vis', vis)
 
-        cv2.waitKey(0)
+    cv2.waitKey(0)
 
     pprint(res_tuples)
 
