@@ -511,7 +511,7 @@ class PolygonCalc{
                     y2 = b[w[0]];
                 }
                                 
-                if (! (((y1 <= b[w[1]] && b[w[1]] <= y2) && (y2 - b[w[1]]) / min_height >= slov_ratio ) || ((y1 <= d[w[1]] && d[w[1]] <= y2) && (y2 - d[w[1]]) / min_height >= slov_ratio) || ((y1 <= b[w[1]]) && (y1 <= d[w[1]]) && (y2 >= b[w[1]]) && (y2 >= d[w[1]])))) {
+                if (! (((y1 <= b[w[1]] && b[w[1]] <= y2) && (y2 - b[w[1]]) / min_height >= slov_ratio ) || ((y1 <= d[w[1]] && d[w[1]] <= y2) && (d[w[1]] - y1) / min_height >= slov_ratio) || ((y1 <= b[w[1]]) && (y1 <= d[w[1]]) && (y2 >= b[w[1]]) && (y2 >= d[w[1]])))) {
                     continue;
                 }
                                 
