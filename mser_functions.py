@@ -39,6 +39,9 @@ MEASUREMENT_HEIGHT = 10
 # padding width in pixels of border before OCR
 BORDER_WIDTH = 15
 
+# outer padding pixels border of full picture
+OUTER_BORDER_WIDTH = 22
+
 # SCALING_FACTOR = 2
 
 
@@ -116,6 +119,13 @@ def main(path):
     # Your image path i-e receipt path
     img = cv2.imread(path)
 
+    full_background_color = get_background_color(img)
+
+    print("full_background_color: {0}".format(full_background_color))
+
+    img = cv2.copyMakeBorder(img, OUTER_BORDER_WIDTH, OUTER_BORDER_WIDTH, OUTER_BORDER_WIDTH, OUTER_BORDER_WIDTH,
+                             cv2.BORDER_CONSTANT, value=full_background_color)
+
     shape = img.shape
 
     height, width = shape[0], shape[1]
@@ -139,10 +149,6 @@ def main(path):
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
     vis = img.copy()
-
-    full_background_color = get_background_color(img)
-
-    print("full_background_color: {0}".format(full_background_color))
 
     # detect regions in gray scale image
     regions, bounding_boxes = mser.detectRegions(gray)
