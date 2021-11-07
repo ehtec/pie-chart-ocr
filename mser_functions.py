@@ -320,9 +320,9 @@ def main(path):
         # pil_img = pil_img.filter(ImageFilter.MinFilter(3))
         # pil_img = pil_img.filter(ImageFilter.MinFilter)
 
-        pil_img = pil_img.filter(ImageFilter.MedianFilter())
-        enhancer = ImageEnhance.Contrast(pil_img)
-        pil_img = enhancer.enhance(3)
+        # pil_img = pil_img.filter(ImageFilter.MedianFilter())
+        # enhancer = ImageEnhance.Contrast(pil_img)
+        # pil_img = enhancer.enhance(3)
         # FILTERS END
 
         cropped_img_bin = np.array(pil_img)
