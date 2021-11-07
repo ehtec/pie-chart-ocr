@@ -3,6 +3,12 @@ from cv2 import dnn_superres
 from data_helpers import get_steph_test_path
 import mser_functions
 import os
+import numpy as np
+import math
+
+
+# target pixel number after neural network upscale
+TARGET_PIXEL_SIZE = 1000 * 1000
 
 
 n = int(input("Image id: "))
@@ -15,14 +21,28 @@ if not os.path.isfile('temp2/upscaled{0}.png'.format(n)):
 
     image = cv2.imread(imagepath)
 
-    # models taken from https://github.com/Saafke/EDSR_Tensorflow
-    path = "EDSR_x3.pb"
+    pixel_size = np.prod(image.shape[:-1])
 
-    sr.readModel(path)
+    upscale_factor = min(int(math.ceil(np.sqrt(TARGET_PIXEL_SIZE / pixel_size))), 4)
 
-    sr.setModel("edsr", 3)
+    if upscale_factor <= 1:
 
-    result = sr.upsample(image)
+        print("No need to upsample image {0} because it has already {1} pixels".format(n, pixel_size))
+
+        result = image
+
+    else:
+
+        print("Upsampling image {0} with upscaling factor {1} because it has {2} pixels".format(n, upscale_factor, pixel_size))
+
+        # models taken from https://github.com/Saafke/EDSR_Tensorflow
+        path = "EDSR_x{0}.pb".format(upscale_factor)
+
+        sr.readModel(path)
+
+        sr.setModel("edsr", upscale_factor)
+
+        result = sr.upsample(image)
 
     # cv2.imshow(result)
     #
