@@ -382,7 +382,7 @@ def main(path):
 
                 the_str = d['text'][i].strip()
 
-                if not bool(re.findall(r'[A-z0-9%]+', the_str)):
+                if not bool(re.findall(r'[A-Za-z0-9%]+', the_str)):
                     print("Discarding {0} because it does not have at least one needed character.".format(res_tuple))
                     continue
 
