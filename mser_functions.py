@@ -493,7 +493,7 @@ def main(path):
 
     cv2.waitKey(0)
 
-    return res_tuples
+    return res_tuples, img
 
 
 def main2(path):
