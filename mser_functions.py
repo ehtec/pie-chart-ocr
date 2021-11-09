@@ -353,9 +353,9 @@ def main(path):
 
         # cv2.rectangle(im_gray_th_otsu, (x1, y1), (x2, y2), (0, 255, 0), 1)
 
-        cv2.imshow('cropped', im_gray_th_otsu)
-
-        cv2.waitKey(0)
+        # cv2.imshow('cropped', im_gray_th_otsu)
+        #
+        # cv2.waitKey(0)
 
         # for box in word:
         #
@@ -459,9 +459,9 @@ def main(path):
 
     cv2.imwrite('temp2/mser_result.png', vis)
 
-    cv2.imshow('img', vis)
-
-    cv2.waitKey(0)
+    # cv2.imshow('img', vis)
+    #
+    # cv2.waitKey(0)
 
     # this is used to find only text regions, remaining are ignored
     text_only = cv2.bitwise_and(img, img, mask=mask)
@@ -489,9 +489,9 @@ def main(path):
 
     cv2.imwrite('temp2/mser_result_text_only.png', text_only)
 
-    cv2.imshow("text only", text_only)
-
-    cv2.waitKey(0)
+    # cv2.imshow("text only", text_only)
+    #
+    # cv2.waitKey(0)
 
     return res_tuples, img
 
