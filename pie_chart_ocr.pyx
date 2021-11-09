@@ -7,6 +7,8 @@ import numpy as np
 import copy
 # from pylab import *
 from scipy.ndimage import measurements
+
+import mser_functions
 from helperfunctions import group_pairs_to_nested_list, clean_folder_contents
 from helperfunctions import pre_rectangle_center, rect_from_pre, detect_percentage, connect_polygon_cloud_2
 # import time
@@ -566,132 +568,136 @@ def main(path):
 
     print("START TIME: {0}".format(start_time))
 
-    # previous_pil_img = Image.open('/home/elias/pdf_images/image-024.jpg')
-
-    previous_pil_img = Image.open(path)
-
-    the_size = previous_pil_img.size
-
-    pix_count = the_size[0] * the_size[1]
-
-    scaling_factor = np.sqrt(TARGET_PIXEL_SIZE / pix_count)
-
-    newsize = (int(the_size[0] * scaling_factor), int(the_size[1] * scaling_factor))
-
-    if scaling_factor < 1.0:
-
-        previous_pil_img = previous_pil_img.resize(newsize, resample=Image.BICUBIC)
-
-    pil_img = previous_pil_img.convert('P', dither=Image.NONE, palette=Image.ADAPTIVE, colors=COLORS_NUM).convert('RGB')
-
-    enhancer = ImageEnhance.Contrast(pil_img)
-    pil_img = enhancer.enhance(CONTRAST_FACTOR)
-
-    img = np.array(pil_img)
-
-    cv2.imshow('img', img)
-    cv2.waitKey(3)
-
-    orig_pil_img = copy.deepcopy(pil_img)
-
-    color_list = pil_img.getcolors(maxcolors=1000)
-
-    color_list.sort(key=lambda x: x[0], reverse=True)
-
-    print("len: {0}".format(len(color_list)))
-
-    # color_list = color_list[0:20]
-
-    new_rows = []
-
-    print("Starting step 1...")
-
-    new_rows = list(row_1_iterator(color_list, orig_pil_img))
-
+    # # previous_pil_img = Image.open('/home/elias/pdf_images/image-024.jpg')
+    #
+    # previous_pil_img = Image.open(path)
+    #
+    # the_size = previous_pil_img.size
+    #
+    # pix_count = the_size[0] * the_size[1]
+    #
+    # scaling_factor = np.sqrt(TARGET_PIXEL_SIZE / pix_count)
+    #
+    # newsize = (int(the_size[0] * scaling_factor), int(the_size[1] * scaling_factor))
+    #
+    # if scaling_factor < 1.0:
+    #
+    #     previous_pil_img = previous_pil_img.resize(newsize, resample=Image.BICUBIC)
+    #
+    # pil_img = previous_pil_img.convert('P', dither=Image.NONE, palette=Image.ADAPTIVE, colors=COLORS_NUM).convert('RGB')
+    #
+    # enhancer = ImageEnhance.Contrast(pil_img)
+    # pil_img = enhancer.enhance(CONTRAST_FACTOR)
+    #
     # img = np.array(pil_img)
     #
-    # img = img[:, :, ::-1].copy()
+    # cv2.imshow('img', img)
+    # cv2.waitKey(3)
     #
-    # # pprint(d)
-    # n_boxes = len(d['level'])
-    # for i in range(n_boxes):
-    #     (x, y, w, h) = (d['left'][i], d['top'][i], d['width'][i], d['height'][i])
-    #     cv2.rectangle(img, (x, y), (x + w, y + h), (0, 255, 0), 2)
+    # orig_pil_img = copy.deepcopy(pil_img)
+    #
+    # color_list = pil_img.getcolors(maxcolors=1000)
+    #
+    # color_list.sort(key=lambda x: x[0], reverse=True)
+    #
+    # print("len: {0}".format(len(color_list)))
+    #
+    # # color_list = color_list[0:20]
+    #
+    # new_rows = []
+    #
+    # print("Starting step 1...")
+    #
+    # new_rows = list(row_1_iterator(color_list, orig_pil_img))
+    #
+    # # img = np.array(pil_img)
+    # #
+    # # img = img[:, :, ::-1].copy()
+    # #
+    # # # pprint(d)
+    # # n_boxes = len(d['level'])
+    # # for i in range(n_boxes):
+    # #     (x, y, w, h) = (d['left'][i], d['top'][i], d['width'][i], d['height'][i])
+    # #     cv2.rectangle(img, (x, y), (x + w, y + h), (0, 255, 0), 2)
+    #
+    # print("Starting with step 2...")
+    #
+    # res_tuples = list(row_2_iterator(new_rows, orig_pil_img, width=the_size[0], height=the_size[1]))
+    #
+    # pprint(res_tuples)
+    #
+    # print("Starting with step 3...")
+    #
+    # comb = list(itertools.combinations(res_tuples, 2))
+    #
+    # # list for same word detections
+    # L = list(step3_iterator(comb))
+    #
+    # for res_tuple in res_tuples:
+    #
+    #     L.append((res_tuple, res_tuple))
+    #
+    # # list for same paragraph detections
+    # L2 = []
+    #
+    # zero_grouped_tuples = group_pairs_to_nested_list(L)
+    #
+    # old_zero_grouped_tuples = copy.deepcopy(zero_grouped_tuples)
+    #
+    # zero_grouped_tuples = []
+    #
+    # for a_group in old_zero_grouped_tuples:
+    #
+    #     avg_len = np.median([len(elem[1]) for elem in a_group])
+    #
+    #     new_group = [elem for elem in a_group if len(elem[1]) >= avg_len]
+    #
+    #     if bool(new_group):
+    #
+    #         zero_grouped_tuples.append(new_group)
+    #
+    # # word_grouped_tuples = group_pairs_to_nested_list(L2)
+    #
+    # print("zero_grouped_tuples:")
+    # pprint(zero_grouped_tuples)
+    #
+    # # print("word_grouped_tuples:")
+    # # pprint(word_grouped_tuples)
+    #
+    # blocked_i_values = [elem[-1] for el in zero_grouped_tuples for elem in el]
+    #
+    # print("Starting with step 4...")
+    #
+    # filtered_res_tuples = []
+    #
+    # for elem in zero_grouped_tuples:
+    #
+    #     # texts_array = [item[1] for item in elem]
+    #
+    #     elem.sort(key=lambda x: x[0], reverse=True)
+    #
+    #     max_text = max(elem, key=lambda x: sum([el[0]**2 for el in elem if el[1] == x[1]]))
+    #
+    #     if not bool(re.findall(r'[A-Za-z0-9%]+', max_text[1])):
+    #         print("Discarding {0} because it does not have at least one needed character.".format(res_tuple))
+    #         continue
+    #
+    #     print("max_text: {0}".format(max_text))
+    #
+    #     filtered_res_tuples.append(max_text)
+    #
+    # # for elem in res_tuples:
+    # #
+    # #     if elem[-1] not in blocked_i_values:
+    # #
+    # #         filtered_res_tuples.append(elem)
+    #
+    # print("filtered_res_tuples:")
+    # pprint(filtered_res_tuples)
 
-    print("Starting with step 2...")
+    filtered_res_tuples, img = mser_functions.main(path)
 
-    res_tuples = list(row_2_iterator(new_rows, orig_pil_img, width=the_size[0], height=the_size[1]))
-
-    pprint(res_tuples)
-
-    print("Starting with step 3...")
-
-    comb = list(itertools.combinations(res_tuples, 2))
-
-    # list for same word detections
-    L = list(step3_iterator(comb))
-
-    for res_tuple in res_tuples:
-
-        L.append((res_tuple, res_tuple))
-
-    # list for same paragraph detections
     L2 = []
-
-    zero_grouped_tuples = group_pairs_to_nested_list(L)
-
-    old_zero_grouped_tuples = copy.deepcopy(zero_grouped_tuples)
-
-    zero_grouped_tuples = []
-
-    for a_group in old_zero_grouped_tuples:
-
-        avg_len = np.median([len(elem[1]) for elem in a_group])
-
-        new_group = [elem for elem in a_group if len(elem[1]) >= avg_len]
-
-        if bool(new_group):
-
-            zero_grouped_tuples.append(new_group)
-
-    # word_grouped_tuples = group_pairs_to_nested_list(L2)
-
-    print("zero_grouped_tuples:")
-    pprint(zero_grouped_tuples)
-
-    # print("word_grouped_tuples:")
-    # pprint(word_grouped_tuples)
-
-    blocked_i_values = [elem[-1] for el in zero_grouped_tuples for elem in el]
-
-    print("Starting with step 4...")
-
-    filtered_res_tuples = []
-
-    for elem in zero_grouped_tuples:
-
-        # texts_array = [item[1] for item in elem]
-
-        elem.sort(key=lambda x: x[0], reverse=True)
-
-        max_text = max(elem, key=lambda x: sum([el[0]**2 for el in elem if el[1] == x[1]]))
-
-        if not bool(re.findall(r'[A-Za-z0-9%]+', max_text[1])):
-            print("Discarding {0} because it does not have at least one needed character.".format(res_tuple))
-            continue
-
-        print("max_text: {0}".format(max_text))
-
-        filtered_res_tuples.append(max_text)
-
-    # for elem in res_tuples:
-    #
-    #     if elem[-1] not in blocked_i_values:
-    #
-    #         filtered_res_tuples.append(elem)
-
-    print("filtered_res_tuples:")
-    pprint(filtered_res_tuples)
 
     print("Starting with step 5...")
 
