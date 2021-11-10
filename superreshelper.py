@@ -20,14 +20,13 @@ def upsample_image(image):
 
     if upscale_factor <= 1:
 
-        print("No need to upsample image {0} because it has already {1} pixels".format(n, pixel_size))
+        print("No need to upsample image because it has already {0} pixels".format(pixel_size))
 
         result = image
 
     else:
 
-        print("Upsampling image {0} with upscaling factor {1} because it has {2} pixels".format(n, upscale_factor,
-                                                                                                pixel_size))
+        print("Upsampling image with upscaling factor {0} because it has {1} pixels".format(upscale_factor, pixel_size))
 
         sr = dnn_superres.DnnSuperResImpl_create()
 
