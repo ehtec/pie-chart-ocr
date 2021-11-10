@@ -21,6 +21,7 @@ from polygon_calc_wrapper import PolygonCalc
 from color_processer_wrapper import ColorProcesser
 import logging
 import uuid
+from polygon_calc_wrapper import PolygonCalc
 
 
 # white rgb pixel
@@ -54,7 +55,7 @@ CONTRAST_FACTOR = 1.0  # 1.2
 MIN_INTERSECTION_AREA_RATIO = 0.75
 
 # maximum distance of words to be recognized as belonging to the same paragraph in terms of letter height
-MAX_WORD_DISTANCE_RATIO = 0.75
+MAX_WORD_DISTANCE_RATIO = 0.2  # 0.75
 
 # number of colors to use
 COLORS_NUM = 120
@@ -108,54 +109,60 @@ def main(path):
 
     print("Starting with step 5...")
 
-    comb = itertools.combinations(filtered_res_tuples, 2)
+    # comb = itertools.combinations(filtered_res_tuples, 2)
 
     pc = PolygonCalc()
 
-    for elem in comb:
+    # for elem in comb:
+    #
+    #     pre_p1 = tuple(elem[0][2:6])
+    #     pre_p2 = tuple(elem[1][2:6])
+    #
+    #     # p1 = ((pre_p1[0], pre_p1[1]), (pre_p1[0], pre_p1[3]), (pre_p1[2], pre_p1[3]), (pre_p1[2], pre_p1[1]))
+    #     # p2 = ((pre_p2[0], pre_p2[1]), (pre_p2[0], pre_p2[3]), (pre_p2[2], pre_p2[3]), (pre_p2[2], pre_p2[1]))
+    #
+    #     p1 = rect_from_pre(pre_p1)
+    #     p2 = rect_from_pre(pre_p2)
+    #
+    #     p1_height = pre_p1[3] - pre_p1[1]
+    #     p2_height = pre_p2[3] - pre_p2[1]
+    #
+    #     p_height = min(p1_height, p2_height)
+    #
+    #     max_word_dist = MAX_WORD_DISTANCE_RATIO * p_height
+    #
+    #     # print("p1:")
+    #     # print(p1)
+    #
+    #     # min_dist = min_poly_distance(p1, p2)
+    #
+    #     # pc = PolygonCalc()
+    #
+    #     min_dist = pc.min_poly_distance(p1, p2)
+    #
+    #     # area_ratio = poly_intersection_area_ratio(p1, p2)
+    #
+    #     # if all([min_dist == 0, area_ratio > MIN_INTERSECTION_AREA_RATIO]):
+    #     #
+    #     #     L.append(elem)
+    #
+    #     if min_dist < max_word_dist:
+    #
+    #         L2.append(elem)
 
-        pre_p1 = tuple(elem[0][2:6])
-        pre_p2 = tuple(elem[1][2:6])
+    # del pc
 
-        # p1 = ((pre_p1[0], pre_p1[1]), (pre_p1[0], pre_p1[3]), (pre_p1[2], pre_p1[3]), (pre_p1[2], pre_p1[1]))
-        # p2 = ((pre_p2[0], pre_p2[1]), (pre_p2[0], pre_p2[3]), (pre_p2[2], pre_p2[3]), (pre_p2[2], pre_p2[1]))
+    # for elem in filtered_res_tuples:
+    #
+    #     L2.append((elem, elem))
+    #
+    # word_grouped_tuples = group_pairs_to_nested_list(L2)
 
-        p1 = rect_from_pre(pre_p1)
-        p2 = rect_from_pre(pre_p2)
+    word_grouped_tuples = pc.group_elements(filtered_res_tuples, MAX_WORD_DISTANCE_RATIO, -1, start_pos=2)
 
-        p1_height = pre_p1[3] - pre_p1[1]
-        p2_height = pre_p2[3] - pre_p2[1]
-
-        p_height = min(p1_height, p2_height)
-
-        max_word_dist = MAX_WORD_DISTANCE_RATIO * p_height
-
-        # print("p1:")
-        # print(p1)
-
-        # min_dist = min_poly_distance(p1, p2)
-
-        # pc = PolygonCalc()
-
-        min_dist = pc.min_poly_distance(p1, p2)
-
-        # area_ratio = poly_intersection_area_ratio(p1, p2)
-
-        # if all([min_dist == 0, area_ratio > MIN_INTERSECTION_AREA_RATIO]):
-        #
-        #     L.append(elem)
-
-        if min_dist < max_word_dist:
-
-            L2.append(elem)
+    # word_grouped_tuples = copy.deepcopy(filtered_res_tuples)
 
     del pc
-
-    for elem in filtered_res_tuples:
-
-        L2.append((elem, elem))
-
-    word_grouped_tuples = group_pairs_to_nested_list(L2)
 
     print("word_grouped_tuples:")
     pprint(word_grouped_tuples)
