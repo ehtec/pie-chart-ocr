@@ -75,6 +75,10 @@ MAX_WORD_AREA_RATIO = 0.05
 # save temporary images
 SAVE_TEMP_IMAGES = True
 
+# threshold distance for paragraph sentence grouping. Not used if everything went well before (because only words near
+#   enough each other should have been grouped into the same paragraph)
+PARAGRAPH_THRESHOLD_DIST = 5.0
+
 
 # def partition(pred, iterable):
 #     t1, t2 = itertools.tee(iterable)
@@ -162,7 +166,7 @@ def main(path):
 
     # word_grouped_tuples = copy.deepcopy(filtered_res_tuples)
 
-    del pc
+    # del pc
 
     print("word_grouped_tuples:")
     pprint(word_grouped_tuples)
@@ -173,47 +177,49 @@ def main(path):
 
     for paragraph in word_grouped_tuples:
 
-        comb = itertools.permutations(paragraph, 2)
-
+        # comb = itertools.permutations(paragraph, 2)
+        #
+        # # for elem in paragraph:
+        # #
+        # #     L3.append((elem, elem))
+        #
+        # # list for word row detection
+        # L3 = []
+        #
         # for elem in paragraph:
         #
         #     L3.append((elem, elem))
+        #
+        # for elem in comb:
+        #     pre_p1 = tuple(elem[0][2:6])
+        #     pre_p2 = tuple(elem[1][2:6])
+        #
+        #     # p1 = ((pre_p1[0], pre_p1[1]), (pre_p1[0], pre_p1[3]), (pre_p1[2], pre_p1[3]), (pre_p1[2], pre_p1[1]))
+        #     # p2 = ((pre_p2[0], pre_p2[1]), (pre_p2[0], pre_p2[3]), (pre_p2[2], pre_p2[3]), (pre_p2[2], pre_p2[1]))
+        #
+        #     p1 = rect_from_pre(pre_p1)
+        #     p2 = rect_from_pre(pre_p2)
+        #
+        #     if pre_p1[3] - pre_p1[1] > 0:
+        #         y1 = pre_p1[1]
+        #         y2 = pre_p1[3]
+        #
+        #     else:
+        #         y1 = pre_p1[3]
+        #         y2 = pre_p1[1]
+        #
+        #     # if pre_p1[-1] == 10023:
+        #     # print(elem)
+        #     # print("YES")
+        #
+        #     if any([y1 <= pre_p2[1] <= y2, y1 <= pre_p2[3] <= y2,
+        #             all([y1 <= pre_p2[1], y1 <= pre_p2[3], y2 >= pre_p2[1], y2 >= pre_p2[3]])]):
+        #
+        #         L3.append(elem)
+        #
+        # paragraph_tuples = group_pairs_to_nested_list(L3)
 
-        # list for word row detection
-        L3 = []
-
-        for elem in paragraph:
-
-            L3.append((elem, elem))
-
-        for elem in comb:
-            pre_p1 = tuple(elem[0][2:6])
-            pre_p2 = tuple(elem[1][2:6])
-
-            # p1 = ((pre_p1[0], pre_p1[1]), (pre_p1[0], pre_p1[3]), (pre_p1[2], pre_p1[3]), (pre_p1[2], pre_p1[1]))
-            # p2 = ((pre_p2[0], pre_p2[1]), (pre_p2[0], pre_p2[3]), (pre_p2[2], pre_p2[3]), (pre_p2[2], pre_p2[1]))
-
-            p1 = rect_from_pre(pre_p1)
-            p2 = rect_from_pre(pre_p2)
-
-            if pre_p1[3] - pre_p1[1] > 0:
-                y1 = pre_p1[1]
-                y2 = pre_p1[3]
-
-            else:
-                y1 = pre_p1[3]
-                y2 = pre_p1[1]
-
-            # if pre_p1[-1] == 10023:
-            # print(elem)
-            # print("YES")
-
-            if any([y1 <= pre_p2[1] <= y2, y1 <= pre_p2[3] <= y2,
-                    all([y1 <= pre_p2[1], y1 <= pre_p2[3], y2 >= pre_p2[1], y2 >= pre_p2[3]])]):
-
-                L3.append(elem)
-
-        paragraph_tuples = group_pairs_to_nested_list(L3)
+        paragraph_tuples = pc.group_elements(paragraph, PARAGRAPH_THRESHOLD_DIST, mser_functions.SLOV_RATIO, start_pos=2)
 
         for elem in paragraph_tuples:
 
