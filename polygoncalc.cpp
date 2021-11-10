@@ -419,7 +419,7 @@ class PolygonCalc{
             
             double min_x_dist, min_y_dist, min_normal_dist;
             
-            double pre_threshold_dist = std::max(0.5, threshold_dist);
+            double pre_threshold_dist = std::max(5.0, threshold_dist);
                         
             int j;
             
@@ -467,13 +467,13 @@ class PolygonCalc{
                 
                 size_metric = std::max(height, width);
                 
-                min_x_dist = std::min(a[w[0]] - c[w[1]], c[w[0]] - a[w[1]]);
+                min_x_dist = std::min({abs(double(a[w[0]] - c[w[1]])), abs(double(c[w[0]] - a[w[1]])), abs(double(a[w[0]] - a[w[1]])), abs(double(c[w[0]] - c[w[1]]))});
                 
-                min_y_dist = std::min(b[w[0] - d[w[1]]], d[w[0]] - b[w[1]]);
+                min_y_dist = std::min({abs(double(b[w[0] - d[w[1]]])), abs(double(d[w[0]] - b[w[1]])), abs(double(b[w[0] - b[w[1]]])), abs(double(d[w[0]] - d[w[1]]))});
                 
                 min_normal_dist = std::min(min_x_dist, min_y_dist);
                 
-                if (min_normal_dist > pre_threshold_dist) {
+                if (min_normal_dist > pre_threshold_dist * size_metric) {
                     continue;
                 }
 
