@@ -416,6 +416,10 @@ class PolygonCalc{
             std::vector<point_type> points2;
             
             double height, width, size_metric, min_height;
+            
+            double min_x_dist, min_y_dist, min_normal_dist;
+            
+            double pre_threshold_dist = std::max(0.5, threshold_dist);
                         
             int j;
             
@@ -463,7 +467,15 @@ class PolygonCalc{
                 
                 size_metric = std::max(height, width);
                 
-                min_x_dist
+                min_x_dist = std::min(a[w[0]] - c[w[1]], c[w[0]] - a[w[1]]);
+                
+                min_y_dist = std::min(b[w[0] - d[w[1]]], d[w[0]] - b[w[1]]);
+                
+                min_normal_dist = std::min(min_x_dist, min_y_dist);
+                
+                if (min_normal_dist > pre_threshold_dist) {
+                    continue;
+                }
 
                 points1.push_back(point_type(a[w[0]], b[w[0]]));
                 points1.push_back(point_type(c[w[0]], b[w[0]]));
@@ -512,9 +524,11 @@ class PolygonCalc{
                     y1 = d[w[0]];
                     y2 = b[w[0]];
                 }
-                                
-                if (! (((y1 <= b[w[1]] && b[w[1]] <= y2) && (y2 - b[w[1]]) / min_height >= slov_ratio ) || ((y1 <= d[w[1]] && d[w[1]] <= y2) && (d[w[1]] - y1) / min_height >= slov_ratio) || ((y1 <= b[w[1]]) && (y1 <= d[w[1]]) && (y2 >= b[w[1]]) && (y2 >= d[w[1]])))) {
-                    continue;
+                
+                if (slov_ratio >= 0) {
+                    if (! (((y1 <= b[w[1]] && b[w[1]] <= y2) && (y2 - b[w[1]]) / min_height >= slov_ratio ) || ((y1 <= d[w[1]] && d[w[1]] <= y2) && (d[w[1]] - y1) / min_height >= slov_ratio) || ((y1 <= b[w[1]]) && (y1 <= d[w[1]]) && (y2 >= b[w[1]]) && (y2 >= d[w[1]])))) {
+                        continue;
+                    }
                 }
                                 
                 if (dist <= threshold_dist * size_metric) {
