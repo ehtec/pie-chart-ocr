@@ -447,14 +447,6 @@ class PolygonCalc{
                 points1 = {};
                 points2 = {};
                 
-                height = std::max(abs(double(d[w[0]] - b[w[0]])), abs(double(d[w[1]] - b[w[1]])));
-                
-                min_height = std::min(abs(double(d[w[0]] - b[w[0]])), abs(double(d[w[1]] - b[w[1]])));
-                
-                width = std::max(abs(double(c[w[0]] - a[w[0]])), abs(double(c[w[1]] - a[w[1]])));
-                
-                size_metric = std::max(height, width);
-                                
                 for (i = 0; i < n; i++) {
                     
                     if (v[i]) {
@@ -462,6 +454,16 @@ class PolygonCalc{
                     }
                                         
                 }
+                
+                height = std::max(abs(double(d[w[0]] - b[w[0]])), abs(double(d[w[1]] - b[w[1]])));
+                
+                min_height = std::min(abs(double(d[w[0]] - b[w[0]])), abs(double(d[w[1]] - b[w[1]])));
+                
+                width = std::max(abs(double(c[w[0]] - a[w[0]])), abs(double(c[w[1]] - a[w[1]])));
+                
+                size_metric = std::max(height, width);
+                
+                min_x_dist
 
                 points1.push_back(point_type(a[w[0]], b[w[0]]));
                 points1.push_back(point_type(c[w[0]], b[w[0]]));
