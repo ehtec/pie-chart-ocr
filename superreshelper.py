@@ -11,15 +11,8 @@ import math
 TARGET_PIXEL_SIZE = 1000 * 1000
 
 
-n = int(input("Image id: "))
-
-if not os.path.isfile('temp2/upscaled{0}.png'.format(n)):
-
-    sr = dnn_superres.DnnSuperResImpl_create()
-
-    csvpath, imagepath = get_steph_test_path(n)
-
-    image = cv2.imread(imagepath)
+# upsample image using superres method
+def upsample_image(image):
 
     pixel_size = np.prod(image.shape[:-1])
 
@@ -33,7 +26,10 @@ if not os.path.isfile('temp2/upscaled{0}.png'.format(n)):
 
     else:
 
-        print("Upsampling image {0} with upscaling factor {1} because it has {2} pixels".format(n, upscale_factor, pixel_size))
+        print("Upsampling image {0} with upscaling factor {1} because it has {2} pixels".format(n, upscale_factor,
+                                                                                                pixel_size))
+
+        sr = dnn_superres.DnnSuperResImpl_create()
 
         # models taken from https://github.com/Saafke/EDSR_Tensorflow
         path = "EDSR_x{0}.pb".format(upscale_factor)
@@ -44,10 +40,25 @@ if not os.path.isfile('temp2/upscaled{0}.png'.format(n)):
 
         result = sr.upsample(image)
 
-    # cv2.imshow(result)
-    #
-    # cv2.waitkey(0)
+    return result
 
-    cv2.imwrite('temp2/upscaled{0}.png'.format(n), result)
+
+# upscale image file from test dataset
+def upscale_test_image_file(n):
+
+    if not os.path.isfile('temp2/upscaled{0}.png'.format(n)):
+
+        csvpath, imagepath = get_steph_test_path(n)
+
+        image = cv2.imread(imagepath)
+
+        result = upsample_image(image)
+
+        cv2.imwrite('temp2/upscaled{0}.png'.format(n), result)
+
+
+n = int(input("Image id: "))
+
+upscale_test_image_file(n)
 
 mser_functions.main('temp2/upscaled{0}.png'.format(n))
