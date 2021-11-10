@@ -55,10 +55,3 @@ def upscale_test_image_file(n):
         result = upsample_image(image)
 
         cv2.imwrite('temp2/upscaled{0}.png'.format(n), result)
-
-
-n = int(input("Image id: "))
-
-upscale_test_image_file(n)
-
-mser_functions.main('temp2/upscaled{0}.png'.format(n))
