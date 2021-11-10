@@ -160,7 +160,7 @@ class PolygonCalc(object):
             n
         )
 
-    def group_elements(self, elements, threshold_dist, slov_ratio, return_indices=False):
+    def group_elements(self, elements, threshold_dist, slov_ratio, return_indices=False, start_pos=0):
 
         a = []
         b = []
@@ -169,10 +169,10 @@ class PolygonCalc(object):
 
         for elem in elements:
 
-            a.append(elem[0])
-            b.append(elem[1])
-            c.append(elem[2])
-            d.append(elem[3])
+            a.append(elem[start_pos])
+            b.append(elem[start_pos + 1])
+            c.append(elem[start_pos + 2])
+            d.append(elem[start_pos + 3])
 
         n = len(elements)
 
