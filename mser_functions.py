@@ -130,6 +130,8 @@ def get_background_color(img, padding_height=PADDING_HEIGHT, measurement_height=
 
 def main(path):
 
+    cp = ColorProcesser()
+
     # color_thief = ColorThief(path)
 
     # dominant_color = color_thief.get_color(quality=1)
@@ -300,8 +302,6 @@ def main(path):
         print("background_color: {0}".format(background_color))
 
         cropped_img_rgb = cv2.cvtColor(cropped_img, cv2.COLOR_BGR2RGB)
-
-        cp = ColorProcesser()
 
         the_color = (background_color[2], background_color[1], background_color[0])
 
