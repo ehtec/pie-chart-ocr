@@ -250,14 +250,37 @@ def main(path):
 
         for item in paragraph:
 
-            for elem in item:
+            blocked_elems = []
+
+            for elem_counter in range(len(item)):
+
+                if elem_counter in blocked_elems:
+                    continue
+
+                elem = item[elem_counter]
+
+                next_starts_with_percent = False
+
+                if elem_counter + 1 < len(item):
+
+                    next_elem = item[elem_counter + 1]
+
+                    if next_elem[1].strip().startswith('%'):
+
+                        next_starts_with_percent = True
+
+                        blocked_elems.append(elem_counter + 1)
 
                 print("elem: {0}".format(elem))
 
                 if detect_percentage(elem[1]) is not None:
                     all_paragraph_tuples.append([[elem]])
 
+                elif next_starts_with_percent and detect_percentage(elem[1] + '%') is not None:
+                    all_paragraph_tuples.append([[elem, next_elem]])
+
                 else:
+
                     remaining_paragraph.append(elem)
 
         if bool(remaining_paragraph):
