@@ -109,64 +109,11 @@ def main(path):
 
     filtered_res_tuples, img = mser_functions.main(path)
 
-    L2 = []
-
     print("Starting with step 5...")
-
-    # comb = itertools.combinations(filtered_res_tuples, 2)
 
     pc = PolygonCalc()
 
-    # for elem in comb:
-    #
-    #     pre_p1 = tuple(elem[0][2:6])
-    #     pre_p2 = tuple(elem[1][2:6])
-    #
-    #     # p1 = ((pre_p1[0], pre_p1[1]), (pre_p1[0], pre_p1[3]), (pre_p1[2], pre_p1[3]), (pre_p1[2], pre_p1[1]))
-    #     # p2 = ((pre_p2[0], pre_p2[1]), (pre_p2[0], pre_p2[3]), (pre_p2[2], pre_p2[3]), (pre_p2[2], pre_p2[1]))
-    #
-    #     p1 = rect_from_pre(pre_p1)
-    #     p2 = rect_from_pre(pre_p2)
-    #
-    #     p1_height = pre_p1[3] - pre_p1[1]
-    #     p2_height = pre_p2[3] - pre_p2[1]
-    #
-    #     p_height = min(p1_height, p2_height)
-    #
-    #     max_word_dist = MAX_WORD_DISTANCE_RATIO * p_height
-    #
-    #     # print("p1:")
-    #     # print(p1)
-    #
-    #     # min_dist = min_poly_distance(p1, p2)
-    #
-    #     # pc = PolygonCalc()
-    #
-    #     min_dist = pc.min_poly_distance(p1, p2)
-    #
-    #     # area_ratio = poly_intersection_area_ratio(p1, p2)
-    #
-    #     # if all([min_dist == 0, area_ratio > MIN_INTERSECTION_AREA_RATIO]):
-    #     #
-    #     #     L.append(elem)
-    #
-    #     if min_dist < max_word_dist:
-    #
-    #         L2.append(elem)
-
-    # del pc
-
-    # for elem in filtered_res_tuples:
-    #
-    #     L2.append((elem, elem))
-    #
-    # word_grouped_tuples = group_pairs_to_nested_list(L2)
-
     word_grouped_tuples = pc.group_elements(filtered_res_tuples, MAX_WORD_DISTANCE_RATIO, -1, start_pos=2)
-
-    # word_grouped_tuples = copy.deepcopy(filtered_res_tuples)
-
-    # del pc
 
     print("word_grouped_tuples:")
     pprint(word_grouped_tuples)
@@ -176,48 +123,6 @@ def main(path):
     all_paragraph_tuples = []
 
     for paragraph in word_grouped_tuples:
-
-        # comb = itertools.permutations(paragraph, 2)
-        #
-        # # for elem in paragraph:
-        # #
-        # #     L3.append((elem, elem))
-        #
-        # # list for word row detection
-        # L3 = []
-        #
-        # for elem in paragraph:
-        #
-        #     L3.append((elem, elem))
-        #
-        # for elem in comb:
-        #     pre_p1 = tuple(elem[0][2:6])
-        #     pre_p2 = tuple(elem[1][2:6])
-        #
-        #     # p1 = ((pre_p1[0], pre_p1[1]), (pre_p1[0], pre_p1[3]), (pre_p1[2], pre_p1[3]), (pre_p1[2], pre_p1[1]))
-        #     # p2 = ((pre_p2[0], pre_p2[1]), (pre_p2[0], pre_p2[3]), (pre_p2[2], pre_p2[3]), (pre_p2[2], pre_p2[1]))
-        #
-        #     p1 = rect_from_pre(pre_p1)
-        #     p2 = rect_from_pre(pre_p2)
-        #
-        #     if pre_p1[3] - pre_p1[1] > 0:
-        #         y1 = pre_p1[1]
-        #         y2 = pre_p1[3]
-        #
-        #     else:
-        #         y1 = pre_p1[3]
-        #         y2 = pre_p1[1]
-        #
-        #     # if pre_p1[-1] == 10023:
-        #     # print(elem)
-        #     # print("YES")
-        #
-        #     if any([y1 <= pre_p2[1] <= y2, y1 <= pre_p2[3] <= y2,
-        #             all([y1 <= pre_p2[1], y1 <= pre_p2[3], y2 >= pre_p2[1], y2 >= pre_p2[3]])]):
-        #
-        #         L3.append(elem)
-        #
-        # paragraph_tuples = group_pairs_to_nested_list(L3)
 
         paragraph_tuples = pc.group_elements(paragraph, PARAGRAPH_THRESHOLD_DIST, mser_functions.SLOV_RATIO, start_pos=2)
 
