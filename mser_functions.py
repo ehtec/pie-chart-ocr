@@ -162,6 +162,27 @@ def main(path):
 
     total_area = height * width
 
+    img_rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+
+    the_color = (full_background_color[2], full_background_color[1], full_background_color[0])
+
+    full_color_distances = cp.array_color_distance(the_color, img_rgb)
+
+    img_bin = img.copy()
+
+    img_bin[full_color_distances <= BG_COLOR_DISTANCE] = (255, 255, 255)
+
+    img_bin[full_color_distances > BG_COLOR_DISTANCE] = (0, 0, 0)
+
+    # apply erode filter
+
+    kernel = np.ones((5, 5), np.uint8)
+
+    img_bin = cv2.erode(img_bin, kernel, iterations=1)
+
+    cv2.imshow('img_bin', img_bin)
+    cv2.waitKey(0)
+
     # print("MAX AREA: {0}".format(total_area * MAX_MSER_BOX_RATIO))
 
     # Create MSER object
