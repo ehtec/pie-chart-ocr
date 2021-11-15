@@ -9,6 +9,44 @@ MAX_SHAPE_AREA_RATIO = 0.40
 # minimum absolute area of a shape in pixels
 MIN_SHAPE_AREA = 15
 
+# maximum deviation for shape detection (square, rectangle,...)
+MAX_DEVIATION = 0.05
+
+
+# check if an array of four points and shape (4, 2) is a square (returning 2), a rectangle (returning 1) or neither
+def check_rect_or_square(arr, max_deviation=MAX_DEVIATION):
+
+    if arr.shape != (4, 2):
+        raise ValueError("Invalid input shape: {0}".format(arr.shape))
+
+    # find diagonal intersection
+
+    mid_1 = (arr[0] + arr[2]) / 2
+    mid_2 = (arr[1] + arr[3]) / 2
+
+    mid_dist = np.linalg.norm(mid_2 - mid_1)
+
+    points_lst = list(arr)
+
+    distances_lst = [np.linalg.norm(points_lst[i] - points_lst[i - 1]) for i in range(len(points_lst))]
+
+    md = np.mean(distances_lst)
+
+    if mid_dist > md * MAX_DEVIATION:
+        logging.info("Rectangle check negative!")
+        return 0
+
+    else:
+        logging.info("Rectangle check positive!")
+
+    dist_diff = [abs(md - el) for el in distances_lst]
+
+    if max(dist_diff) < max_deviation * md:
+        logging.info("Square check positive!")
+        return 2
+
+    return 1
+
 
 # detect shapes in black-white RGB formatted cv2 image
 def detect_shapes(img):
