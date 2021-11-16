@@ -12,7 +12,7 @@ MAX_SHAPE_AREA_RATIO = 0.40
 MIN_SHAPE_AREA = 15
 
 # maximum deviation for shape detection (square, rectangle,...)
-MAX_DEVIATION = 0.05
+MAX_DEVIATION = 0.1
 
 # accuracy parameter for approxPolyDP
 APPROX_POLY_ACCURACY = 0.1
