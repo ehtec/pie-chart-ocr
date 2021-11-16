@@ -18,6 +18,7 @@ from pytesseract import Output
 import pytesseract
 from color_processer_wrapper import ColorProcesser
 import ellipse_detection
+import shape_detection
 
 
 # maximum ratio of the total area a mser box might take
@@ -181,12 +182,14 @@ def main(path):
 
     img_bin = cv2.erode(img_bin, kernel, iterations=1)
 
-    img_bin = cv2.resize(img_rgb, (int(width * 0.4), int(height * 0.4)), interpolation=cv2.INTER_NEAREST)
+    # img_bin = cv2.resize(img_rgb, (int(width * 0.4), int(height * 0.4)), interpolation=cv2.INTER_NEAREST)
 
     # cv2.imshow('img_bin', img_bin)
     # cv2.waitKey(0)
 
-    ellipse_detection.detect_ellipses(img_bin)
+    # ellipse_detection.detect_ellipses(img_bin)
+
+    shape_detection.detect_shapes(img_bin)
 
     # print("MAX AREA: {0}".format(total_area * MAX_MSER_BOX_RATIO))
 

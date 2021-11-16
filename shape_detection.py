@@ -2,6 +2,8 @@ import cv2
 import numpy as np
 import logging
 
+logging.basicConfig(level=logging.INFO)
+
 
 # max area ratio of a shape
 MAX_SHAPE_AREA_RATIO = 0.40
@@ -11,6 +13,9 @@ MIN_SHAPE_AREA = 15
 
 # maximum deviation for shape detection (square, rectangle,...)
 MAX_DEVIATION = 0.05
+
+# accuracy parameter for approxPolyDP
+APPROX_POLY_ACCURACY = 0.1
 
 
 # check if an array of four points and shape (4, 2) is a square (returning 2), a rectangle (returning 1) or neither
@@ -49,7 +54,9 @@ def check_rect_or_square(arr, max_deviation=MAX_DEVIATION):
 
 
 # detect shapes in black-white RGB formatted cv2 image
-def detect_shapes(img):
+def detect_shapes(img, approx_poly_accuracy=APPROX_POLY_ACCURACY):
+
+    vis = img.copy()
 
     shape = img.shape
 
@@ -58,18 +65,22 @@ def detect_shapes(img):
     total_area = height * width
 
     # Morphological closing: get rid of holes
-    img = cv2.morphologyEx(img, cv2.MORPH_CLOSE, cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (5, 5)))
+    # img = cv2.morphologyEx(img, cv2.MORPH_CLOSE, cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (5, 5)))
 
     # Morphological opening: get rid of extensions at the border of the objects
-    img = cv2.morphologyEx(img, cv2.MORPH_OPEN, cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (121, 121)))
+    # img = cv2.morphologyEx(img, cv2.MORPH_OPEN, cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (121, 121)))
+
+    img = cv2.cvtColor(img, cv2.COLOR_RGB2GRAY)
 
     cv2.imshow('intermediate', img)
     cv2.waitKey(0)
 
     contours, hierarchy = cv2.findContours(img, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
 
-    vis = img.copy()
-    vis = cv2.drawContours(img, contours, -1, (0, 255, 0), 2)
+    logging.info("Number of found contours for shape detection: {0}".format(len(contours)))
+
+    # vis = img.copy()
+    cv2.drawContours(vis, contours, -1, (0, 255, 0), 2)
     cv2.imshow('vis', vis)
     cv2.waitKey(0)
 
@@ -94,7 +105,7 @@ def detect_shapes(img):
         x = int(M['m10'] / M['m00'])
         y = int(M['m01'] / M['m00'])
 
-        approx = cv2.approxPolyDP(contour, 0.01 * cv2.arcLength(contour, True), True)
+        approx = cv2.approxPolyDP(contour, approx_poly_accuracy * cv2.arcLength(contour, True), True)
 
         la = len(approx)
 
