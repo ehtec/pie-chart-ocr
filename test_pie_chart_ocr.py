@@ -1,6 +1,6 @@
 import logging
 
-logging.basicConfig(level=logging.WARNING)
+logging.basicConfig(level=logging.INFO)
 
 import pie_chart_ocr
 import mser_functions
