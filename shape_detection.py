@@ -56,6 +56,11 @@ def check_rect_or_square(arr, max_deviation=MAX_DEVIATION):
 # detect shapes in black-white RGB formatted cv2 image
 def detect_shapes(img, approx_poly_accuracy=APPROX_POLY_ACCURACY):
 
+    res_dict = {
+        "rectangles": [],
+        "squares": []
+    }
+
     vis = img.copy()
 
     shape = img.shape
@@ -124,7 +129,15 @@ def detect_shapes(img, approx_poly_accuracy=APPROX_POLY_ACCURACY):
 
             approx = approx.reshape(4, 2)
 
-            check_rect_or_square(approx)
+            r_check = check_rect_or_square(approx)
+
+            blob_data = {"position": (x, y), "approx": approx}
+
+            if r_check == 2:
+                res_dict["squares"].append(blob_data)
+
+            elif r_check == 1:
+                res_dict["rectangles"].append(blob_data)
 
         elif la == 5:
             logging.info("Pentagon detected at position {0}".format((x, y)))
@@ -134,3 +147,5 @@ def detect_shapes(img, approx_poly_accuracy=APPROX_POLY_ACCURACY):
 
         else:
             logging.info("Circle, ellipse or arbitrary shape detected at position {0}".format((x, y)))
+
+    return res_dict
