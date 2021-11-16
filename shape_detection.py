@@ -72,8 +72,8 @@ def detect_shapes(img, approx_poly_accuracy=APPROX_POLY_ACCURACY):
 
     img = cv2.cvtColor(img, cv2.COLOR_RGB2GRAY)
 
-    cv2.imshow('intermediate', img)
-    cv2.waitKey(0)
+    # cv2.imshow('intermediate', img)
+    # cv2.waitKey(0)
 
     contours, hierarchy = cv2.findContours(img, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
 
