@@ -148,4 +148,6 @@ def detect_shapes(img, approx_poly_accuracy=APPROX_POLY_ACCURACY):
         else:
             logging.info("Circle, ellipse or arbitrary shape detected at position {0}".format((x, y)))
 
+    logging.info("res_dict: {0}".format(res_dict))
+
     return res_dict
