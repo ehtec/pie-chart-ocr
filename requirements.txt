@@ -7,4 +7,4 @@ pytesseract
 pillow
 opencv-python
 scikit-image
-lsq-ellipse
+git+https://github.com/djibb/least-squares-ellipse-fitting
