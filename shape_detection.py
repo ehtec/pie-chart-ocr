@@ -1,6 +1,7 @@
 import cv2
 import numpy as np
 import logging
+from ellipse import LsqEllipse
 
 logging.basicConfig(level=logging.INFO)
 
@@ -24,16 +25,24 @@ def check_ellipse_or_circle(arr, max_deviation=MAX_DEVIATION):
     if any([arr.shape[1] != 2, arr.ndim != 2]):
         raise ValueError("Invalid input shape: {0}".format(arr.shape))
 
-    X = arr[:, 0:1]
-    Y = arr[:, 1:]
+    # X = arr[:, 0:1]
+    # Y = arr[:, 1:]
+    #
+    # A = np.hstack([X**2, X * Y, Y**2, X, Y])
+    #
+    # b = np.ones_like(X)
+    #
+    # x, residuals, rank, s = np.linalg.lstsq(A, b)
+    #
+    # x = x.squeeze()
 
-    A = np.hstack([X**2, X * Y, Y**2, X, Y])
+    reg = LsqEllipse().fit(arr)
 
-    b = np.ones_like(X)
+    reg_params = reg.as_parameters()
 
-    x, residuals, rank, s = np.linalg.lstsq(A, b)
+    logging.info("Ellipse parameters: {0}".format(reg_params))
 
-    x = x.squeeze()
+    center, width, height, phi = reg_params
 
 
 # check if an array of four points and shape (4, 2) is a square (returning 2), a rectangle (returning 1) or neither
