@@ -37,9 +37,11 @@ def check_rect_or_square(arr, max_deviation=MAX_DEVIATION):
 
     md = np.mean(distances_lst)
 
+    data = {}
+
     if mid_dist > md * MAX_DEVIATION:
         logging.info("Rectangle check negative!")
-        return 0
+        return 0, data
 
     else:
         logging.info("Rectangle check positive!")
@@ -48,9 +50,23 @@ def check_rect_or_square(arr, max_deviation=MAX_DEVIATION):
 
     if max(dist_diff) < max_deviation * md:
         logging.info("Square check positive!")
-        return 2
 
-    return 1
+        a = np.mean(distances_lst)
+
+        data = {"a": a}
+
+        return 2, data
+
+    a = (distances_lst[0] + distances_lst[2]) / 2
+
+    b = (distances_lst[1] + distances_lst[3]) / 2
+
+    if a < b:
+        a, b = b, a
+
+    data = {"a": a, "b": b}
+
+    return 1, data
 
 
 # detect shapes in black-white RGB formatted cv2 image
@@ -129,9 +145,11 @@ def detect_shapes(img, approx_poly_accuracy=APPROX_POLY_ACCURACY):
 
             approx = approx.reshape(4, 2)
 
-            r_check = check_rect_or_square(approx)
+            r_check, data = check_rect_or_square(approx)
 
             blob_data = {"position": (x, y), "approx": approx}
+
+            blob_data.update(data)
 
             if r_check == 2:
                 res_dict["squares"].append(blob_data)
