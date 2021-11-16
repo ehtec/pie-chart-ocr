@@ -119,6 +119,13 @@ def detect_shapes(img, approx_poly_accuracy=APPROX_POLY_ACCURACY):
         elif la == 4:
             logging.info("Quadrilateral detected at position {0}".format((x, y)))
 
+            if approx.shape != (4, 1, 2):
+                raise ValueError("Invalid shape before reshape to (4, 2): {0}".format(approx.shape))
+
+            approx = approx.reshape(4, 2)
+
+            check_rect_or_square(approx)
+
         elif la == 5:
             logging.info("Pentagon detected at position {0}".format((x, y)))
 
