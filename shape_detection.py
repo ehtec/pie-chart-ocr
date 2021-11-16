@@ -18,7 +18,26 @@ MAX_DEVIATION = 0.1
 APPROX_POLY_ACCURACY = 0.1
 
 
+# check if an array of the shape (n, 2) is a circle (returning 2), an ellipse (returning 1) or neither (returning 0)
+def check_ellipse_or_circle(arr, max_deviation=MAX_DEVIATION):
+
+    if any([arr.shape[1] != 2, arr.ndim != 2]):
+        raise ValueError("Invalid input shape: {0}".format(arr.shape))
+
+    X = arr[:, 0:1]
+    Y = arr[:, 1:]
+
+    A = np.hstack([X**2, X * Y, Y**2, X, Y])
+
+    b = np.ones_like(X)
+
+    x, residuals, rank, s = np.linalg.lstsq(A, b)
+
+    x = x.squeeze()
+
+
 # check if an array of four points and shape (4, 2) is a square (returning 2), a rectangle (returning 1) or neither
+#   (returning 0)
 def check_rect_or_square(arr, max_deviation=MAX_DEVIATION):
 
     if arr.shape != (4, 2):
@@ -115,6 +134,10 @@ def detect_shapes(img, approx_poly_accuracy=APPROX_POLY_ACCURACY):
         if area > MAX_SHAPE_AREA_RATIO * total_area:
             continue
 
+        approx = cv2.approxPolyDP(contour, approx_poly_accuracy * cv2.arcLength(contour, True), True)
+
+        la = len(approx)
+
         # find the center of the shape
 
         M = cv2.moments(contour)
@@ -125,10 +148,6 @@ def detect_shapes(img, approx_poly_accuracy=APPROX_POLY_ACCURACY):
 
         x = int(M['m10'] / M['m00'])
         y = int(M['m01'] / M['m00'])
-
-        approx = cv2.approxPolyDP(contour, approx_poly_accuracy * cv2.arcLength(contour, True), True)
-
-        la = len(approx)
 
         if la < 3:
             logging.warning("Invalid shape detected! Skipping.")
