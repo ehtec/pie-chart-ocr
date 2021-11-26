@@ -18,6 +18,12 @@ MIN_SHAPE_AREA = 15
 # maximum deviation for shape detection (square, rectangle,...)
 MAX_DEVIATION = 0.1
 
+# maximum area deviation to count as successful ellipse fit
+MAX_AREA_DEVIATION = 0.05
+
+# maximum deviation to count ellipse as circle
+MAX_CIRCLE_DEVIATION = 0.1
+
 # accuracy parameter for approxPolyDP
 APPROX_POLY_ACCURACY = 0.1
 
@@ -68,6 +74,19 @@ def check_ellipse_or_circle(arr, max_deviation=MAX_DEVIATION):
     area_deviation_ratio = 2 * (total_area - 2 * intersection_area) / total_area
 
     logging.info("area_deviation_ratio: {0}".format(area_deviation_ratio))
+
+    if area_deviation_ratio <= MAX_AREA_DEVIATION:
+
+        circle_deviation = abs(width - height) * 2 / (width + height)
+
+        if circle_deviation <= MAX_CIRCLE_DEVIATION:
+            logging.info("Circle detected!")
+            return 2
+
+        logging.info("Ellipse detected!")
+        return 1
+
+    return 0
 
 
 # check if an array of four points and shape (4, 2) is a square (returning 2), a rectangle (returning 1) or neither
