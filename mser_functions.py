@@ -64,6 +64,9 @@ MAX_LETTER_DISTANCE_RATIO = 0.8  # 0.8  # 3.0
 # same line overlap ratio
 SLOV_RATIO = 0.92
 
+# median blur kernel size for binary image smoothing
+MEDIAN_BLUR_KERNEL_SIZE = 13
+
 # SCALING_FACTOR = 2
 
 
@@ -190,7 +193,7 @@ def main(path):
     # ellipse_detection.detect_ellipses(img_bin)
 
     # apply median blur to smoothen edges
-    img_bin = cv2.medianBlur(img_bin, 3)
+    img_bin = cv2.medianBlur(img_bin, MEDIAN_BLUR_KERNEL_SIZE)
 
     shape_detection.detect_shapes(img_bin)
 
