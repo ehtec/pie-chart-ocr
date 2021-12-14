@@ -193,7 +193,7 @@ def main(path):
     # ellipse_detection.detect_ellipses(img_bin)
 
     # apply median blur to smoothen edges
-    img_bin = cv2.medianBlur(img_bin, MEDIAN_BLUR_KERNEL_SIZE)
+    # img_bin = cv2.medianBlur(img_bin, MEDIAN_BLUR_KERNEL_SIZE)
 
     shape_detection.detect_shapes(img_bin)
 
