@@ -65,7 +65,7 @@ MAX_LETTER_DISTANCE_RATIO = 0.8  # 0.8  # 3.0
 SLOV_RATIO = 0.92
 
 # median blur kernel size for binary image smoothing
-MEDIAN_BLUR_KERNEL_SIZE = 13
+MEDIAN_BLUR_KERNEL_SIZE = 7
 
 # SCALING_FACTOR = 2
 
