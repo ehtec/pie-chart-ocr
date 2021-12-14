@@ -22,7 +22,7 @@ class Line(object):
     def getRatio(self, point):
         segmentLength = self.lengthSquared
         if segmentLength == 0:
-            return distSquared(point, p1);
+            return distSquared(point, self.p1);
         return ((point[0] - self.p1[0]) * (self.p2[0] - self.p1[0]) + \
         (point[1] - self.p1[1]) * (self.p2[1] - self.p1[1])) / segmentLength
 
