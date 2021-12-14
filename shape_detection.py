@@ -138,9 +138,11 @@ def detect_shapes(img, approx_poly_accuracy=APPROX_POLY_ACCURACY):
         area = cv2.contourArea(contour)
 
         if area < MIN_SHAPE_AREA:
+            logging.warning("Area too small: {0}. Skipping.".format(area))
             continue
 
         if area > MAX_SHAPE_AREA_RATIO * total_area:
+            logging.warning("Area ratio too big: {0}. Skipping.".format(area / total_area))
             continue
 
         approx = cv2.approxPolyDP(contour, approx_poly_accuracy * cv2.arcLength(contour, True), True)
