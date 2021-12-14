@@ -25,7 +25,7 @@ MAX_AREA_DEVIATION = 0.05
 MAX_CIRCLE_DEVIATION = 0.1
 
 # accuracy parameter for approxPolyDP
-APPROX_POLY_ACCURACY = 0.1
+APPROX_POLY_ACCURACY = 0.01
 
 
 # check if an array of the shape (n, 2) is a circle (returning 2), an ellipse (returning 1) or neither (returning 0)
