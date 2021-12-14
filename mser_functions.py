@@ -6,7 +6,7 @@ import numpy as np
 import re
 import pytesseract
 from pytesseract import image_to_string
-from PIL import Image, ImageOps, ImageEnhance
+from PIL import Image, ImageOps, ImageEnhance, ImageFilter
 from pprint import pprint
 # from colorthief import ColorThief, MMCQ
 from PIL import Image, ImageFilter
@@ -188,6 +188,9 @@ def main(path):
     # cv2.waitKey(0)
 
     # ellipse_detection.detect_ellipses(img_bin)
+
+    # apply median blur to smoothen edges
+    img_bin = cv2.medianBlur(img_bin, 3)
 
     shape_detection.detect_shapes(img_bin)
 
