@@ -191,7 +191,7 @@ def detect_shapes(img, approx_poly_accuracy=APPROX_POLY_ACCURACY):
 
         approx = cv2.approxPolyDP(contour, approx_poly_accuracy * cv2.arcLength(contour, True), True)
 
-        cv2.drawContours(vis, [contour], -1, (0, 0, 255), 2)
+        cv2.drawContours(vis, [approx], -1, (0, 0, 255), 2)
 
         la = len(approx)
 
