@@ -1,7 +1,7 @@
-# -*- coding: utf-8 -*-
-
 import math
 import time
+import numpy as np
+from pprint import pprint
 
 
 def timenow():
@@ -22,7 +22,7 @@ class Line(object):
     def getRatio(self, point):
         segmentLength = self.lengthSquared
         if segmentLength == 0:
-            return distSquared(point, self.p1);
+            return distSquared(point, self.p1)
         return ((point[0] - self.p1[0]) * (self.p2[0] - self.p1[0]) + \
         (point[1] - self.p1[1]) * (self.p2[1] - self.p1[1])) / segmentLength
 
@@ -77,3 +77,16 @@ def simplifyDouglasPeucker(points, pointsToKeep):
     ]
 
     return result
+
+
+if __name__ == "__main__":
+
+    the_points = np.column_stack([np.linspace(0.0, 20.0, 100), np.linspace(0.0, -10.0, 100)]).tolist()
+
+    print("the_points: {0}".format(the_points))
+
+    res = simplifyDouglasPeucker(the_points, 30)
+
+    print("len(res): {0}".format(len(res)))
+
+    pprint(res)
