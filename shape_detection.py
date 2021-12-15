@@ -174,8 +174,8 @@ def detect_shapes(img, approx_poly_accuracy=APPROX_POLY_ACCURACY):
 
     # vis = img.copy()
     # cv2.drawContours(vis, contours, -1, (0, 255, 0), 2)
-    # cv2.imshow('vis', vis)
-    # cv2.waitKey(0)
+    cv2.imshow('vis', vis)
+    cv2.waitKey(0)
 
     for contour in contours:
 
