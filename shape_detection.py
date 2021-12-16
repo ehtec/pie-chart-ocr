@@ -222,8 +222,8 @@ def detect_shapes(img, approx_poly_accuracy=APPROX_POLY_ACCURACY):
 
     # vis = img.copy()
     # cv2.drawContours(vis, contours, -1, (0, 255, 0), 2)
-    cv2.imshow('vis', vis)
-    cv2.waitKey(0)
+    # cv2.imshow('vis', vis)
+    # cv2.waitKey(0)
 
     for i in range(len(contours)):
 
@@ -313,9 +313,12 @@ def detect_shapes(img, approx_poly_accuracy=APPROX_POLY_ACCURACY):
         else:
             logging.info("Circle, ellipse or arbitrary shape detected at position {0}".format((x, y)))
 
+        cv2.namedWindow('vis', cv2.WINDOW_NORMAL)
         cv2.drawContours(vis, [contour], -1, (0, 255, 0), 2)
         cv2.imshow('vis', vis)
+        cv2.resizeWindow('vis', 800, 800)
         cv2.waitKey(0)
+        cv2.destroyAllWindows()
 
     logging.info("res_dict: {0}".format(res_dict))
 
