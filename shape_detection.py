@@ -182,7 +182,9 @@ def detect_shapes(img, approx_poly_accuracy=APPROX_POLY_ACCURACY):
 
     res_dict = {
         "rectangles": [],
-        "squares": []
+        "squares": [],
+        "circles": [],
+        "ellipses": []
     }
 
     vis = img.copy()
