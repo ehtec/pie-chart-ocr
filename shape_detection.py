@@ -89,6 +89,8 @@ def get_area_deviation_ratio(p1, p2):
 # check if an array of the shape (n, 2) is a circle (returning 2), an ellipse (returning 1) or neither (returning 0)
 def check_ellipse_or_circle(arr):
 
+    arr = arr.astype(np.int64)
+
     if any([arr.shape[1] != 2, arr.ndim != 2]):
         raise ValueError("Invalid input shape: {0}".format(arr.shape))
 
@@ -143,8 +145,8 @@ def check_ellipse_or_circle(arr):
     # arr = 1000 * arr
     # res_arr = 1000 * res_arr
 
-    res_arr = res_arr.astype(np.int32)
-    arr = arr.astype(np.int32)
+    res_arr = res_arr.astype(np.int64)
+    arr = arr.astype(np.int64)
     # x_values = 1000 * x_values
     # y_values = 1000 * y_values
 
