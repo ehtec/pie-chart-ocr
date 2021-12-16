@@ -423,7 +423,7 @@ def detect_shapes(img):
     cv2.waitKey(0)
     cv2.destroyAllWindows()
 
-    logging.info("res_dict: {0}".format(res_dict))
+    # logging.info("res_dict: {0}".format(res_dict))
 
     return res_dict
 
