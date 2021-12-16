@@ -192,6 +192,8 @@ def detect_shapes(img, approx_poly_accuracy=APPROX_POLY_ACCURACY):
 
     logging.info("len(contours): {0}".format(len(contours)))
     logging.info("len(hierarchy): {0}".format(len(hierarchy)))
+    logging.info("contours.shape: {0}".format(contours.shape))
+    logging.info("hierarchy.shape: {0}".format(hierarchy.shape))
 
     logging.info("Number of found contours for shape detection: {0}".format(len(contours)))
 
