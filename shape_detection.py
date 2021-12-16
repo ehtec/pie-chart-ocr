@@ -68,11 +68,16 @@ def get_area_deviation_ratio(p1, p2):
     logging.info("p2[0]: {0}".format(p2[0]))
     logging.info("p2[-1]: {0}".format(p2[-1]))
 
+    p1 = cv2.convexHull(p1).reshape(-1, 2)
+    p2 = cv2.convexHull(p2).reshape(-1, 2)
+
     pc = PolygonCalc()
 
     intersection_area = pc.poly_intersection_area(p1.tolist(), p2.tolist())
 
-    total_area = cv2.contourArea(cv2.convexHull(p1)) + cv2.contourArea(p2)
+    logging.info("intersection_area: {0}".format(intersection_area))
+
+    total_area = cv2.contourArea(p1) + cv2.contourArea(p2)
 
     area_deviation_ratio = 2 * (total_area - 2 * intersection_area) / total_area
 
