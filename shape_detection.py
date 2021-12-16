@@ -57,16 +57,16 @@ def get_area_deviation_ratio(p1, p2):
     # print("p2:")
     # pprint(p2)
 
-    logging.info("type(p1): {0}".format(type(p1)))
-    logging.info("type(p2): {0}".format(type(p2)))
-    logging.info("len(p1): {0}".format(len(p1)))
-    logging.info("len(p2): {0}".format(len(p2)))
-    logging.info("cv2.contourArea(p1): {0}".format(cv2.contourArea(p1)))
-    logging.info("cv2.contourArea(p2): {0}".format(cv2.contourArea(p2)))
-    logging.info("p1[0]: {0}".format(p1[0]))
-    logging.info("p1[-1]: {0}".format(p1[-1]))
-    logging.info("p2[0]: {0}".format(p2[0]))
-    logging.info("p2[-1]: {0}".format(p2[-1]))
+    # logging.info("type(p1): {0}".format(type(p1)))
+    # logging.info("type(p2): {0}".format(type(p2)))
+    # logging.info("len(p1): {0}".format(len(p1)))
+    # logging.info("len(p2): {0}".format(len(p2)))
+    # logging.info("cv2.contourArea(p1): {0}".format(cv2.contourArea(p1)))
+    # logging.info("cv2.contourArea(p2): {0}".format(cv2.contourArea(p2)))
+    # logging.info("p1[0]: {0}".format(p1[0]))
+    # logging.info("p1[-1]: {0}".format(p1[-1]))
+    # logging.info("p2[0]: {0}".format(p2[0]))
+    # logging.info("p2[-1]: {0}".format(p2[-1]))
 
     p1 = cv2.convexHull(p1).reshape(-1, 2)
     p2 = cv2.convexHull(p2).reshape(-1, 2)
@@ -75,7 +75,7 @@ def get_area_deviation_ratio(p1, p2):
 
     intersection_area = pc.poly_intersection_area(p1.tolist(), p2.tolist())
 
-    logging.info("intersection_area: {0}".format(intersection_area))
+    # logging.info("intersection_area: {0}".format(intersection_area))
 
     total_area = cv2.contourArea(p1) + cv2.contourArea(p2)
 
