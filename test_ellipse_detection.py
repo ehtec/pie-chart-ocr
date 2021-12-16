@@ -23,6 +23,6 @@ pprint(X)
 
 X = X * 1000
 
-X = X.astype(np.int32)
+X = X.astype(np.int64)
 
 shape_detection.check_ellipse_or_circle(X)
