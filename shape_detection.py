@@ -28,6 +28,22 @@ MAX_CIRCLE_DEVIATION = 0.1
 APPROX_POLY_ACCURACY = 0.02
 
 
+# get the area deviation ratio of two contours
+def get_area_deviation_ratio(p1, p2):
+
+    pc = PolygonCalc()
+
+    intersection_area = pc.poly_intersection_area(p1.tolist(), p2.tolist())
+
+    total_area = cv2.contourArea(p1.tolist()) + cv2.contourArea(p2.tolist())
+
+    area_deviation_ratio = 2 * (total_area - 2 * intersection_area) / total_area
+
+    del pc
+
+    return area_deviation_ratio
+
+
 # check if an array of the shape (n, 2) is a circle (returning 2), an ellipse (returning 1) or neither (returning 0)
 def check_ellipse_or_circle(arr):
 
