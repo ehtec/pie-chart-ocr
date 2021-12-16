@@ -339,6 +339,18 @@ def detect_shapes(img, approx_poly_accuracy=APPROX_POLY_ACCURACY):
         else:
             logging.info("Circle, ellipse or arbitrary shape detected at position {0}".format((x, y)))
 
+            approx = approx.reshape(-1, 2)
+
+            c_check, data = check_ellipse_or_circle(approx)
+
+            blob_data.update(data)
+
+            if c_check == 2:
+                res_dict["circles"].append(blob_data)
+
+            elif c_check == 1:
+                res_dict["ellipses"].append(blob_data)
+
         # cv2.namedWindow('vis', cv2.WINDOW_NORMAL)
         cv2.drawContours(vis, [contour], -1, (0, 255, 0), 2)
         # cv2.imshow('vis', vis)
