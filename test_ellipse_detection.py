@@ -16,4 +16,6 @@ X1, X2 = make_test_ellipse()
 
 X = np.array(list(zip(X1, X2)))
 
+print("X.shape: {0}".format(X.shape))
+
 shape_detection.check_ellipse_or_circle(X)
