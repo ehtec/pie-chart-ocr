@@ -109,6 +109,8 @@ def check_ellipse_or_circle(arr):
     print("arr:")
     pprint(arr)
 
+    res_arr = res_arr.astype(np.int32)
+
     plt.plot(arr[:, 0], arr[:, 1], 'bo')
     plt.plot(x_values, y_values, 'r-')
     plt.show()
