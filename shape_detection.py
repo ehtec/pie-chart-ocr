@@ -149,7 +149,7 @@ def check_ellipse_or_circle(arr):
     ax = plt.subplot()
     ax.axis('equal')
     ax.plot(arr[:, 0], arr[:, 1], 'bo')
-    ax.plot(x_values, y_values, 'r-')
+    # ax.plot(x_values, y_values, 'r-')
     plt.show()
 
     area_deviation_ratio = get_area_deviation_ratio(arr.reshape(-1, 2), res_arr.reshape(-1, 2))
