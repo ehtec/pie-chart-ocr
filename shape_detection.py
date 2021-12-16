@@ -212,7 +212,7 @@ def detect_shapes(img, approx_poly_accuracy=APPROX_POLY_ACCURACY):
 
         approx = [(x, y), (x + w, y), (x + w, y + h), (x, y + h)]
 
-        area_deviation_ratio = get_area_deviation_ratio(contour, approx)
+        area_deviation_ratio = get_area_deviation_ratio(contour.reshape(-1, 2).tolist(), approx)
 
         if area_deviation_ratio > MAX_AREA_DEVIATION:
             logging.info("area_deviation_ratio too big: {0}".format(area_deviation_ratio))
