@@ -11,11 +11,18 @@
 from ellipse_example import make_test_ellipse
 import numpy as np
 import shape_detection
+from pprint import pprint
 
 X1, X2 = make_test_ellipse()
 
 X = np.array(list(zip(X1, X2)))
 
 print("X.shape: {0}".format(X.shape))
+print("X:")
+pprint(X)
+
+X = X * 1000
+
+X = X.astype(np.int32)
 
 shape_detection.check_ellipse_or_circle(X)
