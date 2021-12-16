@@ -194,10 +194,13 @@ def detect_shapes(img, approx_poly_accuracy=APPROX_POLY_ACCURACY):
     logging.info("len(hierarchy): {0}".format(len(hierarchy)))
     # logging.info("contours.shape: {0}".format(contours.shape))
     logging.info("hierarchy.shape: {0}".format(hierarchy.shape))
-    pprint(hierarchy)
+    # pprint(hierarchy)
 
     reshaped_hierarchy = hierarchy.reshape(-1, 4)
     logging.info("reshaped_hierarchy.shape: {0}".format(reshaped_hierarchy.shape))
+
+    reshaped_hierarchy_list = reshaped_hierarchy.tolist()
+    logging.info("len(reshaped_hierarchy_list): {0}".format(len(reshaped_hierarchy_list)))
 
     logging.info("Number of found contours for shape detection: {0}".format(len(contours)))
 
