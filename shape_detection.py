@@ -66,7 +66,7 @@ def get_area_deviation_ratio(p1, p2):
 
     intersection_area = pc.poly_intersection_area(p1.tolist(), p2.tolist())
 
-    total_area = cv2.contourArea(p1) + cv2.contourArea(p2)
+    total_area = cv2.contourArea(cv2.convexHull(p1)) + cv2.contourArea(p2)
 
     area_deviation_ratio = 2 * (total_area - 2 * intersection_area) / total_area
 
@@ -124,6 +124,7 @@ def check_ellipse_or_circle(arr):
     # pprint(arr)
 
     res_arr = res_arr.astype(np.int32)
+    arr = arr.astype(np.int32)
 
     fig = plt.figure(figsize=(6, 6))
     ax = plt.subplot()
