@@ -230,6 +230,12 @@ def detect_shapes(img, approx_poly_accuracy=APPROX_POLY_ACCURACY):
         contour = contours[i]
         hierarchy_elem = reshaped_hierarchy_list[i]
 
+        parents_count = get_parents_count(i, contours, hierarchy)
+
+        if parents_count % 2 != 0:
+            logging.info("Odd parents count. Skipping.")
+            continue
+
         if hierarchy_elem[2] > 0:
             logging.info("Contour {0} has a child! Skipping.")
             continue
