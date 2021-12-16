@@ -292,6 +292,8 @@ def detect_shapes(img, approx_poly_accuracy=APPROX_POLY_ACCURACY):
         x = int(M['m10'] / M['m00'])
         y = int(M['m01'] / M['m00'])
 
+        blob_data.update({"position": (x, y), "approx": approx})
+
         if la < 3:
             logging.warning("Invalid shape detected! Skipping.")
             continue
@@ -308,8 +310,6 @@ def detect_shapes(img, approx_poly_accuracy=APPROX_POLY_ACCURACY):
             approx = approx.reshape(4, 2)
 
             r_check, data = check_rect_or_square(approx)
-
-            blob_data.update({"position": (x, y), "approx": approx})
 
             blob_data.update(data)
 
