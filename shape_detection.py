@@ -33,9 +33,9 @@ def get_area_deviation_ratio(p1, p2):
 
     pc = PolygonCalc()
 
-    intersection_area = pc.poly_intersection_area(p1.tolist(), p2.tolist())
+    intersection_area = pc.poly_intersection_area(p1, p2)
 
-    total_area = cv2.contourArea(p1.tolist()) + cv2.contourArea(p2.tolist())
+    total_area = cv2.contourArea(p1) + cv2.contourArea(p2)
 
     area_deviation_ratio = 2 * (total_area - 2 * intersection_area) / total_area
 
@@ -199,7 +199,17 @@ def detect_shapes(img, approx_poly_accuracy=APPROX_POLY_ACCURACY):
             logging.warning("Area ratio too big: {0}. Skipping.".format(area / total_area))
             continue
 
-        approx = cv2.approxPolyDP(contour, approx_poly_accuracy * cv2.arcLength(contour, True), True)
+        # approx = cv2.approxPolyDP(contour, approx_poly_accuracy * cv2.arcLength(contour, True), True)
+
+        x, y, w, h = cv2.boundingRect(contour)
+
+        approx = [(x, y), (x + w, y), (x + w, y + h), (x, y + h)]
+
+        area_deviation_ratio = get_area_deviation_ratio(contour, approx)
+
+        if area_deviation_ratio > MAX_AREA_DEVIATION:
+            logging.info("area_deviation_ratio too big: {0}".format(area_deviation_ratio))
+            approx = contour
 
         cv2.drawContours(vis, [approx], -1, (0, 0, 255), 2)
 
