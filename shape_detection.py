@@ -245,7 +245,7 @@ def check_rect_or_square(arr, max_deviation=MAX_DEVIATION):
 
 
 # detect shapes in black-white RGB formatted cv2 image
-def detect_shapes(img, approx_poly_accuracy=APPROX_POLY_ACCURACY):
+def detect_shapes(img):
 
     res_dict = {
         "rectangles": [],
