@@ -61,6 +61,12 @@ def get_area_deviation_ratio(p1, p2):
     logging.info("type(p2): {0}".format(type(p2)))
     logging.info("len(p1): {0}".format(len(p1)))
     logging.info("len(p2): {0}".format(len(p2)))
+    logging.info("cv2.contourArea(p1): {0}".format(cv2.contourArea(p1)))
+    logging.info("cv2.contourArea(p2): {0}".format(cv2.contourArea(p2)))
+    logging.info("p1[0]: {0}".format(p1[0]))
+    logging.info("p1[-1]: {0}".format(p1[-1]))
+    logging.info("p2[0]: {0}".format(p2[0]))
+    logging.info("p2[-1]: {0}".format(p2[-1]))
 
     pc = PolygonCalc()
 
@@ -111,9 +117,12 @@ def check_ellipse_or_circle(arr):
 
     t_values = np.linspace(0.0, 2 * np.pi, 1000)
 
-    x_values = (width * np.cos(t_values) * np.cos(phi) - height * np.sin(t_values) * np.sin(phi)) / 2
+    # width = 2 * width
+    # height = 2 * height
 
-    y_values = (width * np.cos(t_values) * np.sin(phi) - height * np.sin(t_values) * np.cos(phi)) / 2
+    x_values = center[0] + (width * np.cos(t_values) * np.cos(phi) - height * np.sin(t_values) * np.sin(phi))
+
+    y_values = center[1] + (width * np.cos(t_values) * np.sin(phi) + height * np.sin(t_values) * np.cos(phi))
 
     res_arr = np.column_stack([x_values, y_values])
 
@@ -123,8 +132,13 @@ def check_ellipse_or_circle(arr):
     # print("arr:")
     # pprint(arr)
 
+    arr = 1000 * arr
+    res_arr = 1000 * res_arr
+
     res_arr = res_arr.astype(np.int32)
     arr = arr.astype(np.int32)
+    x_values = 1000 * x_values
+    y_values = 1000 * y_values
 
     fig = plt.figure(figsize=(6, 6))
     ax = plt.subplot()
