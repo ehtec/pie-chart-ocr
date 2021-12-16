@@ -148,7 +148,7 @@ def check_ellipse_or_circle(arr):
     fig = plt.figure(figsize=(6, 6))
     ax = plt.subplot()
     ax.axis('equal')
-    # ax.plot(arr[:, 0], arr[:, 1], 'bo')
+    ax.plot(arr[:, 0], arr[:, 1], 'bo')
     ax.plot(x_values, y_values, 'r-')
     plt.show()
 
