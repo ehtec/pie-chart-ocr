@@ -234,11 +234,12 @@ def detect_shapes(img, approx_poly_accuracy=APPROX_POLY_ACCURACY):
 
         if parents_count % 2 != 0:
             logging.info("Odd parents count. Skipping.")
-            cv2.drawContours(vis, [contour], -1, (255, 0, 0), 2)
+            # cv2.drawContours(vis, [contour], -1, (255, 0, 0), 2)
             continue
 
         if hierarchy_elem[2] > 0:
             logging.info("Contour {0} has a child! Skipping.")
+            cv2.drawContours(vis, [contour], -1, (255, 0, 0), 2)
             continue
 
         area = cv2.contourArea(contour)
