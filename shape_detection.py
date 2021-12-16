@@ -87,7 +87,11 @@ def check_ellipse_or_circle(arr):
     #
     # x = x.squeeze()
 
-    reg = LsqEllipse().fit(arr)
+    try:
+        reg = LsqEllipse().fit(arr)
+    except ValueError:
+        logging.warning("ValueError when trying to fit ellipse")
+        return 0, {}
 
     reg_params = reg.as_parameters()
 
