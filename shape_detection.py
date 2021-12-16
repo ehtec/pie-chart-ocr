@@ -81,13 +81,7 @@ def check_ellipse_or_circle(arr):
     plt.plot(x_values, y_values, 'r-')
     plt.show()
 
-    pc = PolygonCalc()
-
-    intersection_area = pc.poly_intersection_area(arr.tolist(), res_arr.tolist())
-
-    total_area = cv2.contourArea(arr.tolist()) + cv2.contourArea(res_arr.tolist())
-
-    area_deviation_ratio = 2 * (total_area - 2 * intersection_area) / total_area
+    area_deviation_ratio = get_area_deviation_ratio(arr.tolist(), res_arr.tolist())
 
     logging.info("area_deviation_ratio: {0}".format(area_deviation_ratio))
 
