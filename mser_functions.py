@@ -53,7 +53,7 @@ BORDER_WIDTH = 15
 OUTER_BORDER_WIDTH = 22
 
 # color distance difference (CIE2000) for background color check
-BG_COLOR_DISTANCE = 13.0
+BG_COLOR_DISTANCE = 10  # 13.0
 
 # set minimum confidence threshold
 MIN_CONFIDENCE = 20
