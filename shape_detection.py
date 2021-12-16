@@ -1,3 +1,5 @@
+import copy
+
 import cv2
 import numpy as np
 import logging
@@ -424,3 +426,29 @@ def detect_shapes(img):
     logging.info("res_dict: {0}".format(res_dict))
 
     return res_dict
+
+
+# filter the main chart circle / ellipse from the res_dict of detected shapes
+def filter_chart_ellipse(detected_shapes):
+
+    filtered_shapes = copy.deepcopy(detected_shapes)
+
+    # remove rectangles and squares
+    filtered_shapes.pop("rectangles")
+    filtered_shapes.pop("squares")
+
+    # Remove inner (hole) contours
+    filtered_shapes["circles"] = [el for el in filtered_shapes["circles"] if el["parents_count"] % 2 == 0]
+    filtered_shapes["ellipses"] = [el for el in filtered_shapes["ellipses"] if el["parents_count"] % 2 == 0]
+
+    # Remove elements below the minimum area
+    filtered_shapes["circles"] = [el for el in filtered_shapes["circles"] if el["area"] >= MIN_SHAPE_AREA]
+    filtered_shapes["ellipses"] = [el for el in filtered_shapes["ellipses"] if el["area"] >= MIN_SHAPE_AREA]
+
+    # Remove elements that are too big
+    filtered_shapes["circles"] = [el for el in filtered_shapes["circles"] if el["area_ratio"] <= MAX_SHAPE_AREA_RATIO]
+    filtered_shapes["ellipses"] = [el for el in filtered_shapes["ellipses"] if el["area_ratio"] <= MAX_SHAPE_AREA_RATIO]
+
+    logging.info("filtered_shapes: {0}".format(filtered_shapes))
+
+    return filtered_shapes
