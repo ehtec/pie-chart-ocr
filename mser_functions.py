@@ -181,9 +181,9 @@ def main(path):
 
     # apply erode filter
 
-    kernel = np.ones((5, 5), np.uint8)
-
-    img_bin = cv2.erode(img_bin, kernel, iterations=1)
+    # kernel = np.ones((5, 5), np.uint8)
+    #
+    # img_bin = cv2.erode(img_bin, kernel, iterations=1)
 
     # img_bin = cv2.resize(img_rgb, (int(width * 0.4), int(height * 0.4)), interpolation=cv2.INTER_NEAREST)
 
