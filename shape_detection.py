@@ -246,8 +246,8 @@ def detect_shapes(img, approx_poly_accuracy=APPROX_POLY_ACCURACY):
         elif la == 4:
             logging.info("Quadrilateral detected at position {0}".format((x, y)))
 
-            if approx.shape != (4, 1, 2):
-                raise ValueError("Invalid shape before reshape to (4, 2): {0}".format(approx.shape))
+            # if approx.shape != (4, 1, 2):
+            #     raise ValueError("Invalid shape before reshape to (4, 2): {0}".format(approx.shape))
 
             approx = approx.reshape(4, 2)
 
