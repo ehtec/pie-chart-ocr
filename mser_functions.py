@@ -53,7 +53,7 @@ BORDER_WIDTH = 15
 OUTER_BORDER_WIDTH = 22
 
 # color distance difference (CIE2000) for background color check
-BG_COLOR_DISTANCE = 13  # 13.0
+BG_COLOR_DISTANCE = 13.0
 
 # set minimum confidence threshold
 MIN_CONFIDENCE = 20
@@ -181,9 +181,9 @@ def main(path):
 
     # apply erode filter
 
-    # kernel = np.ones((5, 5), np.uint8)
-    #
-    # img_bin = cv2.erode(img_bin, kernel, iterations=1)
+    kernel = np.ones((5, 5), np.uint8)
+
+    img_bin = cv2.erode(img_bin, kernel, iterations=1)
 
     # img_bin = cv2.resize(img_rgb, (int(width * 0.4), int(height * 0.4)), interpolation=cv2.INTER_NEAREST)
 
