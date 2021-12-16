@@ -107,7 +107,7 @@ def check_ellipse_or_circle(arr):
     plt.plot(x_values, y_values, 'r-')
     plt.show()
 
-    area_deviation_ratio = get_area_deviation_ratio(arr.tolist(), res_arr.tolist())
+    area_deviation_ratio = get_area_deviation_ratio(arr, res_arr)
 
     logging.info("area_deviation_ratio: {0}".format(area_deviation_ratio))
 
