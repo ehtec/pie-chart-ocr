@@ -103,6 +103,9 @@ def check_ellipse_or_circle(arr):
     #
     # x = x.squeeze()
 
+    print("arr:")
+    pprint(arr)
+
     try:
         reg = LsqEllipse().fit(arr)
     except ValueError:
