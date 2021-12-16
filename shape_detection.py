@@ -239,7 +239,7 @@ def detect_shapes(img, approx_poly_accuracy=APPROX_POLY_ACCURACY):
 
         if hierarchy_elem[2] > 0:
             logging.info("Contour {0} has a child! Skipping.")
-            # cv2.drawContours(vis, [contour], -1, (255, 0, 0), 2)
+            cv2.drawContours(vis, [contour], -1, (255, 0, 0), 2)
             continue
 
         area = cv2.contourArea(contour)
@@ -251,7 +251,7 @@ def detect_shapes(img, approx_poly_accuracy=APPROX_POLY_ACCURACY):
 
         if area > MAX_SHAPE_AREA_RATIO * total_area:
             logging.warning("Area ratio too big: {0}. Skipping.".format(area / total_area))
-            cv2.drawContours(vis, [contour], -1, (255, 0, 0), 2)
+            # cv2.drawContours(vis, [contour], -1, (255, 0, 0), 2)
             continue
 
         # approx = cv2.approxPolyDP(contour, approx_poly_accuracy * cv2.arcLength(contour, True), True)
