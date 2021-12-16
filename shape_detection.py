@@ -109,8 +109,8 @@ def check_ellipse_or_circle(arr):
     #
     # x = x.squeeze()
 
-    print("arr:")
-    pprint(arr)
+    # print("arr:")
+    # pprint(arr)
 
     try:
 
