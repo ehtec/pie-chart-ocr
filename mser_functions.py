@@ -195,7 +195,9 @@ def main(path):
     # apply median blur to smoothen edges
     # img_bin = cv2.medianBlur(img_bin, MEDIAN_BLUR_KERNEL_SIZE)
 
-    shape_detection.detect_shapes(img_bin)
+    detected_shapes = shape_detection.detect_shapes(img_bin)
+
+    chart_ellipse = shape_detection.filter_chart_ellipse(detected_shapes)
 
     # print("MAX AREA: {0}".format(total_area * MAX_MSER_BOX_RATIO))
 
