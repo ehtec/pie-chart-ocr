@@ -117,12 +117,23 @@ def check_ellipse_or_circle(arr):
 
         if circle_deviation <= MAX_CIRCLE_DEVIATION:
             logging.info("Circle detected!")
-            return 2
+
+            data = {
+                "a": (width + height) / 2
+            }
+
+            return 2, data
 
         logging.info("Ellipse detected!")
-        return 1
 
-    return 0
+        data = {
+            "a": max([width, height]),
+            "b": min([width, height])
+        }
+
+        return 1, data
+
+    return 0, {}
 
 
 # check if an array of four points and shape (4, 2) is a square (returning 2), a rectangle (returning 1) or neither
