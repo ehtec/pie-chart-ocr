@@ -103,6 +103,12 @@ def check_ellipse_or_circle(arr):
 
     res_arr = np.column_stack([x_values, y_values])
 
+    print("res_arr:")
+    pprint(res_arr)
+    print()
+    print("arr:")
+    pprint(arr)
+
     plt.plot(arr[:, 0], arr[:, 1], 'bo')
     plt.plot(x_values, y_values, 'r-')
     plt.show()
