@@ -22,6 +22,9 @@ MAX_DEVIATION = 0.1
 # maximum area deviation to count as successful ellipse fit
 MAX_AREA_DEVIATION = 0.05
 
+# maximum area deviation for a successful rectangle fit
+MAX_RECT_AREA_DEVIATION = 0.15
+
 # maximum deviation to count ellipse as circle
 MAX_CIRCLE_DEVIATION = 0.1
 
@@ -214,7 +217,7 @@ def detect_shapes(img, approx_poly_accuracy=APPROX_POLY_ACCURACY):
 
         area_deviation_ratio = get_area_deviation_ratio(contour.reshape(-1, 2), approx)
 
-        if area_deviation_ratio > MAX_AREA_DEVIATION:
+        if area_deviation_ratio > MAX_RECT_AREA_DEVIATION:
             logging.info("area_deviation_ratio too big: {0}".format(area_deviation_ratio))
             approx = contour
 
