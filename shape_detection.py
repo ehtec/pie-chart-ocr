@@ -57,6 +57,11 @@ def get_area_deviation_ratio(p1, p2):
     # print("p2:")
     # pprint(p2)
 
+    logging.info("type(p1): {0}".format(type(p1)))
+    logging.info("type(p2): {0}".format(type(p2)))
+    logging.info("len(p1): {0}".format(len(p1)))
+    logging.info("len(p2): {0}".format(len(p2)))
+
     pc = PolygonCalc()
 
     intersection_area = pc.poly_intersection_area(p1.tolist(), p2.tolist())
