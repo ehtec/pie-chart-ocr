@@ -4,6 +4,7 @@ import logging
 from ellipse import LsqEllipse
 import matplotlib.pyplot as plt
 from polygon_calc_wrapper import PolygonCalc
+from pprint import pprint
 
 
 logging.basicConfig(level=logging.INFO)
@@ -30,6 +31,12 @@ APPROX_POLY_ACCURACY = 0.02
 
 # get the area deviation ratio of two contours
 def get_area_deviation_ratio(p1, p2):
+
+    print("p1:")
+    pprint(p1)
+    print()
+    print("p2:")
+    pprint(p2)
 
     pc = PolygonCalc()
 
