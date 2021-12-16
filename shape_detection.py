@@ -29,7 +29,7 @@ APPROX_POLY_ACCURACY = 0.02
 
 
 # check if an array of the shape (n, 2) is a circle (returning 2), an ellipse (returning 1) or neither (returning 0)
-def check_ellipse_or_circle(arr, max_deviation=MAX_DEVIATION):
+def check_ellipse_or_circle(arr):
 
     if any([arr.shape[1] != 2, arr.ndim != 2]):
         raise ValueError("Invalid input shape: {0}".format(arr.shape))
