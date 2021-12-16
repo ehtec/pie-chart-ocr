@@ -11,7 +11,7 @@ logging.basicConfig(level=logging.INFO)
 
 
 # max area ratio of a shape
-MAX_SHAPE_AREA_RATIO = 0.40
+MAX_SHAPE_AREA_RATIO = 0.70  # 0.40
 
 # minimum absolute area of a shape in pixels
 MIN_SHAPE_AREA = 15
