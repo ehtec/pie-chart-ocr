@@ -32,6 +32,22 @@ MAX_CIRCLE_DEVIATION = 0.1
 APPROX_POLY_ACCURACY = 0.02
 
 
+# get number of parents of a contour
+def get_parents_count(i, contours, hierarchy):
+
+    temp_contour = contours[i]
+
+    parents_count = 0
+
+    while temp_contour[3] > 0:
+        parents_count += 1
+        temp_contour = contours[temp_contour[3]]
+
+    logging.info("parents_count: {0}".format(parents_count))
+
+    return parents_count
+
+
 # get the area deviation ratio of two contours
 def get_area_deviation_ratio(p1, p2):
 
