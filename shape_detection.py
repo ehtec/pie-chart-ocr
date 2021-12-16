@@ -51,11 +51,11 @@ def get_parents_count(i, hierarchy):
 # get the area deviation ratio of two contours
 def get_area_deviation_ratio(p1, p2):
 
-    print("p1:")
-    pprint(p1)
-    print()
-    print("p2:")
-    pprint(p2)
+    # print("p1:")
+    # pprint(p1)
+    # print()
+    # print("p2:")
+    # pprint(p2)
 
     pc = PolygonCalc()
 
