@@ -229,32 +229,41 @@ def detect_shapes(img, approx_poly_accuracy=APPROX_POLY_ACCURACY):
 
     for i in range(len(contours)):
 
+        blob_data = {}
+
         contour = contours[i]
         hierarchy_elem = reshaped_hierarchy_list[i]
 
         parents_count = get_parents_count(i, reshaped_hierarchy_list)
 
-        if parents_count % 2 != 0:
-            logging.info("Odd parents count. Skipping.")
-            # cv2.drawContours(vis, [contour], -1, (255, 0, 0), 2)
-            continue
-
-        if hierarchy_elem[2] > 0:
-            logging.info("Contour {0} has a child! Skipping.")
-            cv2.drawContours(vis, [contour], -1, (255, 0, 0), 2)
-            continue
-
         area = cv2.contourArea(contour)
 
-        if area < MIN_SHAPE_AREA:
-            logging.warning("Area too small: {0}. Skipping.".format(area))
-            # cv2.drawContours(vis, [contour], -1, (255, 0, 0), 2)
-            continue
+        blob_data.update({
+            "parents_count": parents_count,
+            "has_child": hierarchy_elem[2] > 0,
+            "area": area,
+            "area_ratio": area / total_area
+        })
 
-        if area > MAX_SHAPE_AREA_RATIO * total_area:
-            logging.warning("Area ratio too big: {0}. Skipping.".format(area / total_area))
-            # cv2.drawContours(vis, [contour], -1, (255, 0, 0), 2)
-            continue
+        # if parents_count % 2 != 0:
+        #     logging.info("Odd parents count. Skipping.")
+        #     # cv2.drawContours(vis, [contour], -1, (255, 0, 0), 2)
+        #     continue
+        #
+        # if hierarchy_elem[2] > 0:
+        #     logging.info("Contour {0} has a child! Skipping.")
+        #     cv2.drawContours(vis, [contour], -1, (255, 0, 0), 2)
+        #     continue
+        #
+        # if area < MIN_SHAPE_AREA:
+        #     logging.warning("Area too small: {0}. Skipping.".format(area))
+        #     # cv2.drawContours(vis, [contour], -1, (255, 0, 0), 2)
+        #     continue
+        #
+        # if area > MAX_SHAPE_AREA_RATIO * total_area:
+        #     logging.warning("Area ratio too big: {0}. Skipping.".format(area / total_area))
+        #     # cv2.drawContours(vis, [contour], -1, (255, 0, 0), 2)
+        #     continue
 
         # approx = cv2.approxPolyDP(contour, approx_poly_accuracy * cv2.arcLength(contour, True), True)
 
@@ -300,7 +309,7 @@ def detect_shapes(img, approx_poly_accuracy=APPROX_POLY_ACCURACY):
 
             r_check, data = check_rect_or_square(approx)
 
-            blob_data = {"position": (x, y), "approx": approx}
+            blob_data.update({"position": (x, y), "approx": approx})
 
             blob_data.update(data)
 
