@@ -209,7 +209,14 @@ def detect_shapes(img, approx_poly_accuracy=APPROX_POLY_ACCURACY):
     cv2.imshow('vis', vis)
     cv2.waitKey(0)
 
-    for contour in contours:
+    for i in range(len(contours)):
+
+        contour = contours[i]
+        hierarchy_elem = reshaped_hierarchy_list[i]
+
+        if hierarchy_elem[2] > 0:
+            logging.info("Contour {0} has a child! Skipping.")
+            continue
 
         area = cv2.contourArea(contour)
 
