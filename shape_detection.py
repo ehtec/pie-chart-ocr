@@ -140,13 +140,13 @@ def check_ellipse_or_circle(arr):
     # print("arr:")
     # pprint(arr)
 
-    arr = 1000 * arr
-    res_arr = 1000 * res_arr
+    # arr = 1000 * arr
+    # res_arr = 1000 * res_arr
 
     res_arr = res_arr.astype(np.int32)
     arr = arr.astype(np.int32)
-    x_values = 1000 * x_values
-    y_values = 1000 * y_values
+    # x_values = 1000 * x_values
+    # y_values = 1000 * y_values
 
     fig = plt.figure(figsize=(6, 6))
     ax = plt.subplot()
