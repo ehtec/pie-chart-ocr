@@ -305,6 +305,8 @@ def detect_shapes(img):
         contour = contours[i]
         hierarchy_elem = reshaped_hierarchy_list[i]
 
+        contour = cv2.convexHull(contour)
+
         parents_count = get_parents_count(i, reshaped_hierarchy_list)
 
         area = cv2.contourArea(contour)
