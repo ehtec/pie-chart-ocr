@@ -33,15 +33,15 @@ APPROX_POLY_ACCURACY = 0.02
 
 
 # get number of parents of a contour
-def get_parents_count(i, contours, hierarchy):
+def get_parents_count(i, hierarchy):
 
-    temp_contour = contours[i]
+    temp_contour = hierarchy[i]
 
     parents_count = 0
 
     while temp_contour[3] > 0:
         parents_count += 1
-        temp_contour = contours[temp_contour[3]]
+        temp_contour = hierarchy[temp_contour[3]]
 
     logging.info("parents_count: {0}".format(parents_count))
 
@@ -230,7 +230,7 @@ def detect_shapes(img, approx_poly_accuracy=APPROX_POLY_ACCURACY):
         contour = contours[i]
         hierarchy_elem = reshaped_hierarchy_list[i]
 
-        parents_count = get_parents_count(i, contours, hierarchy)
+        parents_count = get_parents_count(i, hierarchy)
 
         if parents_count % 2 != 0:
             logging.info("Odd parents count. Skipping.")
