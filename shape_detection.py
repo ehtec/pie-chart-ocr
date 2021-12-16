@@ -109,12 +109,18 @@ def check_ellipse_or_circle(arr):
     pprint(arr)
 
     try:
+
         reg = LsqEllipse().fit(arr)
+
+        reg_params = reg.as_parameters()
+
     except ValueError:
         logging.warning("ValueError when trying to fit ellipse")
         return 0, {}
 
-    reg_params = reg.as_parameters()
+    except IndexError:
+        logging.warning("IndexError when trying to fit ellipse")
+        return 0, {}
 
     logging.info("Ellipse parameters: {0}".format(reg_params))
 
