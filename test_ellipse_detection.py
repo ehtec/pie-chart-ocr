@@ -14,7 +14,7 @@ import shape_detection
 from pprint import pprint
 import matplotlib.pyplot as plt
 # import alphashape
-from hull_computation import order_edges, alpha_shape
+from hull_computation import order_edges, alpha_shape, edges_to_contour
 
 
 X1, X2 = make_test_ellipse()
@@ -41,10 +41,15 @@ edges = order_edges(list(edges))
 
 # plt.plot(X[:, 0], X[:, 1], 'r-')
 # plt.plot(points[:, 0], points[:, 1], '.')
-for i, j in edges:
-    plt.plot(X[:, 0], X[:, 1], 'r-')
-    plt.plot(points[[i, j], 0], points[[i, j], 1])
-    plt.show()
+# for i, j in edges:
+#     plt.plot(X[:, 0], X[:, 1], 'r-')
+#     plt.plot(points[[i, j], 0], points[[i, j], 1])
+#     plt.show()
+
+contour = edges_to_contour(points, edges)
+
+plt.plot(contour[:, 0], contour[:, 1], 'r-')
+plt.show()
 
 X = X * 1000
 
