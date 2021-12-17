@@ -3,6 +3,10 @@ import numpy as np
 import logging
 
 
+# default alpha value for concave hull
+DEFAULT_CONCAVE_HULL_ALPHA = 0.10
+
+
 def alpha_shape(points, alpha, only_outer=True):
     """
     Compute the alpha shape (concave hull) of a set of points.
@@ -108,3 +112,18 @@ def edges_to_contour(points, ordered_edges):
     logging.info("contour: {0}".format(contour))
 
     return contour
+
+
+# return concave hull of a contour
+def concave_hull(points, alpha=DEFAULT_CONCAVE_HULL_ALPHA):
+
+    edges = list(alpha_shape(points, alpha=alpha, only_outer=True))
+
+    ordered_edges = order_edges(edges)
+
+    contour = edges_to_contour(points, ordered_edges)
+
+    return contour
+
+
+
