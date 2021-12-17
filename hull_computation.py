@@ -4,7 +4,7 @@ import logging
 
 
 # default alpha value for concave hull
-DEFAULT_CONCAVE_HULL_ALPHA = 0.10
+DEFAULT_CONCAVE_HULL_ALPHA = 1.0
 
 
 def alpha_shape(points, alpha, only_outer=True):
@@ -60,6 +60,7 @@ def alpha_shape(points, alpha, only_outer=True):
 def order_edges(unordered_edges):
 
     edges_l = list(zip(*list(unordered_edges)))
+    print("edges_l: {0}".format(edges_l))
 
     if len(edges_l[0]) != len(list(set(edges_l[0]))):
         raise ValueError("Duplicate point A found!")
