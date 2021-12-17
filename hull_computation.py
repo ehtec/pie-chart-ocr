@@ -118,6 +118,8 @@ def edges_to_contour(points, ordered_edges):
 # return concave hull of a contour
 def concave_hull(points, alpha=DEFAULT_CONCAVE_HULL_ALPHA):
 
+    logging.info("points: {0}".format(points))
+
     edges = list(alpha_shape(points, alpha=alpha, only_outer=True))
 
     if not bool(edges):
