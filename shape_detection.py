@@ -318,7 +318,7 @@ def detect_shapes(img):
         hierarchy_elem = reshaped_hierarchy_list[i]
 
         # contour = cv2.convexHull(contour)
-        contour = concave_hull(contour.reshape(-1, 2).astype(np.float64))
+        # contour = concave_hull(contour.reshape(-1, 2).astype(np.float64))
 
         parents_count = get_parents_count(i, reshaped_hierarchy_list)
 
