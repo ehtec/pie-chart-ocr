@@ -14,7 +14,7 @@ import shape_detection
 from pprint import pprint
 import matplotlib.pyplot as plt
 # import alphashape
-from hull_computation import order_edges, alpha_shape, edges_to_contour
+from hull_computation import order_edges, alpha_shape, edges_to_contour, concave_hull
 
 
 X1, X2 = make_test_ellipse()
@@ -29,24 +29,26 @@ edges = alpha_shape(points, alpha=0.1, only_outer=True)
 
 X = points
 
-print("X.shape: {0}".format(X.shape))
-print("X:")
-# pprint(edges)
+# print("X.shape: {0}".format(X.shape))
+# print("X:")
+# # pprint(edges)
+#
+# edges_list = list(zip(*list(edges)))
+#
+# print("once: {0}".format([el for el in edges if el[1] not in edges_list[0]]))
+#
+# edges = order_edges(list(edges))
+#
+# # plt.plot(X[:, 0], X[:, 1], 'r-')
+# # plt.plot(points[:, 0], points[:, 1], '.')
+# # for i, j in edges:
+# #     plt.plot(X[:, 0], X[:, 1], 'r-')
+# #     plt.plot(points[[i, j], 0], points[[i, j], 1])
+# #     plt.show()
+#
+# contour = edges_to_contour(points, edges)
 
-edges_list = list(zip(*list(edges)))
-
-print("once: {0}".format([el for el in edges if el[1] not in edges_list[0]]))
-
-edges = order_edges(list(edges))
-
-# plt.plot(X[:, 0], X[:, 1], 'r-')
-# plt.plot(points[:, 0], points[:, 1], '.')
-# for i, j in edges:
-#     plt.plot(X[:, 0], X[:, 1], 'r-')
-#     plt.plot(points[[i, j], 0], points[[i, j], 1])
-#     plt.show()
-
-contour = edges_to_contour(points, edges)
+contour = concave_hull(points)
 
 plt.plot(contour[:, 0], contour[:, 1], 'r-')
 plt.show()
