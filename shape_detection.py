@@ -367,10 +367,16 @@ def detect_shapes(img):
 
         approx = np.array([(x, y), (x + w, y), (x + w, y + h), (x, y + h)])
 
-        area_deviation_ratio = get_area_deviation_ratio(contour.reshape(-1, 2), approx)
+        try:
 
-        if area_deviation_ratio > MAX_RECT_AREA_DEVIATION:
-            logging.info("area_deviation_ratio too big: {0}".format(area_deviation_ratio))
+            area_deviation_ratio = get_area_deviation_ratio(contour.reshape(-1, 2), approx)
+
+            if area_deviation_ratio > MAX_RECT_AREA_DEVIATION:
+                logging.info("area_deviation_ratio too big: {0}".format(area_deviation_ratio))
+                approx = contour
+
+        except ValueError:
+            logging.warning("ValueError when executing get_area_deviation_ratio")
             approx = contour
 
         cv2.drawContours(vis, [approx], -1, (0, 0, 255), 2)
