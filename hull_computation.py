@@ -1,6 +1,7 @@
 from scipy.spatial import Delaunay
 import numpy as np
 import logging
+from shapely.geometry import Polygon
 
 
 # default alpha value for concave hull
@@ -117,6 +118,11 @@ def edges_to_contour(points, ordered_edges):
 
 # return concave hull of a contour
 def concave_hull(points, alpha=DEFAULT_CONCAVE_HULL_ALPHA):
+
+    the_poly = Polygon(points.tolist())
+
+    if the_poly.is_valid:
+        return points
 
     logging.info("points: {0}".format(points))
 
