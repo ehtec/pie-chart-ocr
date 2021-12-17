@@ -375,7 +375,8 @@ def detect_shapes(img):
                 logging.info("area_deviation_ratio too big: {0}".format(area_deviation_ratio))
                 approx = contour
 
-        except ValueError:
+        except ValueError as e:
+            logging.exception(e)
             logging.warning("ValueError when executing get_area_deviation_ratio")
             approx = contour
 
