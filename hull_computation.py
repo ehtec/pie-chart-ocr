@@ -120,6 +120,9 @@ def concave_hull(points, alpha=DEFAULT_CONCAVE_HULL_ALPHA):
 
     edges = list(alpha_shape(points, alpha=alpha, only_outer=True))
 
+    if not bool(edges):
+        raise ValueError("No edges found")
+
     ordered_edges = order_edges(edges)
 
     contour = edges_to_contour(points, ordered_edges)
