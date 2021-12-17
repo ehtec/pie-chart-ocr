@@ -179,7 +179,17 @@ def check_ellipse_or_circle(arr):
     ax.plot(x_values, y_values, 'r-')
     plt.show()
 
-    area_deviation_ratio = get_area_deviation_ratio(arr.reshape(-1, 2), res_arr.reshape(-1, 2))
+    try:
+
+        area_deviation_ratio = get_area_deviation_ratio(arr.reshape(-1, 2), res_arr.reshape(-1, 2))
+
+    except ValueError:
+        logging.warning("ValueError when trying to fit ellipse")
+        return 0, {}
+
+    except IndexError:
+        logging.warning("IndexError when trying to fit ellipse")
+        return 0, {}
 
     logging.info("area_deviation_ratio: {0}".format(area_deviation_ratio))
 
