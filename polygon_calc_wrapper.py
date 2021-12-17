@@ -17,6 +17,8 @@ lib.PolygonCalc_test_nparray.restype = ctypes.c_int
 
 lib.PolygonCalc_min_poly_distance.restype = c_double
 
+lib.PolygonCalc_poly_area.restype = c_double
+
 lib.PolygonCalc_poly_intersection_area.restype = c_double
 
 lib.PolygonCalc_poly_intersection_area_ratio.restype = c_double
@@ -88,6 +90,27 @@ class PolygonCalc(object):
             ctypes.c_void_p(poly2y.ctypes.data),
             m,
             n
+        )
+
+    def poly_area(self, p1):
+
+        poly1x = []
+        poly1y = []
+
+        for elem in p1:
+            poly1x.append(elem[0])
+            poly1y.append(elem[1])
+
+        m = len(poly1x)
+
+        poly1x = np.ascontiguousarray(poly1x, dtype=np.double)
+        poly1y = np.ascontiguousarray(poly1y, dtype=np.double)
+
+        return lib.PolygonCalc_poly_intersection_area(
+            self.obj,
+            ctypes.c_void_p(poly1x.ctypes.data),
+            ctypes.c_void_p(poly1y.ctypes.data),
+            m
         )
 
     def poly_intersection_area(self, p1, p2):
