@@ -267,7 +267,17 @@ def check_rect_or_square(arr, max_deviation=MAX_DEVIATION):
     if a < b:
         a, b = b, a
 
-    data = {"a": a, "b": b}
+    # also find delta_x and delta_y (difference between max and min of the coordinate)
+
+    x_min = arr[:, 0].min()
+    x_max = arr[:, 0].max()
+    delta_x = x_max - x_min
+
+    y_min = arr[:, 1].min()
+    y_max = arr[:, 1].max()
+    delta_y = y_max - y_min
+
+    data = {"a": a, "b": b, "delta_x": delta_x, "delta_y": delta_y}
 
     return 1, data
 
