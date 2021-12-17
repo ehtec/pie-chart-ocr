@@ -109,7 +109,7 @@ def edges_to_contour(points, ordered_edges):
 
     contour = np.array(contour)
 
-    logging.info("contour: {0}".format(contour))
+    # logging.info("contour: {0}".format(contour))
 
     return contour
 
