@@ -369,7 +369,7 @@ def detect_shapes(img):
 
         try:
 
-            area_deviation_ratio = get_area_deviation_ratio(contour.reshape(-1, 2), approx)
+            area_deviation_ratio = get_area_deviation_ratio(contour.reshape(-1, 2), approx.astype(np.float64))
 
             if area_deviation_ratio > MAX_RECT_AREA_DEVIATION:
                 logging.info("area_deviation_ratio too big: {0}".format(area_deviation_ratio))
