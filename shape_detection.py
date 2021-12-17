@@ -93,6 +93,8 @@ def get_area_deviation_ratio(p1, p2):
 
     area_deviation_ratio = 2 * (total_area - 2 * intersection_area) / total_area
 
+    logging.info("area_deviation_ratio: {0}".format(area_deviation_ratio))
+
     del pc
 
     return area_deviation_ratio
