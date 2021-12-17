@@ -15,6 +15,8 @@ from pprint import pprint
 import matplotlib.pyplot as plt
 # import alphashape
 from hull_computation import order_edges, alpha_shape, edges_to_contour, concave_hull
+import cv2
+from shapely.geometry import Polygon
 
 
 X1, X2 = make_test_ellipse()
@@ -28,6 +30,8 @@ points = np.array(list(zip(X1, X2)))
 edges = alpha_shape(points, alpha=0.1, only_outer=True)
 
 X = points
+
+print("cv2.contourArea(X): {0}".format(cv2.contourArea(X.astype(np.int64))))
 
 # print("X.shape: {0}".format(X.shape))
 # print("X:")
@@ -50,23 +54,39 @@ X = points
 
 contour = concave_hull(points)
 
-contour = concave_hull(contour)
-
-contour = concave_hull(contour)
-
-contour = concave_hull(contour)
-
-contour = concave_hull(contour)
-
-contour = concave_hull(contour)
-
-contour = concave_hull(contour)
+# contour = concave_hull(contour)
+#
+# contour = concave_hull(contour)
+#
+# contour = concave_hull(contour)
+#
+# contour = concave_hull(contour)
+#
+# contour = concave_hull(contour)
+#
+# contour = concave_hull(contour)
 
 plt.plot(contour[:, 0], contour[:, 1], 'r-')
 plt.show()
+
+X = concave_hull(X)
+
+X = X.astype(np.float64)
 
 X = X * 1000
 
 X = X.astype(np.int64)
 
-shape_detection.check_ellipse_or_circle(X)
+# concave_hull(X)
+
+poly1 = Polygon(X.tolist())
+print("poly1.is_valid: {0}".format(poly1.is_valid))
+
+# print("X:")
+# pprint(X.tolist())
+
+print("cv2.contourArea(X): {0}".format(cv2.contourArea(X.astype(np.int64))))
+
+shape_detection.get_area_deviation_ratio(X, X)
+
+# shape_detection.check_ellipse_or_circle(X)

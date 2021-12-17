@@ -6,6 +6,7 @@ from ellipse import LsqEllipse
 import matplotlib.pyplot as plt
 from polygon_calc_wrapper import PolygonCalc
 from pprint import pprint
+from hull_computation import concave_hull
 
 
 logging.basicConfig(level=logging.INFO)
@@ -75,12 +76,14 @@ def get_area_deviation_ratio(p1, p2):
     p1_hull = copy.deepcopy(p1)  # cv2.convexHull(p1).reshape(-1, 2)
     p2_hull = copy.deepcopy(p2)  # cv2.convexHull(p2).reshape(-1, 2)
 
-    logging.info("cv2.contourArea(p1_hull): {0}".format(cv2.contourArea(cv2.convexHull(p1))))
-    logging.info("cv2.contourArea(p2_hull): {0}".format(cv2.contourArea(cv2.convexHull(p2))))
+    # p1_hull = concave_hull(p1.reshape(-1, 2))
+    # p2_hull = concave_hull(p2.reshape(-1, 2))
 
     pc = PolygonCalc()
 
     intersection_area = pc.poly_intersection_area(p1_hull.tolist(), p2_hull.tolist())
+
+    # intersection_area = poly_intersection_area(p1_hull.tolist(), p2_hull.tolist())
 
     logging.info("intersection_area: {0}".format(intersection_area))
 
