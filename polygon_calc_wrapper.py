@@ -106,7 +106,7 @@ class PolygonCalc(object):
         poly1x = np.ascontiguousarray(poly1x, dtype=np.double)
         poly1y = np.ascontiguousarray(poly1y, dtype=np.double)
 
-        return lib.PolygonCalc_poly_intersection_area(
+        return lib.PolygonCalc_poly_area(
             self.obj,
             ctypes.c_void_p(poly1x.ctypes.data),
             ctypes.c_void_p(poly1y.ctypes.data),
