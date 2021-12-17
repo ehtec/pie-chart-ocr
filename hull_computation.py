@@ -1,5 +1,6 @@
 from scipy.spatial import Delaunay
 import numpy as np
+import logging
 
 
 def alpha_shape(points, alpha, only_outer=True):
@@ -87,7 +88,12 @@ def order_edges(unordered_edges):
 # return opencv style contour from ordered_edges
 def edges_to_contour(points, ordered_edges):
 
-    if not all([bool(points), bool(ordered_edges)]):
+    if not all([points is not None, ordered_edges is not None]):
+        logging.info("Either edges or points are None!")
+        return []
+
+    if not all([len(points) > 0, len(ordered_edges) > 0]):
+        logging.info("Either edges or points are empty!")
         return []
 
     i, j = ordered_edges[0]
@@ -98,5 +104,7 @@ def edges_to_contour(points, ordered_edges):
         contour.append([points[j, 0], points[j, 1]])
 
     contour = np.array(contour)
+
+    logging.info("contour: {0}".format(contour))
 
     return contour
