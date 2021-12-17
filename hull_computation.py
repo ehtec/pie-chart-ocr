@@ -82,3 +82,21 @@ def order_edges(unordered_edges):
             raise ValueError("This should not be reached.")
 
     return ordered_edges
+
+
+# return opencv style contour from ordered_edges
+def edges_to_contour(points, ordered_edges):
+
+    if not all([bool(points), bool(ordered_edges)]):
+        return []
+
+    i, j = ordered_edges[0]
+
+    contour = [[points[i, 0], points[i, 1]]]
+
+    for i, j in ordered_edges:
+        contour.append([points[j, 0], points[j, 1]])
+
+    contour = np.array(contour)
+
+    return contour
