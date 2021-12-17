@@ -486,6 +486,8 @@ def filter_chart_ellipse(detected_shapes):
     filtered_shapes.pop("rectangles")
     filtered_shapes.pop("squares")
 
+    logging.info("initial shapes: {0}".format(filtered_shapes))
+
     # Remove inner (hole) contours
     filtered_shapes["circles"] = [el for el in filtered_shapes["circles"] if el["parents_count"] % 2 == 0]
     filtered_shapes["ellipses"] = [el for el in filtered_shapes["ellipses"] if el["parents_count"] % 2 == 0]
