@@ -23,7 +23,7 @@ def make_test_ellipse(center=[1, 1], width=1, height=.6, phi=3.14/5):
         list of two lists containing the x and y data of the ellipse.
         of the form [[x1, x2, ..., xi],[y1, y2, ..., yi]]
     """
-    t = np.linspace(0, 2*np.pi, 1000)
+    t = np.linspace(0, 2*np.pi, 1000, endpoint=False)
     x_noise, y_noise = np.random.rand(2, len(t))
 
     ellipse_x = center[0] + width*np.cos(t)*np.cos(phi)-height*np.sin(t)*np.sin(phi) + x_noise/2.  # noqa: E501
