@@ -71,11 +71,11 @@ plt.show()
 
 X = concave_hull(X)
 
-X = X.astype(np.float64)
+# X = X.astype(np.float64)
 
-X = X * 1000
+# X = X * 1000
 
-X = X.astype(np.int64)
+# X = X.astype(np.int64)
 
 # concave_hull(X)
 
