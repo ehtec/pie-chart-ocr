@@ -1,5 +1,6 @@
 from scipy.spatial import Delaunay
 import numpy as np
+from pprint import pprint
 
 
 def alpha_shape(points, alpha, only_outer=True):
@@ -66,6 +67,8 @@ if __name__ == "__main__":
 
     # Computing the alpha shape
     edges = alpha_shape(points, alpha=0.25, only_outer=True)
+
+    pprint(edges)
 
     # Plotting the output
     figure()
