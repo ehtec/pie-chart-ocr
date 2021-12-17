@@ -66,8 +66,8 @@ def get_area_deviation_ratio(p1, p2):
     logging.info("type(p2): {0}".format(type(p2)))
     logging.info("len(p1): {0}".format(len(p1)))
     logging.info("len(p2): {0}".format(len(p2)))
-    logging.info("cv2.contourArea(p1): {0}".format(cv2.contourArea(p1)))
-    logging.info("cv2.contourArea(p2): {0}".format(cv2.contourArea(p2)))
+    # logging.info("cv2.contourArea(p1): {0}".format(cv2.contourArea(p1)))
+    # logging.info("cv2.contourArea(p2): {0}".format(cv2.contourArea(p2)))
     logging.info("p1[0]: {0}".format(p1[0]))
     logging.info("p1[-1]: {0}".format(p1[-1]))
     logging.info("p2[0]: {0}".format(p2[0]))
@@ -87,7 +87,9 @@ def get_area_deviation_ratio(p1, p2):
 
     logging.info("intersection_area: {0}".format(intersection_area))
 
-    total_area = cv2.contourArea(p1_hull) + cv2.contourArea(p2_hull)
+    # total_area = cv2.contourArea(p1_hull) + cv2.contourArea(p2_hull)
+
+    total_area = pc.poly_area(p1_hull.tolist()) + pc.poly_area(p2_hull.tolist())
 
     area_deviation_ratio = 2 * (total_area - 2 * intersection_area) / total_area
 
