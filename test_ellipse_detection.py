@@ -50,6 +50,18 @@ X = points
 
 contour = concave_hull(points)
 
+contour = concave_hull(contour)
+
+contour = concave_hull(contour)
+
+contour = concave_hull(contour)
+
+contour = concave_hull(contour)
+
+contour = concave_hull(contour)
+
+contour = concave_hull(contour)
+
 plt.plot(contour[:, 0], contour[:, 1], 'r-')
 plt.show()
 
