@@ -69,7 +69,7 @@ contour = concave_hull(points)
 plt.plot(contour[:, 0], contour[:, 1], 'r-')
 plt.show()
 
-X = concave_hull(X)
+# X = concave_hull(X)
 
 # X = X.astype(np.float64)
 
