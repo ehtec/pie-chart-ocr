@@ -61,25 +61,28 @@ def get_area_deviation_ratio(p1, p2):
     # print("p2:")
     # pprint(p2)
 
-    # logging.info("type(p1): {0}".format(type(p1)))
-    # logging.info("type(p2): {0}".format(type(p2)))
-    # logging.info("len(p1): {0}".format(len(p1)))
-    # logging.info("len(p2): {0}".format(len(p2)))
-    # logging.info("cv2.contourArea(p1): {0}".format(cv2.contourArea(p1)))
-    # logging.info("cv2.contourArea(p2): {0}".format(cv2.contourArea(p2)))
-    # logging.info("p1[0]: {0}".format(p1[0]))
-    # logging.info("p1[-1]: {0}".format(p1[-1]))
-    # logging.info("p2[0]: {0}".format(p2[0]))
-    # logging.info("p2[-1]: {0}".format(p2[-1]))
+    logging.info("type(p1): {0}".format(type(p1)))
+    logging.info("type(p2): {0}".format(type(p2)))
+    logging.info("len(p1): {0}".format(len(p1)))
+    logging.info("len(p2): {0}".format(len(p2)))
+    logging.info("cv2.contourArea(p1): {0}".format(cv2.contourArea(p1)))
+    logging.info("cv2.contourArea(p2): {0}".format(cv2.contourArea(p2)))
+    logging.info("p1[0]: {0}".format(p1[0]))
+    logging.info("p1[-1]: {0}".format(p1[-1]))
+    logging.info("p2[0]: {0}".format(p2[0]))
+    logging.info("p2[-1]: {0}".format(p2[-1]))
 
-    p1_hull = cv2.convexHull(p1).reshape(-1, 2)
-    p2_hull = cv2.convexHull(p2).reshape(-1, 2)
+    p1_hull = copy.deepcopy(p1)  # cv2.convexHull(p1).reshape(-1, 2)
+    p2_hull = copy.deepcopy(p2)  # cv2.convexHull(p2).reshape(-1, 2)
+
+    logging.info("cv2.contourArea(p1_hull): {0}".format(cv2.contourArea(cv2.convexHull(p1))))
+    logging.info("cv2.contourArea(p2_hull): {0}".format(cv2.contourArea(cv2.convexHull(p2))))
 
     pc = PolygonCalc()
 
     intersection_area = pc.poly_intersection_area(p1_hull.tolist(), p2_hull.tolist())
 
-    # logging.info("intersection_area: {0}".format(intersection_area))
+    logging.info("intersection_area: {0}".format(intersection_area))
 
     total_area = cv2.contourArea(p1_hull) + cv2.contourArea(p2_hull)
 
@@ -305,7 +308,7 @@ def detect_shapes(img):
         contour = contours[i]
         hierarchy_elem = reshaped_hierarchy_list[i]
 
-        contour = cv2.convexHull(contour)
+        # contour = cv2.convexHull(contour)
 
         parents_count = get_parents_count(i, reshaped_hierarchy_list)
 
