@@ -189,6 +189,28 @@ class PolygonCalc{
             return bg::distance(poly1, poly2);
 
         }
+        
+        double poly_area(double *poly1x, double *poly1y, int m){
+
+            int i;
+
+            std::vector<point_type> points1;
+
+            for (i=0; i<m; i++) {
+                points1.push_back(point_type(poly1x[i], poly1y[i]));
+            }
+
+            polygon_type poly1;
+
+            bg::assign_points(poly1, points1);
+
+            bg::correct(poly1);
+
+            double totalArea = bg::area(poly1);
+
+            return totalArea;
+
+        }
 
         double poly_intersection_area(double *poly1x, double *poly1y, double *poly2x, double *poly2y, int m, int n){
 
@@ -572,6 +594,7 @@ extern "C" {
         return polygoncalc->min_poly_distance(poly1x, poly1y, poly2x, poly2y, m, n);
 
     }
+    double PolygonCalc_poly_area(PolygonCalc* polygoncalc, double *poly1x, double *poly1y, int m){ return polygoncalc->poly_area(poly1x, poly1y, m); }
     double PolygonCalc_poly_intersection_area(PolygonCalc* polygoncalc, double *poly1x, double *poly1y, double *poly2x, double *poly2y, int m, int n){
 
         return polygoncalc->poly_intersection_area(poly1x, poly1y, poly2x, poly2y, m, n);
