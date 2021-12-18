@@ -145,6 +145,9 @@ def concave_hull(points, alpha=DEFAULT_CONCAVE_HULL_ALPHA):
 
         multipoly = make_valid(the_poly)
 
+        if isinstance(multipoly, Polygon):
+            return multipoly.exterior.coords.xy
+
         for el in multipoly:
             logging.info("el: {0}, el.area: {1}".format(el, el.area))
 
