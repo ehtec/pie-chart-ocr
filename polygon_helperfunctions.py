@@ -53,13 +53,13 @@ def group_words(filtered_res_tuples, max_word_distance_ratio=MAX_CHARACTER_DISTA
             # if min_dist > max_word_dist:
             #     continue
 
-            if pre_p1[3] - pre_p1[1] > 0:
-                y1 = pre_p1[1]
-                y2 = pre_p1[3]
-
-            else:
-                y1 = pre_p1[3]
-                y2 = pre_p1[3]
+            # if pre_p1[3] - pre_p1[1] > 0:
+            #     y1 = pre_p1[1]
+            #     y2 = pre_p1[3]
+            #
+            # else:
+            #     y1 = pre_p1[3]
+            #     y2 = pre_p1[3]
 
             # if not any([y1 <= pre_p2[1] <= y2, y1 <= pre_p2[3] <= y2,
             #             all([y1 <= pre_p2[1], y1 <= pre_p2[3], y2 >= pre_p2[1], y2 >= pre_p2[3]])]):
