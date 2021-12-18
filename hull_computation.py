@@ -2,6 +2,7 @@ from scipy.spatial import Delaunay
 import numpy as np
 import logging
 from shapely.geometry import Polygon
+from shapely.validation import make_valid
 
 
 # default alpha value for concave hull
@@ -138,6 +139,14 @@ def concave_hull(points, alpha=DEFAULT_CONCAVE_HULL_ALPHA):
     the_poly = Polygon(contour.tolist())
 
     logging.info("the_poly.is_valid: {0}".format(the_poly.is_valid))
+
+    if not the_poly.is_valid:
+        logging.warning("The polygon is not valid. Trying to fix it...")
+
+        multipoly = make_valid(the_poly)
+
+        for el in multipoly:
+            logging.info("el: {0}, el.area: {1}".format(el, el.area))
 
     return contour
 
