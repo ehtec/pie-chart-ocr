@@ -71,9 +71,9 @@ def group_pairs_to_nested_list(L):
 # calculate center of a rectangle of the form (x, y, x+w, y+h)
 def pre_rectangle_center(p1):
 
-    x_0 = (p1[0] + p1[2])/2
+    x_0 = (p1[0] + p1[2]) / 2
 
-    y_0 = (p1[1] + p1[3])/2
+    y_0 = (p1[1] + p1[3]) / 2
 
     return x_0, y_0
 
@@ -131,7 +131,7 @@ def connect_polygon_cloud_2(points1, points2):
     # let the solver  to handle the problem
     P = cvxpy.Problem(cvxpy.Minimize(sum(use[i, j] * d[i, j] for i in range(N) for j in range(N))), constraints)
 
-    dist = P.solve()
+    P.solve()
 
     return use.value
 
@@ -197,9 +197,9 @@ def hash_file(path):
 
 
 # convert list of floats to integers
-def integerize(l):
+def integerize(li):
 
-    return [int(el) for el in l]
+    return [int(el) for el in li]
 
 
 # helper to put characters together to words after MSER
@@ -349,7 +349,7 @@ def get_cv2_dominant_color_4(img, colors_num, return_integers=True):
 # calculate average color of cv2 image
 def get_cv2_dominant_color_5(img, return_integers=True):
 
-    res =  list(img.mean(axis=0).mean(axis=0))
+    res = list(img.mean(axis=0).mean(axis=0))
 
     if return_integers:
         res = integerize(res)
