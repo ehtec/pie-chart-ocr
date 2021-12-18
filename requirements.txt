@@ -11,3 +11,5 @@ git+https://github.com/ehtec/least-squares-ellipse-fitting
 matplotlib
 shapely
 tqdm
+colormath
+colorthief
