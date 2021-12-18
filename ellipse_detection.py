@@ -1,6 +1,6 @@
 import matplotlib.pyplot as plt
 
-from skimage import data, color, img_as_ubyte
+from skimage import color, img_as_ubyte
 from skimage.feature import canny
 from skimage.transform import hough_ellipse
 from skimage.draw import ellipse_perimeter
