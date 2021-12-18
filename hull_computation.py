@@ -154,6 +154,3 @@ def concave_hull(points, alpha=DEFAULT_CONCAVE_HULL_ALPHA):
         raise NotImplementedError("Unknown object (maybe multiple polygons) returned from make_valid")
 
     return contour
-
-
-
