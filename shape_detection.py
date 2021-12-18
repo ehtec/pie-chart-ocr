@@ -167,8 +167,8 @@ def check_ellipse_or_circle(arr):
     # arr = 1000 * arr
     # res_arr = 1000 * res_arr
 
-    res_arr = res_arr.astype(np.int64)
-    arr = arr.astype(np.int64)
+    # res_arr = res_arr.astype(np.int64)
+    # arr = arr.astype(np.int64)
     # x_values = 1000 * x_values
     # y_values = 1000 * y_values
 
