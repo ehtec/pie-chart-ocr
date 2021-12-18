@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 from matplotlib.patches import Ellipse
 
 
-def make_test_ellipse(center=[1, 1], width=1, height=.6, phi=3.14/5):
+def make_test_ellipse(center=(1, 1), width=1, height=.6, phi=3.14 / 5):
     """Generate Elliptical data with noise
     Parameters
     ----------
@@ -23,11 +23,11 @@ def make_test_ellipse(center=[1, 1], width=1, height=.6, phi=3.14/5):
         list of two lists containing the x and y data of the ellipse.
         of the form [[x1, x2, ..., xi],[y1, y2, ..., yi]]
     """
-    t = np.linspace(0, 2*np.pi, 1000, endpoint=False)
+    t = np.linspace(0, 2 * np.pi, 1000, endpoint=False)
     x_noise, y_noise = np.random.rand(2, len(t))
 
-    ellipse_x = center[0] + width*np.cos(t)*np.cos(phi)-height*np.sin(t)*np.sin(phi) + x_noise/2.  # noqa: E501
-    ellipse_y = center[1] + width*np.cos(t)*np.sin(phi)+height*np.sin(t)*np.cos(phi) + y_noise/2.  # noqa: E501
+    ellipse_x = center[0] + width * np.cos(t) * np.cos(phi) - height * np.sin(t) * np.sin(phi) + x_noise / 2.  # noqa: E501
+    ellipse_y = center[1] + width * np.cos(t) * np.sin(phi) + height * np.sin(t) * np.cos(phi) + y_noise / 2.  # noqa: E501
 
     return [ellipse_x, ellipse_y]
 
@@ -49,7 +49,7 @@ if __name__ == '__main__':
     ax.axis('equal')
     ax.plot(X1, X2, 'ro', zorder=1)
     ellipse = Ellipse(
-        xy=center, width=2*width, height=2*height, angle=np.rad2deg(phi),
+        xy=center, width=2 * width, height=2 * height, angle=np.rad2deg(phi),
         edgecolor='b', fc='None', lw=2, label='Fit', zorder=2
     )
     ax.add_patch(ellipse)
