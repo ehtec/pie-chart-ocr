@@ -1,7 +1,7 @@
 import cv2
 from cv2 import dnn_superres
 from data_helpers import get_steph_test_path
-import mser_functions
+# import mser_functions
 import os
 import numpy as np
 import math
