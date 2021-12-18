@@ -11,11 +11,11 @@ def get_steph_test_path(n):
 
     logging.debug("basepath: {0}".format(basepath))
 
-    l = os.listdir(basepath)
+    li = os.listdir(basepath)
 
-    logging.debug("l: {0}".format(l))
+    logging.debug("l: {0}".format(li))
 
-    imagefiles = [el for el in l if "image" in el]
+    imagefiles = [el for el in li if "image" in el]
 
     logging.debug("imagefiles: {0}".format(imagefiles))
 
@@ -78,16 +78,18 @@ def test_data_format():
                 csvpath, IMG_INPUT_PATH = get_steph_test_path(i)
 
             except Exception as e:
+                logging.exception(e)
                 continue
 
             total_count += 1
 
-            annotations = load_annotations_from_csv(csvpath)
+            load_annotations_from_csv(csvpath)
 
             correct_count += 1
             correct_numbers.append(i)
 
         except Exception as e:
+            logging.exception(e)
             wrong_count += 1
             failed_numbers.append(i)
 
