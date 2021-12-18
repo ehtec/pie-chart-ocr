@@ -148,8 +148,10 @@ def concave_hull(points, alpha=DEFAULT_CONCAVE_HULL_ALPHA):
         if isinstance(multipoly, Polygon):
             return np.column_stack(multipoly.exterior.coords.xy)
 
-        for el in multipoly:
-            logging.info("el: {0}, el.area: {1}".format(el, el.area))
+        # for el in multipoly:
+        #     logging.info("el: {0}, el.area: {1}".format(el, el.area))
+
+        raise NotImplementedError("Unknown object (maybe multiple polygons) returned from make_valid")
 
     return contour
 
