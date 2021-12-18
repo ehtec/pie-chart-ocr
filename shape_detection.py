@@ -89,6 +89,9 @@ def get_area_deviation_ratio(p1, p2):
 
     # total_area = cv2.contourArea(p1_hull) + cv2.contourArea(p2_hull)
 
+    logging.info("p1_hull area: {0}".format(pc.poly_area(p1_hull.tolist())))
+    logging.info("p2_hull area: {0}".format(pc.poly_area(p2_hull.tolist())))
+
     total_area = pc.poly_area(p1_hull.tolist()) + pc.poly_area(p2_hull.tolist())
 
     logging.info("total_area: {0}".format(total_area))
