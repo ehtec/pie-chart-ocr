@@ -185,6 +185,10 @@ def main(path):
 
     img_bin = cv2.erode(img_bin, kernel, iterations=1)
 
+    # apply dilate filter
+
+    img_bin = cv2.dilate(img_bin, kernel, iterations=1)
+
     # img_bin = cv2.resize(img_rgb, (int(width * 0.4), int(height * 0.4)), interpolation=cv2.INTER_NEAREST)
 
     # cv2.imshow('img_bin', img_bin)
