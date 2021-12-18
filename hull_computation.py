@@ -135,6 +135,10 @@ def concave_hull(points, alpha=DEFAULT_CONCAVE_HULL_ALPHA):
 
     contour = edges_to_contour(points, ordered_edges)
 
+    the_poly = Polygon(contour.tolist())
+
+    logging.info("the_poly.is_valid: {0}".format(the_poly.is_valid))
+
     return contour
 
 
