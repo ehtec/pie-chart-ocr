@@ -1,4 +1,4 @@
-from ctypes import cdll, c_double, c_uint, c_long, c_ulong
+from ctypes import cdll, c_double, c_ulong
 import ctypes
 # from numpy.ctypeslib import as_ctypes, as_array, as_ctypes_type
 import numpy as np
@@ -237,4 +237,3 @@ class PolygonCalc(object):
             res_list[j].append(elements[i])
 
         return res_list
-
