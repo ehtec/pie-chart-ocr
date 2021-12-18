@@ -73,11 +73,11 @@ def get_area_deviation_ratio(p1, p2):
     logging.info("p2[0]: {0}".format(p2[0]))
     logging.info("p2[-1]: {0}".format(p2[-1]))
 
-    # p1_hull = copy.deepcopy(p1)  # cv2.convexHull(p1).reshape(-1, 2)
-    # p2_hull = copy.deepcopy(p2)  # cv2.convexHull(p2).reshape(-1, 2)
+    p1_hull = copy.deepcopy(p1)  # cv2.convexHull(p1).reshape(-1, 2)
+    p2_hull = copy.deepcopy(p2)  # cv2.convexHull(p2).reshape(-1, 2)
 
-    p1_hull = concave_hull(p1.reshape(-1, 2))
-    p2_hull = concave_hull(p2.reshape(-1, 2))
+    # p1_hull = concave_hull(p1.reshape(-1, 2))
+    # p2_hull = concave_hull(p2.reshape(-1, 2))
 
     pc = PolygonCalc()
 
