@@ -95,5 +95,3 @@ class ColorProcesser(object):
         lib.free_double_array(res_array_p)
 
         return res_array_copy.reshape(input_shape[:-1])
-
-
