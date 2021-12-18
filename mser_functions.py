@@ -4,20 +4,21 @@ import cv2
 import cv2.cv2
 import numpy as np
 import re
-import pytesseract
+# import pytesseract
 from pytesseract import image_to_string
-from PIL import Image, ImageOps, ImageEnhance, ImageFilter
-from pprint import pprint
+# from PIL import Image, ImageOps, ImageEnhance, ImageFilter
+# from pprint import pprint
 # from colorthief import ColorThief, MMCQ
-from PIL import Image, ImageFilter
-from helperfunctions import get_cv2_dominant_color, get_cv2_dominant_color_2, get_cv2_dominant_color_3,\
-    get_cv2_dominant_color_4, get_cv2_dominant_color_5
-from polygon_helperfunctions import group_words
+from PIL import Image  # , ImageFilter
+# from helperfunctions import get_cv2_dominant_color, get_cv2_dominant_color_2, get_cv2_dominant_color_3,\
+#     get_cv2_dominant_color_4, get_cv2_dominant_color_5
+from helperfunctions import get_cv2_dominant_color_3
+# from polygon_helperfunctions import group_words
 from polygon_calc_wrapper import PolygonCalc
 from pytesseract import Output
 import pytesseract
 from color_processer_wrapper import ColorProcesser
-import ellipse_detection
+# import ellipse_detection
 import shape_detection
 
 
@@ -202,6 +203,8 @@ def main(path):
     detected_shapes = shape_detection.detect_shapes(img_bin)
 
     chart_ellipse = shape_detection.filter_chart_ellipse(detected_shapes)
+
+    logging.info("chart_ellipse: {0}".format(chart_ellipse))
 
     # logging.info("MAX AREA: {0}".format(total_area * MAX_MSER_BOX_RATIO))
 
@@ -564,5 +567,3 @@ def main2(path):
         counter += 1
 
     logging.info(array_of_texts)
-
-
