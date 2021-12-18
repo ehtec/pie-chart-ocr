@@ -3,10 +3,10 @@ import cv2
 import numpy as np
 import logging
 from ellipse import LsqEllipse
-import matplotlib.pyplot as plt
+# import matplotlib.pyplot as plt
 from polygon_calc_wrapper import PolygonCalc
-from pprint import pprint
-from hull_computation import concave_hull
+# from pprint import pprint
+# from hull_computation import concave_hull
 
 
 logging.basicConfig(level=logging.INFO)
@@ -504,10 +504,10 @@ def filter_chart_ellipse(detected_shapes):
     filtered_shapes["ellipses"] = [el for el in filtered_shapes["ellipses"] if el["area_ratio"] <= MAX_SHAPE_AREA_RATIO]
 
     # Remove elements that are too small for the main circle / ellipse of the chart
-    filtered_shapes["circles"] = [el for el in filtered_shapes["circles"] if el["area_ratio"] >=
-                                  MIN_CHART_ELLIPSE_AREA_RATIO]
-    filtered_shapes["ellipses"] = [el for el in filtered_shapes["ellipses"] if el["area_ratio"] >=
-                                   MIN_CHART_ELLIPSE_AREA_RATIO]
+    filtered_shapes["circles"] = [el for el in filtered_shapes["circles"]
+                                  if el["area_ratio"] >= MIN_CHART_ELLIPSE_AREA_RATIO]
+    filtered_shapes["ellipses"] = [el for el in filtered_shapes["ellipses"]
+                                   if el["area_ratio"] >= MIN_CHART_ELLIPSE_AREA_RATIO]
 
     logging.info("filtered_shapes: {0}".format(filtered_shapes))
 
