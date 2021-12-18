@@ -5,7 +5,7 @@ from shapely.geometry import Polygon
 
 
 # default alpha value for concave hull
-DEFAULT_CONCAVE_HULL_ALPHA = 1.0
+DEFAULT_CONCAVE_HULL_ALPHA = 0.25  # 1.0
 
 
 def alpha_shape(points, alpha, only_outer=True):
