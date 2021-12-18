@@ -82,12 +82,12 @@ def get_text_background_color(img, x, y, w, h, padding_height=PADDING_HEIGHT, me
 
     img2_2 = img[y + h + PADDING_HEIGHT: y + h + tmh, x: x + w]
 
-    print(img2_1.shape)
-    print(img2_2.shape)
+    logging.info(img2_1.shape)
+    logging.info(img2_2.shape)
 
     img_sum = np.append(img2_1, img2_2, axis=0)
 
-    print(img_sum.shape)
+    logging.info(img_sum.shape)
 
     dominant_color = get_cv2_dominant_color_3(img_sum, colors_num=COLORS_NUM)
 
@@ -116,17 +116,17 @@ def get_background_color(img, padding_height=PADDING_HEIGHT, measurement_height=
 
         cropped_image = img[y: y + h, x: x + w]
 
-        print("Shape before reshape: {0}".format(cropped_image.shape))
+        logging.info("Shape before reshape: {0}".format(cropped_image.shape))
 
         cropped_image = cropped_image.reshape((-1, 1, 3))
 
-        print("Shape after reshape: {0}".format(cropped_image.shape))
+        logging.info("Shape after reshape: {0}".format(cropped_image.shape))
 
         image_list.append(cropped_image)
 
     img_sum = np.concatenate(image_list, axis=0)
 
-    print("sum shape: {0}".format(img_sum.shape))
+    logging.info("sum shape: {0}".format(img_sum.shape))
 
     dominant_color = get_cv2_dominant_color_3(img_sum, colors_num=COLORS_NUM)
 
@@ -141,14 +141,14 @@ def main(path):
 
     # dominant_color = color_thief.get_color(quality=1)
     #
-    # print("Dominant color: {0}".format(dominant_color))
+    # logging.info("Dominant color: {0}".format(dominant_color))
 
     # Your image path i-e receipt path
     img = cv2.imread(path)
 
     full_background_color = get_background_color(img)
 
-    print("full_background_color: {0}".format(full_background_color))
+    logging.info("full_background_color: {0}".format(full_background_color))
 
     img = cv2.copyMakeBorder(img, OUTER_BORDER_WIDTH, OUTER_BORDER_WIDTH, OUTER_BORDER_WIDTH, OUTER_BORDER_WIDTH,
                              cv2.BORDER_CONSTANT, value=full_background_color)
@@ -159,7 +159,7 @@ def main(path):
 
     # dominant_color = get_cv2_dominant_color(img, colors_num=COLORS_NUM)
     #
-    # print("Dominant color: {0}".format(dominant_color))
+    # logging.info("Dominant color: {0}".format(dominant_color))
 
     # img = cv2.resize(img, (img.shape[1] * SCALING_FACTOR, img.shape[0] * SCALING_FACTOR), interpolation=cv2.INTER_AREA)
 
@@ -203,7 +203,7 @@ def main(path):
 
     chart_ellipse = shape_detection.filter_chart_ellipse(detected_shapes)
 
-    # print("MAX AREA: {0}".format(total_area * MAX_MSER_BOX_RATIO))
+    # logging.info("MAX AREA: {0}".format(total_area * MAX_MSER_BOX_RATIO))
 
     # Create MSER object
     mser = cv2.MSER_create(max_area=int(MAX_MSER_BOX_RATIO * total_area))  # delta = 20
@@ -216,9 +216,9 @@ def main(path):
     # detect regions in gray scale image
     regions, bounding_boxes = mser.detectRegions(gray)
 
-    print("NUMBER OF BOUNDING BOXES: {0}".format(len(bounding_boxes)))
+    logging.info("NUMBER OF BOUNDING BOXES: {0}".format(len(bounding_boxes)))
 
-    print(img.shape)
+    logging.info(img.shape)
 
     filtered_res_tuples = []
 
@@ -226,7 +226,7 @@ def main(path):
 
         x, y, w, h = box
 
-        # print(box)
+        # logging.info(box)
         #
         # # total margin height
         # tmh = PADDING_HEIGHT + MEASUREMENT_HEIGHT
@@ -237,12 +237,12 @@ def main(path):
         #
         # img2_2 = img[y + h + PADDING_HEIGHT: y + h + tmh, x: x + w]
         #
-        # print(img2_1.shape)
-        # print(img2_2.shape)
+        # logging.info(img2_1.shape)
+        # logging.info(img2_2.shape)
         #
         # img_sum = np.append(img2_1, img2_2, axis=0)
         #
-        # print(img_sum.shape)
+        # logging.info(img_sum.shape)
         #
         # dominant_color_1 = get_cv2_dominant_color(img_sum, colors_num=COLORS_NUM)
         # dominant_color_2 = get_cv2_dominant_color_2(img_sum, colors_num=COLORS_NUM)
@@ -250,11 +250,11 @@ def main(path):
         # dominant_color_4 = get_cv2_dominant_color_4(img_sum, colors_num=COLORS_NUM)
         # dominant_color_5 = get_cv2_dominant_color_5(img_sum)
         #
-        # print("Dominant color 1: {0}".format(dominant_color_1))
-        # print("Dominant color 2: {0}".format(dominant_color_2))
-        # print("Dominant color 3: {0}".format(dominant_color_3))
-        # print("Dominant color 4: {0}".format(dominant_color_4))
-        # print("Dominant color 5: {0}".format(dominant_color_5))
+        # logging.info("Dominant color 1: {0}".format(dominant_color_1))
+        # logging.info("Dominant color 2: {0}".format(dominant_color_2))
+        # logging.info("Dominant color 3: {0}".format(dominant_color_3))
+        # logging.info("Dominant color 4: {0}".format(dominant_color_4))
+        # logging.info("Dominant color 5: {0}".format(dominant_color_5))
         #
         # cv2.imshow('img2', img2)
         #
@@ -293,9 +293,9 @@ def main(path):
         if h < ABSOLUTE_MIN_MSER_BOX_HEIGHT:
             continue
 
-        # print(h/height)
+        # logging.info(h/height)
         #
-        # print(box)
+        # logging.info(box)
 
         # cv2.rectangle(vis, (x, y), (x + w, y + h), (0, 255, 0), 1)
 
@@ -313,9 +313,9 @@ def main(path):
 
     word_grouped_tuples = pc.group_elements(filtered_res_tuples, MAX_LETTER_DISTANCE_RATIO, SLOV_RATIO)
 
-    # pprint(word_grouped_tuples)
+    # plogging.info(word_grouped_tuples)
 
-    print(len(word_grouped_tuples))
+    logging.info(len(word_grouped_tuples))
 
     res_tuples = []
 
@@ -340,7 +340,7 @@ def main(path):
 
         background_color = get_text_background_color(img, x1, y1, x2 - x1, y2 - y1)
 
-        print("background_color: {0}".format(background_color))
+        logging.info("background_color: {0}".format(background_color))
 
         cropped_img_rgb = cv2.cvtColor(cropped_img, cv2.COLOR_BGR2RGB)
 
@@ -368,22 +368,22 @@ def main(path):
 
         cropped_img_bin = np.array(pil_img)
 
-        # pprint(cropped_img_bin)
+        # plogging.info(cropped_img_bin)
 
-        print("cropped_img.shape: {0}".format(cropped_img.shape))
-        print("color_distances.shape: {0}".format(color_distances.shape))
-        print("cropped_img_bin.shape: {0}".format(cropped_img_bin.shape))
+        logging.info("cropped_img.shape: {0}".format(cropped_img.shape))
+        logging.info("color_distances.shape: {0}".format(color_distances.shape))
+        logging.info("cropped_img_bin.shape: {0}".format(cropped_img_bin.shape))
 
         im_gray = cv2.cvtColor(cropped_img_bin, cv2.COLOR_BGR2GRAY)
 
         th, im_gray_th_otsu = cv2.threshold(im_gray, 127, 255, cv2.THRESH_BINARY)
 
-        # pprint(im_gray_th_otsu)
+        # plogging.info(im_gray_th_otsu)
 
         im_gray_th_otsu = cv2.copyMakeBorder(im_gray_th_otsu, BORDER_WIDTH, BORDER_WIDTH, BORDER_WIDTH, BORDER_WIDTH,
                                              cv2.BORDER_CONSTANT, value=(255, 255, 255))
 
-        print("im_gray_th_otsu.shape: {0}".format(im_gray_th_otsu.shape))
+        logging.info("im_gray_th_otsu.shape: {0}".format(im_gray_th_otsu.shape))
 
         d = pytesseract.image_to_data(im_gray_th_otsu, lang='eng', output_type=Output.DICT, config='--psm 7')
 
@@ -416,15 +416,15 @@ def main(path):
                                 d['height'][i])
 
                 # cv2.rectangle(img, (x // SCALING_FACTOR, y // SCALING_FACTOR), ((x + w) // SCALING_FACTOR, (y + h) // SCALING_FACTOR), (0, 255, 0), 2)
-                # print(d['text'][i])
-                print("{0}             {1} {2} {3} {4}".format(d['text'][i], x, y, (x + w), (y + h)))
+                # logging.info(d['text'][i])
+                logging.info("{0}             {1} {2} {3} {4}".format(d['text'][i], x, y, (x + w), (y + h)))
 
                 res_tuple = (d['conf'][i], d['text'][i].strip(), x, y, (x + w), (y + h), 10000 * k + i)
 
                 the_str = d['text'][i].strip()
 
                 if not bool(re.findall(r'[A-Za-z0-9%]+', the_str)):
-                    print("Discarding {0} because it does not have at least one needed character.".format(res_tuple))
+                    logging.info("Discarding {0} because it does not have at least one needed character.".format(res_tuple))
                     continue
 
                 # res_tuples.append(res_tuple)
@@ -453,11 +453,11 @@ def main(path):
     #
     # cv2.waitKey(0)
 
-    pprint(res_tuples)
+    logging.info("res_tuples: {0}".format(res_tuples))
 
-    # print("")
+    # logging.info("")
 
-    # pprint([el['text'] for el in res_tuples if bool(el['text'])])
+    # plogging.info([el['text'] for el in res_tuples if bool(el['text'])])
 
     hulls = [cv2.convexHull(p.reshape(-1, 1, 2)) for p in regions]  # regions
 
@@ -478,7 +478,7 @@ def main(path):
 
         area = cv2.contourArea(contour)
 
-        # print(area)
+        # logging.info(area)
 
         areas.append(area)
 
@@ -493,7 +493,7 @@ def main(path):
     areas.sort(reverse=True)
 
     # for i in range(5):
-    #     print(areas[i])
+    #     logging.info(areas[i])
 
     # # cv2.polylines(vis, regions, 1, (0, 255, 0))
     # cv2.polylines(vis, new_hulls, 1, (0, 255, 0))
@@ -507,20 +507,20 @@ def main(path):
     # this is used to find only text regions, remaining are ignored
     text_only = cv2.bitwise_and(img, img, mask=mask)
 
-    # pprint(mask)
+    # plogging.info(mask)
 
-    # pprint(list(set(list(mask.flatten()))))
+    # plogging.info(list(set(list(mask.flatten()))))
 
     # pil_img = Image.fromarray(img)
 
-    # pprint(np.array(mask).shape)
+    # plogging.info(np.array(mask).shape)
 
     # mask[mask == 0] = np.array([0, 0, 0])
     # mask[mask == 255] = np.array([255, 255, 255])
 
     mask = np.repeat(mask, repeats=3, axis=2)
 
-    # pprint(np.array(mask).shape)
+    # plogging.info(np.array(mask).shape)
 
     # pil_img_array = np.array(pil_img)
 
@@ -563,6 +563,6 @@ def main2(path):
         array_of_texts.append(str_store)
         counter += 1
 
-    print(array_of_texts)
+    logging.info(array_of_texts)
 
 
