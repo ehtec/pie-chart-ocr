@@ -6,6 +6,7 @@ scipy
 pytesseract
 pillow
 opencv-python
+opencv-contrib-python
 scikit-image
 git+https://github.com/ehtec/least-squares-ellipse-fitting
 matplotlib
