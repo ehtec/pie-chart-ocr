@@ -311,8 +311,16 @@ def main(path):
 
     print("SECONDS ELAPSED: {0}".format(seconds_elapsed))
 
+    # cv2.imshow('img', img)
+    # cv2.waitKey(0)
+
+    # show resized window with image instead
+    cv2.namedWindow('img', cv2.WINDOW_NORMAL)
+    # cv2.drawContours(vis, [contour], -1, (0, 255, 0), 2)
     cv2.imshow('img', img)
+    cv2.resizeWindow('img', 800, 800)
     cv2.waitKey(0)
+    cv2.destroyAllWindows()
 
     # img = img[162:184, 633:650]
     # cv2.imwrite('test.png', img)
