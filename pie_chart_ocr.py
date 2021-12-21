@@ -129,7 +129,7 @@ def main(path):
 
             elem.sort(key=lambda x: x[4])
 
-        paragraph_tuples.sort(key=lambda x: mean([pre_rectangle_center(elem[2:6])[1] for elem in x]), reverse=False)
+        paragraph_tuples.sort(key=lambda x: mean([pre_rectangle_center(elem2[2:6])[1] for elem2 in x]), reverse=False)
 
         all_paragraph_tuples.append(paragraph_tuples)
 
@@ -181,6 +181,7 @@ def main(path):
                     all_paragraph_tuples.append([[elem]])
 
                 elif next_starts_with_percent and detect_percentage(elem[1] + '%') is not None:
+                    # referenced before assignment warning false positive
                     all_paragraph_tuples.append([[elem, next_elem]])
 
                 else:
