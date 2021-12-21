@@ -15,6 +15,13 @@ Install Boost and Tesseract:
 
 `sudo apt install libboost-all-dev tesseract-ocr`
 
+Clone this repository including submodules:
+
+```commandline
+git clone --recursive https://github.com/ehtec/pie-chart-ocr.git
+cd pie-chart-ocr
+```
+
 Install Python requirements:
 
 `python3 -m pip install -r requirements.txt`
@@ -30,6 +37,13 @@ Eventually change the `MAX_WORKERS` number in `pie_chart_ocr.pyx`
 Build Cython modules:
 
 `python3 setup.py build_ext --inplace`
+
+Create temporary directories if you want to run tests:
+```commandline
+mkdir temp
+mkdir temp1
+mkdir temp2
+```
 
 # Usage
 
