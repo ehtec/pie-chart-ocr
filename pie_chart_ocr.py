@@ -1,26 +1,25 @@
-import pytesseract
-from pytesseract import Output
+# import pytesseract
+# from pytesseract import Output
 import cv2
 from pprint import pprint
-from PIL import Image, ImageOps, ImageFilter, ImageEnhance
+# from PIL import Image, ImageOps, ImageFilter, ImageEnhance
 import numpy as np
 import copy
 # from pylab import *
-from scipy.ndimage import measurements
-
+# from scipy.ndimage import measurements
 import mser_functions
-from helperfunctions import group_pairs_to_nested_list, clean_folder_contents
+from helperfunctions import clean_folder_contents
 from helperfunctions import pre_rectangle_center, rect_from_pre, detect_percentage, connect_polygon_cloud_2
 # import time
-import itertools
+# import itertools
 from statistics import mean
 from datetime import datetime
-from concurrent.futures import ProcessPoolExecutor
+# from concurrent.futures import ProcessPoolExecutor
 import re
-from polygon_calc_wrapper import PolygonCalc
-from color_processer_wrapper import ColorProcesser
-import logging
-import uuid
+# from polygon_calc_wrapper import PolygonCalc
+# from color_processer_wrapper import ColorProcesser
+# import logging
+# import uuid
 from polygon_calc_wrapper import PolygonCalc
 
 
@@ -67,7 +66,7 @@ MAX_WORKERS = 10  # 14
 # OVERRIDE_SCALING_FACTOR = True
 
 # target pixel size after scaling
-TARGET_PIXEL_SIZE = 8000*800
+TARGET_PIXEL_SIZE = 8000 * 800
 
 # maximum area ratio of a single word
 MAX_WORD_AREA_RATIO = 0.05
@@ -193,9 +192,9 @@ def main(path):
 
     for paragraph in all_paragraph_tuples:
 
-        l = [elem[1] for el in paragraph for elem in el]
+        li = [elem[1] for el in paragraph for elem in el]
 
-        s = ' '.join(l).strip()
+        s = ' '.join(li).strip()
 
         s = re.sub(r'^[^A-Za-z0-9]+', '', s)
 
@@ -326,6 +325,3 @@ def main(path):
     # cv2.imwrite('test.png', img)
     # cv2.imshow('img', img)
     # cv2.waitKey(0)
-
-
-
