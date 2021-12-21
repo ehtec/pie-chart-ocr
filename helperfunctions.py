@@ -355,3 +355,9 @@ def get_cv2_dominant_color_5(img, return_integers=True):
         res = integerize(res)
 
     return res
+
+
+# get root path
+def get_root_path():
+
+    return os.path.dirname(__file__)
