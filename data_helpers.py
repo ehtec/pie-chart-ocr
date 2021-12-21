@@ -1,13 +1,13 @@
 import logging
 import os
 import csv
-from helperfunctions import hash_file
+from helperfunctions import hash_file, get_root_path
 
 
 # get (csvpath, imagepath) by number from stephs first test dataset
 def get_steph_test_path(n):
 
-    basepath = os.path.join("/home/elias/pie-chart-ocr/data", "charts_steph", "Chart_{0}".format(n))
+    basepath = os.path.join(get_root_path(), "data", "charts_steph", "Chart_{0}".format(n))
 
     logging.debug("basepath: {0}".format(basepath))
 
