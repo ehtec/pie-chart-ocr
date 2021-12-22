@@ -9,6 +9,9 @@ https://analytics.finminity.finance
 
 https://t.me/FinminityOfficial
 
+Note: The original repository was moved to https://git.ehtec.co/research/pie-chart-ocr.
+https://github.com/ehtec/pie-chart-ocr is a mirror.
+
 # Installation
 
 Install Boost and Tesseract:
