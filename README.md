@@ -13,7 +13,7 @@ https://t.me/FinminityOfficial
 
 Install Boost and Tesseract:
 
-`sudo apt install libboost-all-dev tesseract-ocr`
+`sudo apt install libboost-all-dev tesseract-ocr build-essential`
 
 Clone this repository including submodules:
 
@@ -38,15 +38,33 @@ Build Cython modules:
 
 `python3 setup.py build_ext --inplace`
 
-Create temporary directories if you want to run tests:
+Create temporary directories:
 ```commandline
 mkdir temp
 mkdir temp1
 mkdir temp2
 ```
 
+Unpack test charts:
+
+```commandline
+cd data
+unzip charts_steph.zip
+cd ..
+```
+
 # Usage
 
-Run tests:
+Run tests on an image for the first time (also uses upsampling):
 
-`python3 test_pie_chart_ocr.py`
+```commandline
+python3 test_superreshelper.py
+```
+
+The script asks for an image ID. Use `4`, for example.
+
+Run tests for images that were already upsampled:
+
+```commandline
+python3 test_pie_chart_ocr.py
+```
