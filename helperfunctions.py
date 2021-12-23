@@ -382,6 +382,8 @@ def cluster_abs_1d(input_values, atol):
         else:
             res_clusters.append([sorted_input_values[i]])
 
+    res_clusters = list(sorted(res_clusters, key=lambda x: len(x), reverse=True))
+
     return res_clusters
 
 
@@ -406,6 +408,8 @@ def cluster_rel_1d(input_values, rtol):
 
         else:
             res_clusters.append([sorted_input_values[i]])
+
+    res_clusters = list(sorted(res_clusters, key=lambda x: len(x), reverse=True))
 
     return res_clusters
 
@@ -434,5 +438,7 @@ def cluster_dbscan(input_array, eps, min_samples=1):
     for i in range(len(the_labels)):
         j = the_labels[i]
         res_clusters[j].append(parsed_input_array[i])
+
+    res_clusters = list(sorted(res_clusters, key=lambda x: len(x), reverse=True))
 
     return res_clusters
