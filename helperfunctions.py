@@ -396,7 +396,11 @@ def cluster_rel_1d(input_values, rtol):
 
     for i in range(1, len(sorted_input_values)):
 
-        if ((sorted_input_values[i] / res_clusters[-1][-1]) - 1) <= rtol:
+        if (res_clusters[-1][-1] == 0) or (res_clusters[-1][-1] * sorted_input_values[i] < 0):
+            res_clusters.append([sorted_input_values[i]])
+            continue
+
+        if abs((sorted_input_values[i] / res_clusters[-1][-1]) - 1) <= rtol:
             res_clusters[-1].append(sorted_input_values[i])
 
         else:
