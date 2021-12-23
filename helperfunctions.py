@@ -382,3 +382,24 @@ def cluster_abs_1d(input_values, atol):
             res_clusters.append([sorted_input_values[i]])
 
     return res_clusters
+
+
+# cluster 1D array of values by using a relative deviation
+def cluster_rel_1d(input_values, rtol):
+
+    if not bool(input_values):
+        return []
+
+    sorted_input_values = list(sorted(input_values))
+
+    res_clusters = [[sorted_input_values[0]]]
+
+    for i in range(1, len(sorted_input_values)):
+
+        if ((sorted_input_values[i] / res_clusters[-1][-1]) - 1) <= rtol:
+            res_clusters[-1].append(sorted_input_values[i])
+
+        else:
+            res_clusters.append([sorted_input_values[i]])
+
+    return res_clusters
