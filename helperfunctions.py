@@ -15,6 +15,7 @@ import scipy.misc
 import scipy.cluster
 from colormath.color_objects import sRGBColor, LabColor
 from colormath.color_conversions import convert_color
+from sklearn.cluster import DBSCAN
 
 
 # equivalent to rm -rf
@@ -405,5 +406,33 @@ def cluster_rel_1d(input_values, rtol):
 
         else:
             res_clusters.append([sorted_input_values[i]])
+
+    return res_clusters
+
+
+# cluster multidimensional array with the DBSCAN algorithm
+def cluster_dbscan(input_array, eps, min_samples=1):
+
+    if input_array is None:
+        return []
+
+    if isinstance(input_array, np.ndarray):
+        parsed_input_array = input_array.tolist()
+
+    else:
+        parsed_input_array = input_array
+
+    if not bool(parsed_input_array):
+        return []
+
+    db = DBSCAN(eps=eps, min_samples=min_samples).fit(parsed_input_array)
+
+    the_labels = db.labels_.tolist()
+
+    res_clusters = [[] for _ in range(max(the_labels) + 1)]
+
+    for i in range(len(the_labels)):
+        j = the_labels[i]
+        res_clusters[j].append(parsed_input_array[i])
 
     return res_clusters
