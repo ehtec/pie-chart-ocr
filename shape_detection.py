@@ -575,4 +575,7 @@ def filter_legend_squares(detected_shapes):
 
     logging.info("shape_clusters: {0}".format(shape_clusters))
 
+    if not bool(shape_clusters):
+        return None
+
     return shape_clusters[0]
