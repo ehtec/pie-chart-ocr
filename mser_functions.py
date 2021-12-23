@@ -204,6 +204,10 @@ def main(path):
 
     chart_ellipse = shape_detection.filter_chart_ellipse(detected_shapes)
 
+    legend_squares = shape_detection.filter_legend_squares(detected_shapes)
+
+    logging.info("legend_squares: {0}".format(legend_squares))
+
     logging.info("chart_ellipse: {0}".format(chart_ellipse))
 
     # logging.info("MAX AREA: {0}".format(total_area * MAX_MSER_BOX_RATIO))

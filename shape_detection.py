@@ -18,6 +18,9 @@ MAX_SHAPE_AREA_RATIO = 0.70  # 0.40
 # min area ratio of the chart ellipse / circle
 MIN_CHART_ELLIPSE_AREA_RATIO = 0.03
 
+# max area ratio of a legend shape
+MAX_LEGEND_SHAPE_AREA_RATIO = 0.01
+
 # minimum absolute area of a shape in pixels
 MIN_SHAPE_AREA = 15
 
@@ -518,3 +521,39 @@ def filter_chart_ellipse(detected_shapes):
     logging.info("chart_ellipse: {0}".format(chart_ellipse))
 
     return chart_ellipse
+
+
+# filter the main chart circle / ellipse from the res_dict of detected shapes
+def filter_legend_squares(detected_shapes):
+
+    filtered_shapes = copy.deepcopy(detected_shapes)
+
+    # remove rectangles, ellipses and circles
+    filtered_shapes.pop("rectangles")
+    filtered_shapes.pop("circles")
+    filtered_shapes.pop("ellipses")
+
+    logging.info("initial shapes: {0}".format(filtered_shapes))
+
+    # Remove inner (hole) contours
+    filtered_shapes["squares"] = [el for el in filtered_shapes["squares"] if el["parents_count"] % 2 == 0]
+
+    # Remove elements below the minimum area
+    filtered_shapes["squares"] = [el for el in filtered_shapes["squares"] if el["area"] >= MIN_SHAPE_AREA]
+
+    # Remove elements that are too big
+    filtered_shapes["squares"] = [el for el in filtered_shapes["squares"] if el["area_ratio"] <= MAX_SHAPE_AREA_RATIO]
+
+    # Remove elements that are too big for a legend square
+    filtered_shapes["squares"] = [el for el in filtered_shapes["squares"]
+                                  if el["area_ratio"] <= MAX_LEGEND_SHAPE_AREA_RATIO]
+
+    logging.info("filtered_shapes: {0}".format(filtered_shapes))
+
+    # filtered_shape_tuples = [(shape_type, shape_data) for shape_type, el in filtered_shapes.items() for shape_data in el]
+    #
+    # chart_ellipse = max(filtered_shape_tuples, key=lambda x: x[1]['area'])
+    #
+    # logging.info("chart_ellipse: {0}".format(chart_ellipse))
+    #
+    # return chart_ellipse
