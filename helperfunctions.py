@@ -375,7 +375,7 @@ def cluster_abs_1d(input_values, atol):
 
     for i in range(1, len(sorted_input_values)):
 
-        if sorted_input_values[i] - res_clusters[-1][-1] <=atol:
+        if sorted_input_values[i] - res_clusters[-1][-1] <= atol:
             res_clusters[-1].append(sorted_input_values[i])
 
         else:
