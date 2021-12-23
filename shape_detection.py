@@ -38,7 +38,7 @@ MAX_DEVIATION = 0.1
 MAX_AREA_DEVIATION = 0.05
 
 # maximum area deviation for a successful rectangle fit
-MAX_RECT_AREA_DEVIATION = 0.15
+MAX_RECT_AREA_DEVIATION = 0.18
 
 # maximum deviation to count ellipse as circle
 MAX_CIRCLE_DEVIATION = 0.1
