@@ -7,6 +7,7 @@ from ellipse import LsqEllipse
 from polygon_calc_wrapper import PolygonCalc
 # from pprint import pprint
 # from hull_computation import concave_hull
+from helperfunctions import cluster_abs_1d
 
 
 logging.basicConfig(level=logging.INFO)
@@ -20,6 +21,12 @@ MIN_CHART_ELLIPSE_AREA_RATIO = 0.03
 
 # max area ratio of a legend shape
 MAX_LEGEND_SHAPE_AREA_RATIO = 0.01
+
+# maximum absolute deviation clustering tolerance for legend shapes
+MAX_LEGEND_ATOL = 3.0
+
+# minimum length of a legend shape cluster
+MIN_LEGEND_SHAPE_CLUSTER_LEN = 3
 
 # minimum absolute area of a shape in pixels
 MIN_SHAPE_AREA = 15
@@ -550,10 +557,22 @@ def filter_legend_squares(detected_shapes):
 
     logging.info("filtered_shapes: {0}".format(filtered_shapes))
 
-    # filtered_shape_tuples = [(shape_type, shape_data) for shape_type, el in filtered_shapes.items() for shape_data in el]
-    #
-    # chart_ellipse = max(filtered_shape_tuples, key=lambda x: x[1]['area'])
-    #
-    # logging.info("chart_ellipse: {0}".format(chart_ellipse))
-    #
-    # return chart_ellipse
+    filtered_square_a_values = [el["a"] for el in filtered_shapes['squares']]
+
+    a_clusters = cluster_abs_1d(filtered_square_a_values, MAX_LEGEND_ATOL)
+
+    shape_clusters = []
+
+    for temp_cluster in a_clusters:
+
+        shape_clusters.append([])
+
+        for val in list(set(temp_cluster)):
+            shape_clusters[-1] += [el for el in filtered_shapes['squares'] if el['a'] == val]
+
+    shape_clusters = [shape_cluster for shape_cluster in shape_clusters
+                      if len(shape_cluster) >= MIN_LEGEND_SHAPE_CLUSTER_LEN]
+
+    logging.info("shape_clusters: {0}".format(shape_clusters))
+
+    return shape_clusters[0]
