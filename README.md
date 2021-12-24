@@ -27,19 +27,18 @@ cd pie-chart-ocr
 
 Install Python requirements:
 
-`python3 -m pip install -r requirements.txt`
+```commandline
+python3 -m pip install -r requirements.txt
+```
 
 Compile libraries:
 
-`bash compile_polygoncalc.sh`
+```commandline
+python3 setup.py build_ext
+sudo python3 setup.py install --install-lib lib/
+```
 
-`bash compile_colorprocesser.sh`
-
-Eventually change the `MAX_WORKERS` number in `pie_chart_ocr.pyx`
-
-Build Cython modules:
-
-`python3 setup.py build_ext --inplace`
+Eventually change the `MAX_WORKERS` number in `pie_chart_ocr.py`.
 
 Create temporary directories:
 ```commandline
