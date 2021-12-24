@@ -6,11 +6,21 @@ import numpy as np
 from numpy.ctypeslib import ndpointer
 import copy
 import logging
+from .basefunctions import find_lib, get_root_path
+import os
 
 
-lib_path = find_library('colorprocesser')
-logging.info("colorprocesser library path: {0}".format(lib_path))
-lib = cdll.LoadLibrary(lib_path)
+# relative path to colorprocesser library
+RELATIVE_LIBRARY_PATH = "lib/usr/local/lib/python3.9/dist-packages"
+
+
+# lib_path = find_library('colorprocesser')
+lib_path = find_lib(os.path.join(get_root_path(), RELATIVE_LIBRARY_PATH), 'libcolorprocesser')
+if not bool(lib_path):
+    raise FileNotFoundError("colorprocesser library not found!")
+lib_full_path = os.path.join(get_root_path(), RELATIVE_LIBRARY_PATH, lib_path)
+logging.info("colorprocesser library path: {0}".format(lib_full_path))
+lib = cdll.LoadLibrary(lib_full_path)
 # set output types for ColorProcesser methods
 lib.ColorProcesser_helloworld.restype = c_double
 lib.ColorProcesser_test_calc.restype = c_double

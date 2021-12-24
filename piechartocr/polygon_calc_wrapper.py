@@ -6,11 +6,21 @@ import numpy as np
 import copy
 from numpy.ctypeslib import ndpointer
 import logging
+from .basefunctions import find_lib, get_root_path
+import os
 
 
-lib_path = find_library('polygoncalc')
-logging.info("polygoncalc library path: {0}".format(lib_path))
-lib = cdll.LoadLibrary(lib_path)
+# relative path to colorprocesser library
+RELATIVE_LIBRARY_PATH = "lib/usr/local/lib/python3.9/dist-packages"
+
+
+# lib_path = find_library('polygoncalc')
+lib_path = find_lib(os.path.join(get_root_path(), RELATIVE_LIBRARY_PATH), 'libpolygoncalc')
+if not bool(lib_path):
+    raise FileNotFoundError("polygoncalc library not found!")
+lib_full_path = os.path.join(get_root_path(), RELATIVE_LIBRARY_PATH, lib_path)
+logging.info("polygoncalc library path: {0}".format(lib_full_path))
+lib = cdll.LoadLibrary(lib_full_path)
 
 # set output types for PolygonCalc methods
 lib.PolygonCalc_helloworld.restype = c_double
