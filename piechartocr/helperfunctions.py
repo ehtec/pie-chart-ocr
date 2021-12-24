@@ -4,7 +4,7 @@ import numpy as np
 import re
 import itertools
 import cvxpy
-from polygon_calc_wrapper import PolygonCalc
+from .polygon_calc_wrapper import PolygonCalc
 import os
 import shutil
 import hashlib
@@ -361,7 +361,7 @@ def get_cv2_dominant_color_5(img, return_integers=True):
 # get root path
 def get_root_path():
 
-    return os.path.dirname(__file__)
+    return os.path.dirname(os.path.dirname(__file__))
 
 
 # cluster 1D array of values by using an absolute deviation
