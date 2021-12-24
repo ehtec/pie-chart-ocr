@@ -1,11 +1,11 @@
 import cv2
 from cv2 import dnn_superres
-from data_helpers import get_steph_test_path
+from .data_helpers import get_steph_test_path
 # import mser_functions
 import os
 import numpy as np
 import math
-from helperfunctions import get_root_path
+from .helperfunctions import get_root_path
 
 
 # target pixel number after neural network upscale
