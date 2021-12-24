@@ -144,6 +144,8 @@ def check_ellipse_or_circle(arr):
 
         reg_params = reg.as_parameters()
 
+        logging.info("Original ellipse parameters: {0}".format(reg_params))
+
         reg_params = np.hstack(reg_params).tolist()
 
         reg_params = [complex_to_real(el) for el in reg_params]
@@ -173,7 +175,7 @@ def check_ellipse_or_circle(arr):
 
     x_values = center_x + (width * np.cos(t_values) * np.cos(phi) - height * np.sin(t_values) * np.sin(phi))
 
-    y_values = center_x + (width * np.cos(t_values) * np.sin(phi) + height * np.sin(t_values) * np.cos(phi))
+    y_values = center_y + (width * np.cos(t_values) * np.sin(phi) + height * np.sin(t_values) * np.cos(phi))
 
     res_arr = np.column_stack([x_values, y_values])
 
