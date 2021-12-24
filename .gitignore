@@ -148,3 +148,5 @@ dmypy.json
 
 # compiled executables
 *.out
+
+/run_examples.py
