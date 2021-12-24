@@ -1,4 +1,5 @@
 import logging
+import os.path
 
 import cv2
 import cv2.cv2
@@ -135,6 +136,9 @@ def get_background_color(img, padding_height=PADDING_HEIGHT, measurement_height=
 
 
 def main(path):
+
+    if not os.path.isfile(path):
+        raise FileNotFoundError("Input image file does not exist!")
 
     cp = ColorProcesser()
 
