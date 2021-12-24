@@ -4,11 +4,11 @@ import numpy as np
 import logging
 from ellipse import LsqEllipse
 # import matplotlib.pyplot as plt
-from polygon_calc_wrapper import PolygonCalc
+from .polygon_calc_wrapper import PolygonCalc
 # from pprint import pprint
 # from hull_computation import concave_hull
-from helperfunctions import cluster_abs_1d
-from basefunctions import complex_to_real
+from .helperfunctions import cluster_abs_1d
+from .basefunctions import complex_to_real
 
 
 logging.basicConfig(level=logging.INFO)
