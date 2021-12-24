@@ -7,9 +7,9 @@ import numpy as np
 import copy
 # from pylab import *
 # from scipy.ndimage import measurements
-import mser_functions
-from helperfunctions import clean_folder_contents
-from helperfunctions import pre_rectangle_center, rect_from_pre, detect_percentage, connect_polygon_cloud_2
+from . import mser_functions
+from .helperfunctions import clean_folder_contents, get_root_path
+from .helperfunctions import pre_rectangle_center, rect_from_pre, detect_percentage, connect_polygon_cloud_2
 # import time
 # import itertools
 from statistics import mean
@@ -20,7 +20,8 @@ import re
 # from color_processer_wrapper import ColorProcesser
 # import logging
 # import uuid
-from polygon_calc_wrapper import PolygonCalc
+from .polygon_calc_wrapper import PolygonCalc
+import os
 
 
 # white rgb pixel
@@ -99,8 +100,8 @@ def white_or_black(pixel):
 
 def main(path):
 
-    clean_folder_contents('temp1')
-    clean_folder_contents('temp')
+    clean_folder_contents(os.path.join(get_root_path(), 'temp1'))
+    clean_folder_contents(os.path.join(get_root_path(), 'temp'))
 
     start_time = datetime.now()
 
