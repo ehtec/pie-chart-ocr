@@ -537,11 +537,11 @@ def filter_chart_ellipse(detected_shapes):
 
     filtered_shape_tuples = [(shape_type, shape_data) for shape_type, el in filtered_shapes.items() for shape_data in el]
 
-    chart_ellipse = max(filtered_shape_tuples, key=lambda x: x[1]['area'])
-
     if not bool(filtered_shape_tuples):
         logging.warning("No chart ellipse found!")
         return None
+
+    chart_ellipse = max(filtered_shape_tuples, key=lambda x: x[1]['area'])
 
     logging.info("chart_ellipse: {0}".format(chart_ellipse))
 
