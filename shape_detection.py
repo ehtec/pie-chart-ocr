@@ -392,6 +392,8 @@ def detect_shapes(img):
 
         approx = np.array([(x, y), (x + w, y), (x + w, y + h), (x, y + h)])
 
+        cv2.drawContours(vis, [contour], -1, (0, 255, 0), 2)
+
         try:
 
             area_deviation_ratio = get_area_deviation_ratio(contour.reshape(-1, 2).astype(np.float64),
@@ -408,7 +410,7 @@ def detect_shapes(img):
             logging.warning("ValueError when executing get_area_deviation_ratio")
             approx = contour
 
-        cv2.drawContours(vis, [approx], -1, (0, 0, 255), 2)
+        # cv2.drawContours(vis, [approx], -1, (0, 0, 255), 2)
 
         la = len(approx)
 
@@ -434,6 +436,8 @@ def detect_shapes(img):
 
         elif la == 4:
             logging.info("Quadrilateral detected at position {0}".format((x, y)))
+
+            cv2.drawContours(vis, [approx], -1, (0, 0, 255), 2)
 
             # if approx.shape != (4, 1, 2):
             #     raise ValueError("Invalid shape before reshape to (4, 2): {0}".format(approx.shape))
@@ -472,7 +476,7 @@ def detect_shapes(img):
                 res_dict["ellipses"].append(blob_data)
 
         # cv2.namedWindow('vis', cv2.WINDOW_NORMAL)
-        cv2.drawContours(vis, [contour], -1, (0, 255, 0), 2)
+        # cv2.drawContours(vis, [contour], -1, (0, 255, 0), 2)
         # cv2.imshow('vis', vis)
         # cv2.resizeWindow('vis', 800, 800)
         # cv2.waitKey(0)
