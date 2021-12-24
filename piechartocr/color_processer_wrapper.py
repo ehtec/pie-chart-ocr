@@ -1,5 +1,5 @@
 from ctypes import cdll, c_double
-from ctypes.util import find_library
+# from ctypes.util import find_library
 import ctypes
 # from numpy.ctypeslib import as_ctypes, as_array, as_ctypes_type
 import numpy as np
