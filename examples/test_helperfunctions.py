@@ -1,6 +1,6 @@
 import logging
 logging.basicConfig(level=logging.DEBUG)
-import helperfunctions
+from piechartocr import helperfunctions
 import numpy as np
 
 
