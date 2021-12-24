@@ -1,7 +1,7 @@
 import logging
 import os
 import csv
-from helperfunctions import hash_file, get_root_path
+from .helperfunctions import hash_file, get_root_path
 
 
 # get (csvpath, imagepath) by number from stephs first test dataset
