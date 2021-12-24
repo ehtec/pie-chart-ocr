@@ -402,7 +402,7 @@ def detect_shapes(img):
 
         cv2.drawContours(vis, [contour], -1, (0, 255, 0), 2)
 
-        logging.info("approx: {0}".format(approx))
+        # logging.info("approx: {0}".format(approx))
 
         try:
 
