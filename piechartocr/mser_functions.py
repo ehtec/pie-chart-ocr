@@ -509,7 +509,7 @@ def main(path):
     # # cv2.polylines(vis, regions, 1, (0, 255, 0))
     # cv2.polylines(vis, new_hulls, 1, (0, 255, 0))
 
-    cv2.imwrite(os.path.join(get_root_path(), 'temp2', 'mser_result.png', vis))
+    cv2.imwrite(os.path.join(get_root_path(), 'temp2', 'mser_result.png'), vis)
 
     # cv2.imshow('img', vis)
     #
@@ -539,7 +539,7 @@ def main(path):
 
     # text_only[mask == (255, 255, 255)] = (255, 255, 255)
 
-    cv2.imwrite(os.path.join(get_root_path(), 'temp2', 'mser_result_text_only.png', text_only))
+    cv2.imwrite(os.path.join(get_root_path(), 'temp2', 'mser_result_text_only.png'), text_only)
 
     # cv2.imshow("text only", text_only)
     #
