@@ -8,6 +8,7 @@ from polygon_calc_wrapper import PolygonCalc
 # from pprint import pprint
 # from hull_computation import concave_hull
 from helperfunctions import cluster_abs_1d
+from basefunctions import complex_to_real
 
 
 logging.basicConfig(level=logging.INFO)
@@ -143,6 +144,10 @@ def check_ellipse_or_circle(arr):
 
         reg_params = reg.as_parameters()
 
+        reg_params = np.hstack(reg_params).tolist()
+
+        reg_params = [complex_to_real(el) for el in reg_params]
+
     except ValueError:
         logging.warning("ValueError when trying to fit ellipse")
         return 0, {}
@@ -153,9 +158,10 @@ def check_ellipse_or_circle(arr):
 
     logging.info("Ellipse parameters: {0}".format(reg_params))
 
-    center, width, height, phi = reg_params
+    center_x, center_y, width, height, phi = reg_params
 
-    logging.info("center: {0}".format(center))
+    logging.info("center_x: {0}".format(center_x))
+    logging.info("center_y: {0}".format(center_y))
     logging.info("width: {0}".format(width))
     logging.info("height: {0}".format(height))
     logging.info("phi: {0}".format(phi))
@@ -165,9 +171,9 @@ def check_ellipse_or_circle(arr):
     # width = 2 * width
     # height = 2 * height
 
-    x_values = center[0] + (width * np.cos(t_values) * np.cos(phi) - height * np.sin(t_values) * np.sin(phi))
+    x_values = center_x + (width * np.cos(t_values) * np.cos(phi) - height * np.sin(t_values) * np.sin(phi))
 
-    y_values = center[1] + (width * np.cos(t_values) * np.sin(phi) + height * np.sin(t_values) * np.cos(phi))
+    y_values = center_x + (width * np.cos(t_values) * np.sin(phi) + height * np.sin(t_values) * np.cos(phi))
 
     res_arr = np.column_stack([x_values, y_values])
 
@@ -393,6 +399,8 @@ def detect_shapes(img):
         approx = np.array([(x, y), (x + w, y), (x + w, y + h), (x, y + h)])
 
         cv2.drawContours(vis, [contour], -1, (0, 255, 0), 2)
+
+        logging.info("approx: {0}".format(approx))
 
         try:
 
