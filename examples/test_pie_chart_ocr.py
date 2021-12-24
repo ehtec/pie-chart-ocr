@@ -2,10 +2,12 @@ import logging
 
 logging.basicConfig(level=logging.INFO)
 
-import pie_chart_ocr
-import mser_functions
-from data_helpers import get_steph_test_path, load_annotations_from_csv, test_data_format, test_data_duplicates,\
-    test_data_percentages
+from piechartocr import pie_chart_ocr
+from piechartocr import mser_functions
+from piechartocr.data_helpers import get_steph_test_path, load_annotations_from_csv, test_data_format,\
+    test_data_duplicates, test_data_percentages
+from piechartocr.helperfunctions import get_root_path
+import os
 
 
 # IMG_INPUT_PATH = '/home/elias/pdf_images/saved_images/image-019_1.png'
@@ -50,7 +52,7 @@ IMG_INPUT_PATH = '/home/elias/pdf_images/saved_images/image-024.jpg'
 
 n = int(input("Image id: "))
 
-path = "temp2/upscaled{0}.png".format(n)
+path = os.path.join(get_root_path(), "temp2", "upscaled{0}.png".format(n))
 
 pie_chart_ocr.main(path)
 
