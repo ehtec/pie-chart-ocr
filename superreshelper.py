@@ -5,6 +5,7 @@ from data_helpers import get_steph_test_path
 import os
 import numpy as np
 import math
+from helperfunctions import get_root_path
 
 
 # target pixel number after neural network upscale
@@ -31,7 +32,7 @@ def upsample_image(image):
         sr = dnn_superres.DnnSuperResImpl_create()
 
         # models taken from https://github.com/Saafke/EDSR_Tensorflow
-        path = "EDSR_x{0}.pb".format(upscale_factor)
+        path = os.path.join(get_root_path(), "models", "EDSR_x{0}.pb".format(upscale_factor))
 
         sr.readModel(path)
 
@@ -45,7 +46,7 @@ def upsample_image(image):
 # upscale image file from test dataset
 def upscale_test_image_file(n):
 
-    if not os.path.isfile('temp2/upscaled{0}.png'.format(n)):
+    if not os.path.isfile(os.path.join(get_root_path(), 'temp2', 'upscaled{0}.png'.format(n))):
 
         csvpath, imagepath = get_steph_test_path(n)
 
@@ -53,4 +54,6 @@ def upscale_test_image_file(n):
 
         result = upsample_image(image)
 
-        cv2.imwrite('temp2/upscaled{0}.png'.format(n), result)
+        output_path = os.path.join(get_root_path(), 'temp2', 'upscaled{0}.png'.format(n))
+
+        cv2.imwrite(output_path, result)
