@@ -1,9 +1,15 @@
-import mser_functions
-import superreshelper
+from piechartocr import mser_functions
+from piechartocr import superreshelper
 
 
-n = int(input("Image id: "))
+def main():
 
-superreshelper.upscale_test_image_file(n)
+    n = int(input("Image id: "))
 
-mser_functions.main('temp2/upscaled{0}.png'.format(n))
+    superreshelper.upscale_test_image_file(n)
+
+    mser_functions.main('temp2/upscaled{0}.png'.format(n))
+
+
+if __name__ == "__main__":
+    main()
