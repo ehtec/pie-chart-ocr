@@ -1,12 +1,16 @@
 from ctypes import cdll, c_double
+from ctypes.util import find_library
 import ctypes
 # from numpy.ctypeslib import as_ctypes, as_array, as_ctypes_type
 import numpy as np
 from numpy.ctypeslib import ndpointer
 import copy
+import logging
 
-lib = cdll.LoadLibrary('./libcolorprocesser.so')
 
+lib_path = find_library('colorprocesser')
+logging.info("colorprocesser library path: {0}".format(lib_path))
+lib = cdll.LoadLibrary(lib_path)
 # set output types for ColorProcesser methods
 lib.ColorProcesser_helloworld.restype = c_double
 lib.ColorProcesser_test_calc.restype = c_double

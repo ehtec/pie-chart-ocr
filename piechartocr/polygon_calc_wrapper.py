@@ -1,12 +1,16 @@
 from ctypes import cdll, c_double, c_ulong
+from ctypes.util import find_library
 import ctypes
 # from numpy.ctypeslib import as_ctypes, as_array, as_ctypes_type
 import numpy as np
 import copy
 from numpy.ctypeslib import ndpointer
+import logging
 
 
-lib = cdll.LoadLibrary('./libpolygoncalc.so')
+lib_path = find_library('polygoncalc')
+logging.info("polygoncalc library path: {0}".format(lib_path))
+lib = cdll.LoadLibrary(lib_path)
 
 # set output types for PolygonCalc methods
 lib.PolygonCalc_helloworld.restype = c_double
