@@ -3,6 +3,12 @@ import os
 import platform
 
 
+# get root path
+def get_root_path():
+
+    return os.path.dirname(os.path.dirname(__file__))
+
+
 # convert complex to real, throw error if imaginary part is not 0. Return orignial number if it is not a complex.
 def complex_to_real(c):
 
