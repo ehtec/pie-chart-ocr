@@ -13,14 +13,14 @@ from pytesseract import image_to_string
 from PIL import Image  # , ImageFilter
 # from helperfunctions import get_cv2_dominant_color, get_cv2_dominant_color_2, get_cv2_dominant_color_3,\
 #     get_cv2_dominant_color_4, get_cv2_dominant_color_5
-from helperfunctions import get_cv2_dominant_color_3
+from .helperfunctions import get_cv2_dominant_color_3
 # from polygon_helperfunctions import group_words
-from polygon_calc_wrapper import PolygonCalc
+from .polygon_calc_wrapper import PolygonCalc
 from pytesseract import Output
 import pytesseract
-from color_processer_wrapper import ColorProcesser
+from .color_processer_wrapper import ColorProcesser
 # import ellipse_detection
-import shape_detection
+from . import shape_detection
 
 
 # maximum ratio of the total area a mser box might take
