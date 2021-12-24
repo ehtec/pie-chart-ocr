@@ -35,6 +35,7 @@ Compile libraries:
 
 ```commandline
 python3 setup.py build_ext
+mkdir lib
 sudo python3 setup.py install --install-lib lib/
 ```
 
