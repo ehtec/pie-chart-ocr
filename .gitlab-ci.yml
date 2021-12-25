@@ -12,7 +12,7 @@ flake8:
 
 nose2:
   stage: test
-  image: python:3.7
+  image: python:3.7-buster
   before_script:
     - pip install -r requirements.txt
   script:
