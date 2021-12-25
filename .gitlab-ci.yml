@@ -1,5 +1,6 @@
 stages:
   - linting
+  - test
 
 flake8:
   stage: linting
@@ -8,3 +9,11 @@ flake8:
     - pip install flake8
   script:
     - flake8 .
+
+nose2:
+  stage: test
+  image: python:3.7
+  before_script:
+    - pip install -r requirements.txt
+  script:
+    - python3 -m nose2 .
