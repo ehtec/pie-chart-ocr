@@ -26,7 +26,7 @@ nose2:
     - mkdir temp2
     - unzip data/charts_steph.zip -d data
   script:
-    - python3 -m nose2 --start-dir tests/
+    - python3 -m nose2 --start-dir tests/ --with-coverage
     - python3 -m coverage xml --fail-under 0
   artifacts:
     reports:
