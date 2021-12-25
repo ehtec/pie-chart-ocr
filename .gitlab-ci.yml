@@ -14,13 +14,13 @@ nose2:
   stage: test
   image: python:3.7-buster
   before_script:
-    - sudo apt update
-    - sudo apt install libboost-system-dev tesseract-ocr build-essential git
+    - apt update
+    - apt install libboost-system-dev tesseract-ocr build-essential git
     - pip install -r requirements.txt
     - git submodule update --init --recursive
     - python3 setup.py build_ext
     - mkdir lib
-    - sudo python3 setup.py install --install-lib lib/
+    - python3 setup.py install --install-lib lib/
     - mkdir temp
     - mkdir temp1
     - mkdir temp2
