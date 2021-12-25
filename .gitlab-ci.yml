@@ -27,3 +27,5 @@ nose2:
     - unzip data/charts_steph.zip -d data
   script:
     - python3 -m nose2 --start-dir tests/
+  only:
+    - merge_requests
