@@ -58,16 +58,19 @@ unzip data/charts_steph.zip -d data
 
 # Usage
 
-Run tests on an image for the first time (also uses upsampling):
+Run unit tests:
 
 ```commandline
-python3 test_superreshelper.py
+python3 -m nose2 --start-dir tests/
+```
+
+Run legacy tests / examples:
+
+```commandline
+python3 run_examples.py
 ```
 
 The script asks for an image ID. Use `4`, for example.
 
-Run tests for images that were already upsampled:
-
-```commandline
-python3 test_pie_chart_ocr.py
-```
+You need to close all `matplotlib` figures by pressing the "x", and all `opencv` images
+labeled `img` or `vis` by pressing an arbitrary key.
