@@ -17,7 +17,7 @@ https://github.com/ehtec/pie-chart-ocr is a mirror.
 Install Boost and Tesseract:
 
 ```commandline
-sudo apt install libboost-all-dev tesseract-ocr build-essential
+sudo apt install libboost-system-dev tesseract-ocr build-essential git
 ```
 
 Clone this repository including submodules:
