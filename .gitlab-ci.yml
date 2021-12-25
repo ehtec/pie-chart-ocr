@@ -27,5 +27,9 @@ nose2:
     - unzip data/charts_steph.zip -d data
   script:
     - python3 -m nose2 --start-dir tests/
-  only:
-    - merge_requests
+    - python3 -m coverage xml --fail-under 0
+  artifacts:
+    reports:
+      cobertura: coverage.xml
+#  only:
+#    - merge_requests
