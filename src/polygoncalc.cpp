@@ -114,7 +114,6 @@ class PolygonCalc{
 
             double totalArea = 0.0;
 
-            int i = 0;
             BOOST_FOREACH(polygon_type const& p, output)
             {
 
@@ -319,9 +318,7 @@ class PolygonCalc{
             std::vector<point_type> points2;
             
             double height;
-                        
-            int j;
-            
+                                    
             double dist;
             
             double totalArea;
@@ -442,9 +439,7 @@ class PolygonCalc{
             double min_x_dist, min_y_dist, min_normal_dist;
             
             double pre_threshold_dist = std::max(5.0, threshold_dist);
-                        
-            int j;
-            
+                                    
             double dist;
             
             double totalArea;
