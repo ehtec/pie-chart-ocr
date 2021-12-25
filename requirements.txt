@@ -16,3 +16,4 @@ colormath
 colorthief
 sklearn
 nose2
+coverage
