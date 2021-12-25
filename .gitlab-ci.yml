@@ -15,7 +15,7 @@ nose2:
   image: python:3.7-buster
   before_script:
     - apt update
-    - apt install libboost-system-dev tesseract-ocr build-essential git
+    - apt install libboost-system-dev tesseract-ocr build-essential git -y
     - pip install -r requirements.txt
     - git submodule update --init --recursive
     - python3 setup.py build_ext
