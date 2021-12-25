@@ -53,9 +53,7 @@ mkdir temp2
 Unpack test charts:
 
 ```commandline
-cd data
-unzip charts_steph.zip
-cd ..
+unzip data/charts_steph.zip -d data
 ```
 
 # Usage
