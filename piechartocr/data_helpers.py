@@ -20,17 +20,17 @@ def get_steph_test_path(n):
     logging.debug("imagefiles: {0}".format(imagefiles))
 
     if not bool(imagefiles):
-        raise Exception("No image found for chart number {0}".format(n))
+        raise FileNotFoundError("No image found for chart number {0}".format(n))
 
     imagepath = os.path.join(basepath, imagefiles[0])
 
     csvpath = os.path.join(basepath, "annotation.csv")
 
     if not os.path.isfile(csvpath):
-        raise Exception("No annotation found for chart number {0}".format(n))
+        raise FileNotFoundError("No annotation found for chart number {0}".format(n))
 
     if not os.path.isfile(imagepath):
-        raise Exception("No image found for chart number {0}".format(n))
+        raise FileNotFoundError("No image found for chart number {0}".format(n))
 
     return csvpath, imagepath
 
