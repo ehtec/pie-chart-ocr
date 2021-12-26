@@ -220,6 +220,11 @@ def main(path):
 
     get_image_color_pixels(img_bin, chart_ellipse[1]['approx'], 7)
 
+    # only for squares for testing
+    legend_colors = [el['dominant_color'] for el in legend_squares]
+
+    shape_detection.detect_ellipse_sectors(img, legend_colors, chart_ellipse[1])
+
     # logging.info("MAX AREA: {0}".format(total_area * MAX_MSER_BOX_RATIO))
 
     # Create MSER object
