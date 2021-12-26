@@ -260,6 +260,8 @@ def main(path):
 
     chart_data.update({"has_legend": has_legend, "has_chart_ellipse": has_chart_ellipse})
 
+    logging.debug("chart_data: {0}".format(chart_data))
+
     # logging.info("MAX AREA: {0}".format(total_area * MAX_MSER_BOX_RATIO))
 
     # Create MSER object
