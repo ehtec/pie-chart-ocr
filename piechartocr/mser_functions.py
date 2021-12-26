@@ -209,7 +209,7 @@ def main(path):
         ("dilation", 7, 6)
     ]
 
-    img_bin_chart_ellipse = erosion_dilation_operations(img_bin, chart_ellipse_operations)
+    # img_bin_chart_ellipse = erosion_dilation_operations(img_bin, chart_ellipse_operations)
 
     # img_bin = cv2.resize(img_rgb, (int(width * 0.4), int(height * 0.4)), interpolation=cv2.INTER_NEAREST)
 
