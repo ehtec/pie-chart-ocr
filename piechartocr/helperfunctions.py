@@ -512,3 +512,27 @@ def white_or_black(pixel):
 
     else:
         return 1
+
+
+# perform a couple of erosion / dilation operations on an opencv image.
+# the operations parameter has the following format: [('erosion' | 'dilation', kernel_size, iterations)]
+def erosion_dilation_operations(img, operations):
+
+    img_copy = img.copy()
+
+    for operation_type, kernel_size, iterations in operations:
+
+        kernel = np.ones((kernel_size, kernel_size), np.uint8)
+
+        if operation_type == 'erosion':
+            func = cv2.erode
+
+        elif operation_type == 'dilation':
+            func = cv2.dilate
+
+        else:
+            raise NotImplementedError("Operation {0} is not implemented.".format(operation_type))
+
+        img_copy = func(img_copy, kernel, iterations=iterations)
+
+    return img_copy

@@ -13,7 +13,7 @@ import re
 from PIL import Image  # , ImageFilter
 # from helperfunctions import get_cv2_dominant_color, get_cv2_dominant_color_2, get_cv2_dominant_color_3,\
 #     get_cv2_dominant_color_4, get_cv2_dominant_color_5
-from .helperfunctions import get_cv2_dominant_color_3, get_root_path
+from .helperfunctions import get_cv2_dominant_color_3, get_root_path, erosion_dilation_operations
 # from polygon_helperfunctions import group_words
 from .polygon_calc_wrapper import PolygonCalc
 from pytesseract import Output
@@ -189,13 +189,20 @@ def main(path):
 
     # apply erode filter
 
-    kernel = np.ones((5, 5), np.uint8)
+    # kernel = np.ones((5, 5), np.uint8)
+    #
+    # img_bin = cv2.erode(img_bin, kernel, iterations=1)
+    #
+    # # apply dilate filter
+    #
+    # img_bin = cv2.dilate(img_bin, kernel, iterations=2)
 
-    img_bin = cv2.erode(img_bin, kernel, iterations=1)
+    operations = [
+        ("erosion", 5, 1),
+        ("dilation", 5, 2)
+    ]
 
-    # apply dilate filter
-
-    img_bin = cv2.dilate(img_bin, kernel, iterations=2)
+    img_bin = erosion_dilation_operations(img_bin, operations)
 
     # img_bin = cv2.resize(img_rgb, (int(width * 0.4), int(height * 0.4)), interpolation=cv2.INTER_NEAREST)
 
