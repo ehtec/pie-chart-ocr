@@ -704,6 +704,10 @@ def detect_ellipse_sectors(img, legend_colors, chart_ellipse, max_color_distance
         kernel = np.ones((erosion_kernel_size, erosion_kernel_size), np.uint8)
         img_mask = cv2.erode(img_mask, kernel, iterations=erosion_iterations)
 
+    logging.debug("img_mask.shape before: {0}".format(img_mask.shape))
+    img_mask = img_mask[:, :, 0]
+    logging.debug("img_Mask shape after: {0}".format(img_mask.shape))
+
     centers = []
 
     for legend_color in legend_colors:
@@ -712,10 +716,10 @@ def detect_ellipse_sectors(img, legend_colors, chart_ellipse, max_color_distance
 
         color_distances = cp.array_color_distance(legend_color_rgb, img_rgb)
 
-        sector_points = np.where((img_mask == (255, 255, 255)) & (color_distances <= max_color_distance))
+        sector_points = np.where((img_mask == 255) & (color_distances <= max_color_distance))
 
         logging.debug("sector_points: {0}".format(sector_points))
-        logging.info("sector_points.shape: {0}".format(sector_points.shape))
+        logging.info("sector_points[0].shape: {0}".format(sector_points[0].shape))
 
         assert len(sector_points) == 2
 
