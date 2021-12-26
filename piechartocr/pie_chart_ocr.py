@@ -1,7 +1,7 @@
 # import pytesseract
 # from pytesseract import Output
 import cv2
-from pprint import pprint
+# from pprint import pprint
 # from PIL import Image, ImageOps, ImageFilter, ImageEnhance
 import numpy as np
 import copy
