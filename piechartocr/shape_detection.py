@@ -634,7 +634,7 @@ def filter_legend_squares(detected_shapes, img, colors_num):
 
 
 # filter the main chart circle / ellipse from the res_dict of detected shapes
-def filter_legend_rectangles(detected_shapes):
+def filter_legend_rectangles(detected_shapes, img, colors_num):
 
     filtered_shapes = copy.deepcopy(detected_shapes)
 
@@ -663,6 +663,9 @@ def filter_legend_rectangles(detected_shapes):
     filtered_shapes["rectangles"] = [el for el in filtered_shapes["rectangles"] if el["delta_x"] >= el["delta_y"]]
 
     logging.info("filtered_shapes: {0}".format(filtered_shapes))
+
+    # add color info
+    filtered_shapes = add_color_info(filtered_shapes, img, colors_num)
 
     filtered_square_ab_values = [[el["delta_x"], el["delta_y"]] for el in filtered_shapes['rectangles']]
 
@@ -805,7 +808,7 @@ def optimize_detected_shapes(img, img_bin, colors_num):
 
         legend_squares = filter_legend_squares(detected_shapes, img, colors_num)
 
-        legend_rectangles = filter_legend_rectangles(detected_shapes)
+        legend_rectangles = filter_legend_rectangles(detected_shapes, img, colors_num)
 
         legend_squares_results.append(legend_squares)
         legend_rectangles_results.append(legend_rectangles)
