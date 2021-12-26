@@ -411,14 +411,14 @@ def detect_shapes(img):
 
             if area_deviation_ratio > MAX_RECT_AREA_DEVIATION:
                 logging.info("area_deviation_ratio too big: {0}".format(area_deviation_ratio))
-                approx = contour
+                approx = contour.reshape(-1, 2)
 
             logging.info("Successful execution of get_area_deviation_ratio!")
 
         except ValueError as e:
             logging.exception(e)
             logging.warning("ValueError when executing get_area_deviation_ratio")
-            approx = contour
+            approx = contour.reshape(-1, 2)
 
         # cv2.drawContours(vis, [approx], -1, (0, 0, 255), 2)
 
