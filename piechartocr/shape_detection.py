@@ -8,6 +8,7 @@ from .polygon_calc_wrapper import PolygonCalc
 # from pprint import pprint
 # from hull_computation import concave_hull
 from .helperfunctions import cluster_abs_1d, cluster_dbscan, get_image_color_pixels, get_cv2_dominant_color_3
+from .helperfunctions import erosion_dilation_operations, find_longest_sequence
 from .basefunctions import complex_to_real
 from .color_processer_wrapper import ColorProcesser
 
@@ -738,3 +739,58 @@ def detect_ellipse_sectors(img, legend_colors, chart_ellipse, max_color_distance
     logging.info("centers: {0}".format(centers))
 
     return centers
+
+
+# optimize detected shapes by executing different erosion dilation operations
+def optimize_detected_shapes(img):
+
+    # separate operations for chart ellipse detection to deal with larger gaps
+    chart_ellipse_operations_set = [[
+        ("erosion", 7, i),
+        ("dilation", 7, i + 1)
+    ] for i in range(8)]
+
+    operations_set = [[
+        ("erosion", 5, i),
+        ("dilation", 5, i + 1)
+    ] for i in range(3)]
+
+    chart_ellipse_results = []
+    legend_squares_results = []
+    legend_rectangles_results = []
+
+    for i in range(len(chart_ellipse_operations_set)):
+
+        chart_ellipse_operations = chart_ellipse_operations_set[i]
+
+        img_bin_chart_ellipse = erosion_dilation_operations(img, chart_ellipse_operations)
+
+        chart_ellipse_detected_shapes = detect_shapes(img_bin_chart_ellipse)
+
+        chart_ellipse = filter_chart_ellipse(chart_ellipse_detected_shapes)
+
+        chart_ellipse_results.append(chart_ellipse)
+
+        if (i == 0) and (chart_ellipse is not None):
+            # do not continue to save computation time if the first search is already a hit
+            break
+
+    logging.debug("chart_ellipse_results: {0}".format(chart_ellipse_results))
+
+    chart_ellipse_boolean_results = [el is not None for el in chart_ellipse_results]
+
+    logging.debug("chart_ellipse_boolean_results: {0}".format(chart_ellipse_boolean_results))
+
+    if not any(chart_ellipse_boolean_results):
+        chart_ellipse = None
+
+    else:
+        if chart_ellipse_boolean_results[0]:
+            chart_ellipse = chart_ellipse_results[0]
+
+        else:
+            middle_index = find_longest_sequence(chart_ellipse_boolean_results, lambda x: x)
+            logging.debug("middle_index: {0}".format(middle_index))
+            chart_ellipse = chart_ellipse_results[middle_index]
+
+    logging.debug("chart_ellipse: {0}".format(chart_ellipse))
