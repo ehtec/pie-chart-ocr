@@ -12,7 +12,7 @@ import re
 from PIL import Image  # , ImageFilter
 # from helperfunctions import get_cv2_dominant_color, get_cv2_dominant_color_2, get_cv2_dominant_color_3,\
 #     get_cv2_dominant_color_4, get_cv2_dominant_color_5
-from .helperfunctions import get_cv2_dominant_color_3, get_root_path
+from .helperfunctions import get_cv2_dominant_color_3, get_root_path, rect_from_pre
 # from polygon_helperfunctions import group_words
 from .polygon_calc_wrapper import PolygonCalc
 from pytesseract import Output
@@ -250,6 +250,9 @@ def main(path):
     legend_type = None
     legend_shapes = None
 
+    # list of all legend shapes. They need to be removed from the text detection shapes
+    p_list = []
+
     if bool(chart_ellipse):
         has_chart_ellipse = True
         chart_data.update({'chart_ellipse': chart_ellipse})
@@ -269,6 +272,8 @@ def main(path):
             legend_colors = [el['dominant_color'] for el in legend_shapes]
 
             sector_centers = shape_detection.detect_ellipse_sectors(img, legend_colors, chart_ellipse[1])
+
+            p_list += [el['approx'] for el in legend_shapes]
 
             chart_data.update({
                 "legend_type": legend_type,
@@ -299,6 +304,8 @@ def main(path):
     logging.info(img.shape)
 
     filtered_res_tuples = []
+
+    pc = PolygonCalc()
 
     for box in bounding_boxes:
 
@@ -377,7 +384,21 @@ def main(path):
 
         # cv2.rectangle(vis, (x, y), (x + w, y + h), (0, 255, 0), 1)
 
-        filtered_res_tuples.append((x, y, x + w, y + h))
+        pre_p1 = (x, y, x + w, y + h)
+        p1 = rect_from_pre(pre_p1)
+
+        should_continue = False
+
+        for p2 in p_list:
+            the_distance = pc.min_poly_distance(p1, p2)
+            if the_distance == 0:
+                should_continue = True
+                break
+
+        if should_continue:
+            continue
+
+        filtered_res_tuples.append(pre_p1)
 
     # cv2.imshow('vis', vis)
     #
@@ -386,8 +407,6 @@ def main(path):
     # vis = img.copy()
 
     # word_grouped_tuples = group_words(filtered_res_tuples)
-
-    pc = PolygonCalc()
 
     word_grouped_tuples = pc.group_elements(filtered_res_tuples, MAX_LETTER_DISTANCE_RATIO, SLOV_RATIO)
 
