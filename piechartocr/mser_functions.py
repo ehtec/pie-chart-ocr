@@ -1,6 +1,5 @@
 import logging
 import os.path
-
 import cv2
 import cv2.cv2
 import numpy as np
@@ -204,6 +203,14 @@ def main(path):
 
     img_bin = erosion_dilation_operations(img_bin, operations)
 
+    # separate operations for chart ellipse detection to deal with larger gaps
+    chart_ellipse_operations = [
+        ("erosion", 7, 5),
+        ("dilation", 7, 6)
+    ]
+
+    img_bin_chart_ellipse = erosion_dilation_operations(img_bin, chart_ellipse_operations)
+
     # img_bin = cv2.resize(img_rgb, (int(width * 0.4), int(height * 0.4)), interpolation=cv2.INTER_NEAREST)
 
     # cv2.imshow('img_bin', img_bin)
@@ -213,14 +220,18 @@ def main(path):
 
     # apply median blur to smoothen edges
     # img_bin = cv2.medianBlur(img_bin, MEDIAN_BLUR_KERNEL_SIZE)
+    #
+    # detected_shapes = shape_detection.detect_shapes(img_bin)
+    #
+    # chart_ellipse_detected_shapes = shape_detection.detect_shapes(img_bin_chart_ellipse)
+    #
+    # chart_ellipse = shape_detection.filter_chart_ellipse(chart_ellipse_detected_shapes)
+    #
+    # legend_squares = shape_detection.filter_legend_squares(detected_shapes, img, COLORS_NUM)
+    #
+    # legend_rectangles = shape_detection.filter_legend_rectangles(detected_shapes)
 
-    detected_shapes = shape_detection.detect_shapes(img_bin)
-
-    chart_ellipse = shape_detection.filter_chart_ellipse(detected_shapes)
-
-    legend_squares = shape_detection.filter_legend_squares(detected_shapes, img, COLORS_NUM)
-
-    legend_rectangles = shape_detection.filter_legend_rectangles(detected_shapes)
+    chart_ellipse, legend_squares, legend_rectangles = shape_detection.optimize_detected_shapes(img, COLORS_NUM)
 
     logging.info("legend_squares: {0}".format(legend_squares))
 
