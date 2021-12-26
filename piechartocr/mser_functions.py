@@ -6,7 +6,7 @@ import cv2.cv2
 import numpy as np
 import re
 # import pytesseract
-from pytesseract import image_to_string
+# from pytesseract import image_to_string
 # from PIL import Image, ImageOps, ImageEnhance, ImageFilter
 # from pprint import pprint
 # from colorthief import ColorThief, MMCQ
