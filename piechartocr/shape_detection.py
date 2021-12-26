@@ -723,7 +723,7 @@ def detect_ellipse_sectors(img, legend_colors, chart_ellipse, max_color_distance
 
         assert len(sector_points) == 2
 
-        center = [el.mean() for el in sector_points]
+        center = list(reversed([el.mean() for el in sector_points]))
 
         logging.info("center: {0}".format(center))
 
