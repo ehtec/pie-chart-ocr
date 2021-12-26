@@ -748,7 +748,7 @@ def optimize_detected_shapes(img, img_bin, colors_num):
     chart_ellipse_operations_set = [[
         ("erosion", 7, i),
         ("dilation", 7, i + 1)
-    ] for i in range(8)]
+    ] for i in range(11)]
 
     operations_set = [[
         ("erosion", 5, i),
