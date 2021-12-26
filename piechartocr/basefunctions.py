@@ -27,7 +27,7 @@ def find_lib(search_path, keyword):
         logging.warning("Path {0} is not a directory".format(search_path))
         return None
 
-    files = os.listdir(search_path)
+    # files = os.listdir(search_path)
 
     if platform.system().upper() == "WINDOWS":
         fileext = ".dll"
@@ -35,9 +35,22 @@ def find_lib(search_path, keyword):
     else:
         fileext = ".so"
 
-    files = [el for el in files if el.lower().endswith(fileext)]
+    # files = [el for el in files if el.lower().endswith(fileext)]
 
-    files = [el for el in files if keyword in el]
+    # files = [el for el in files if keyword in el]
+
+    files = []
+
+    for root, dirs, the_files in os.walk(search_path):
+        for a_file in the_files:
+
+            if not a_file.lower().endswith(fileext):
+                continue
+
+            if keyword not in a_file:
+                continue
+
+            files.append(os.path.join(root, a_file))
 
     if not bool(files):
         return None
