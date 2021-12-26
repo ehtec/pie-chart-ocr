@@ -12,7 +12,7 @@ import re
 from PIL import Image  # , ImageFilter
 # from helperfunctions import get_cv2_dominant_color, get_cv2_dominant_color_2, get_cv2_dominant_color_3,\
 #     get_cv2_dominant_color_4, get_cv2_dominant_color_5
-from .helperfunctions import get_cv2_dominant_color_3, get_root_path, remove_sc_prefix, remove_sc_suffix
+from .helperfunctions import get_cv2_dominant_color_3, get_root_path
 # from polygon_helperfunctions import group_words
 from .polygon_calc_wrapper import PolygonCalc
 from pytesseract import Output
@@ -501,8 +501,8 @@ def main(path):
 
                 the_str = d['text'][i].strip()
 
-                the_str = remove_sc_prefix(the_str)
-                the_str = remove_sc_suffix(the_str)
+                # the_str = remove_sc_prefix(the_str)
+                # the_str = remove_sc_suffix(the_str)
 
                 if not bool(re.findall(r'[A-Za-z0-9%]+', the_str)):
                     logging.info("Discarding {0} because it does not have at least one needed character.".format(res_tuple))

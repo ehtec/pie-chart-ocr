@@ -10,6 +10,7 @@ import copy
 from . import mser_functions
 from .helperfunctions import clean_folder_contents, get_root_path, calculate_distance_matrix
 from .helperfunctions import pre_rectangle_center, rect_from_pre, detect_percentage, connect_polygon_cloud_2
+from .helperfunctions import remove_sc_prefix, remove_sc_suffix
 # import time
 # import itertools
 from statistics import mean
@@ -250,6 +251,12 @@ def main(path, interactive=True):
             polygons_percent.append(p1)
 
         else:
+
+            s = remove_sc_suffix(s)
+            s = remove_sc_prefix(s)
+
+            if not bool(s):
+                continue
 
             polygons_text_data.append((p1, s))
 
