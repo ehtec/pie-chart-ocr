@@ -204,10 +204,10 @@ def main(path):
     img_bin = erosion_dilation_operations(img_bin, operations)
 
     # separate operations for chart ellipse detection to deal with larger gaps
-    chart_ellipse_operations = [
-        ("erosion", 7, 5),
-        ("dilation", 7, 6)
-    ]
+    # chart_ellipse_operations = [
+    #     ("erosion", 7, 5),
+    #     ("dilation", 7, 6)
+    # ]
 
     # img_bin_chart_ellipse = erosion_dilation_operations(img_bin, chart_ellipse_operations)
 
