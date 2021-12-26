@@ -301,8 +301,12 @@ def main(path, interactive=True):
             legend_polygons = [el['approx'] for el in chart_data['legend_shapes']]
             sector_centers = chart_data['sector_centers']
 
+            # this should never happen. Would be an implementation error
             assert len(legend_polygons) == len(sector_centers)
             assert len(legend_polygons) == len(polygons_percent)
+
+            # we cannot proceed if there is less text than percent numbers. Probably too many overlaps detected
+            assert len(polygons_percent) <= len(polygons_text)
 
             # polygons made of a single point
             sector_polygons = [[el] for el in sector_centers]
