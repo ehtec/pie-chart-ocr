@@ -273,11 +273,18 @@ def main(path, interactive=True):
 
     else:
 
-        if (chart_data['has_legend']) and (not chart_data['has_chart_ellipse']):
-            logging.warning("The chart has a legend, but no chart ellipse was found.")
+        if not chart_data['has_chart_ellipse']:
+            logging.warning("No chart ellipse found!")
             logging.warning("Falling back to legacy method. The results might be wrong.")
             chart_data['has_legend'] = False
             fallback_used = True
+
+        # not possible to reach with the current method, as no legend is computed when no chart ellipse is found
+        # if (chart_data['has_legend']) and (not chart_data['has_chart_ellipse']):
+        #     logging.warning("The chart has a legend, but no chart ellipse was found.")
+        #     logging.warning("Falling back to legacy method. The results might be wrong.")
+        #     chart_data['has_legend'] = False
+        #     fallback_used = True
 
         if chart_data['has_legend']:
             if len(chart_data['legend_shapes']) != len(polygons_percent):
