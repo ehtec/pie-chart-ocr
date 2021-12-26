@@ -12,7 +12,7 @@ import re
 from PIL import Image  # , ImageFilter
 # from helperfunctions import get_cv2_dominant_color, get_cv2_dominant_color_2, get_cv2_dominant_color_3,\
 #     get_cv2_dominant_color_4, get_cv2_dominant_color_5
-from .helperfunctions import get_cv2_dominant_color_3, get_root_path, erosion_dilation_operations
+from .helperfunctions import get_cv2_dominant_color_3, get_root_path
 # from polygon_helperfunctions import group_words
 from .polygon_calc_wrapper import PolygonCalc
 from pytesseract import Output
