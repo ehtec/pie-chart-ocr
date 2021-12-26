@@ -16,6 +16,7 @@ import scipy.cluster
 from colormath.color_objects import sRGBColor, LabColor
 from colormath.color_conversions import convert_color
 from sklearn.cluster import DBSCAN
+import cv2
 
 
 # equivalent to rm -rf
@@ -417,8 +418,12 @@ def cluster_rel_1d(input_values, rtol):
 # cluster multidimensional array with the DBSCAN algorithm
 def cluster_dbscan(input_array, eps, min_samples=1, input_objects=None):
 
+    empty_return = []
+    if input_objects is not None:
+        empty_return = [], []
+
     if input_array is None:
-        return []
+        return empty_return
 
     if input_objects is not None:
         assert len(input_objects) == len(input_array)
@@ -430,7 +435,7 @@ def cluster_dbscan(input_array, eps, min_samples=1, input_objects=None):
         parsed_input_array = input_array
 
     if not bool(parsed_input_array):
-        return []
+        return empty_return
 
     db = DBSCAN(eps=eps, min_samples=min_samples).fit(parsed_input_array)
 
@@ -452,3 +457,18 @@ def cluster_dbscan(input_array, eps, min_samples=1, input_objects=None):
         return res_clusters, obj_clusters
 
     return res_clusters
+
+
+# get color pixels inside contour of opencv image as 1d array
+def get_image_color_pixels(img, contour):
+
+    img_mask = np.full(img.shape, 0)
+
+    cv2.drawContours(img_mask, [contour], -1, color=(255, 255, 255), thickness=cv2.FILLED)
+
+    vis = img_mask.copy()
+    cv2.namedWindow('vis', cv2.WINDOW_NORMAL)
+    cv2.imshow('vis', vis)
+    cv2.resizeWindow('vis', 800, 800)
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
