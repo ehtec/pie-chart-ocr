@@ -17,6 +17,7 @@ from colormath.color_objects import sRGBColor, LabColor
 from colormath.color_conversions import convert_color
 from sklearn.cluster import DBSCAN
 import cv2
+import operator
 
 
 # equivalent to rm -rf
@@ -536,3 +537,17 @@ def erosion_dilation_operations(img, operations):
         img_copy = func(img_copy, kernel, iterations=iterations)
 
     return img_copy
+
+
+# return the middle index from the longest sequence where condition is True
+def find_longest_sequence(elements, condition):
+
+    if not bool(elements):
+        return None
+
+    r = max((list(y) for (x, y) in itertools.groupby((enumerate(elements)), operator.itemgetter(1)) if condition(x)),
+            key=len)
+
+    middle_index = int(sum([el[0] for el in r]) / len(r))
+
+    return middle_index
