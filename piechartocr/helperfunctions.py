@@ -481,4 +481,11 @@ def get_image_color_pixels(img, contour, erosion_kernel_size, erosion_iterations
 
     condition = np.where(img_mask == (255, 255, 255))[:-1]
 
-    logging.info("condition: {0}".format(condition))
+    logging.debug("condition: {0}".format(condition))
+
+    color_pixels = img[condition[0], condition[1]]
+
+    logging.debug("color_pixels: {0}".format(color_pixels))
+    logging.info("color_pixels.shape: {0}".format(color_pixels.shape))
+
+    return color_pixels
