@@ -9,6 +9,7 @@ from .polygon_calc_wrapper import PolygonCalc
 # from hull_computation import concave_hull
 from .helperfunctions import cluster_abs_1d, cluster_dbscan, get_image_color_pixels, get_cv2_dominant_color_3
 from .basefunctions import complex_to_real
+from .color_processer_wrapper import ColorProcesser
 
 
 logging.basicConfig(level=logging.INFO)
@@ -49,6 +50,9 @@ APPROX_POLY_ACCURACY = 0.02
 
 # color detection erosion kernel size
 COLOR_DETECTION_EROSION_KERNEL_SIZE = 7
+
+# maximum CIEDE2000 color distance to be considered the same sector in the chart ellipse
+CHART_ELLIPSE_SECTOR_COLOR_DISTANCE = 9.5
 
 
 # get number of parents of a contour
@@ -678,3 +682,47 @@ def filter_legend_rectangles(detected_shapes):
         return None
 
     return shape_clusters[0]
+
+
+# detect the sector positions of the chart ellipse. Takes a list of BGR colors as input, returns a list of sector
+#   positions (center of mass).
+def detect_ellipse_sectors(img, legend_colors, chart_ellipse, max_color_distance=CHART_ELLIPSE_SECTOR_COLOR_DISTANCE,
+                           erosion_kernel_size=COLOR_DETECTION_EROSION_KERNEL_SIZE, erosion_iterations=1):
+
+    cp = ColorProcesser()
+
+    img_rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+
+    contour = chart_ellipse['approx']
+    img_mask = np.full(img.shape, 0)
+    img_mask = np.ascontiguousarray(img_mask, dtype=np.uint8)
+
+    cv2.drawContours(img_mask, [contour], -1, color=(255, 255, 255), thickness=cv2.FILLED)
+
+    # apply erode filter
+    if erosion_iterations > 0:
+        kernel = np.ones((erosion_kernel_size, erosion_kernel_size), np.uint8)
+        img_mask = cv2.erode(img_mask, kernel, iterations=erosion_iterations)
+
+    centers = []
+
+    for legend_color in legend_colors:
+
+        legend_color_rgb = (legend_color[2], legend_color[1], legend_color[0])
+
+        color_distances = cp.array_color_distance(legend_color_rgb, img_rgb)
+
+        sector_points = np.where((img_mask == (255, 255, 255)) & (color_distances <= max_color_distance))
+
+        logging.debug("sector_points: {0}".format(sector_points))
+        logging.info("sector_points.shape: {0}".format(sector_points.shape))
+
+        center = [el.mean() for el in sector_points]
+
+        logging.info("center: {0}".format(center))
+
+        centers.append(center)
+
+    del cp
+
+    return centers
