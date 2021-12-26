@@ -7,7 +7,7 @@ from ellipse import LsqEllipse
 from .polygon_calc_wrapper import PolygonCalc
 # from pprint import pprint
 # from hull_computation import concave_hull
-from .helperfunctions import cluster_abs_1d
+from .helperfunctions import cluster_abs_1d, cluster_dbscan
 from .basefunctions import complex_to_real
 
 
@@ -587,6 +587,59 @@ def filter_legend_squares(detected_shapes):
 
         for val in list(set(temp_cluster)):
             shape_clusters[-1] += [el for el in filtered_shapes['squares'] if el['a'] == val]
+
+    shape_clusters = [shape_cluster for shape_cluster in shape_clusters
+                      if len(shape_cluster) >= MIN_LEGEND_SHAPE_CLUSTER_LEN]
+
+    logging.info("shape_clusters: {0}".format(shape_clusters))
+
+    if not bool(shape_clusters):
+        return None
+
+    return shape_clusters[0]
+
+
+# filter the main chart circle / ellipse from the res_dict of detected shapes
+def filter_legend_rectangles(detected_shapes):
+
+    filtered_shapes = copy.deepcopy(detected_shapes)
+
+    # remove squares, ellipses and circles
+    filtered_shapes.pop("squares")
+    filtered_shapes.pop("circles")
+    filtered_shapes.pop("ellipses")
+
+    logging.info("initial shapes: {0}".format(filtered_shapes))
+
+    # Remove inner (hole) contours
+    filtered_shapes["rectangles"] = [el for el in filtered_shapes["rectangles"] if el["parents_count"] % 2 == 0]
+
+    # Remove elements below the minimum area
+    filtered_shapes["rectangles"] = [el for el in filtered_shapes["rectangles"] if el["area"] >= MIN_SHAPE_AREA]
+
+    # Remove elements that are too big
+    filtered_shapes["rectangles"] = [el for el in filtered_shapes["rectangles"]
+                                     if el["area_ratio"] <= MAX_SHAPE_AREA_RATIO]
+
+    # Remove elements that are too big for a legend square
+    filtered_shapes["rectangles"] = [el for el in filtered_shapes["rectangles"]
+                                     if el["area_ratio"] <= MAX_LEGEND_SHAPE_AREA_RATIO]
+
+    logging.info("filtered_shapes: {0}".format(filtered_shapes))
+
+    filtered_square_ab_values = [[el["delta_x"], el["delta_y"]] for el in filtered_shapes['rectangles']]
+
+    _, shape_clusters = cluster_dbscan(filtered_square_ab_values, 2 * MAX_LEGEND_ATOL,
+                                       input_objects=filtered_shapes['rectangles'])
+
+    # shape_clusters = []
+    #
+    # for temp_cluster in ab_clusters:
+    #
+    #     shape_clusters.append([])
+    #
+    #     for val in list(set(temp_cluster)):
+    #         shape_clusters[-1] += [el for el in filtered_shapes['squares'] if el['a'] == val]
 
     shape_clusters = [shape_cluster for shape_cluster in shape_clusters
                       if len(shape_cluster) >= MIN_LEGEND_SHAPE_CLUSTER_LEN]
