@@ -262,7 +262,23 @@ def main(path, interactive=True):
         pairs = []
 
     else:
-        pairs = connect_polygon_cloud_2(polygons_percent, polygons_text)
+
+        if (chart_data['has_legend']) and (not chart_data['has_chart_ellipse']):
+            logging.warning("The chart has a legend, but no chart ellipse was found.")
+            logging.warning("Falling back to legacy method. The results might be wrong.")
+            chart_data['has_legend'] = False
+
+        if chart_data['has_legend']:
+            logging.info("We are dealing with a chart WITH legend.")
+
+            legend_polygons = [el['approx'] for el in chart_data['legend_shapes']]
+            sector_centers = chart_data['sector_centers']
+
+            assert len(legend_polygons) == len(sector_centers)
+
+        else:
+            logging.info("We are dealing with a chart WITHOUT legend.")
+            pairs = connect_polygon_cloud_2(polygons_percent, polygons_text)
 
     logging.debug("pairs: {0}".format(pairs))
     # pprint(pairs)

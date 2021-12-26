@@ -80,21 +80,8 @@ def pre_rectangle_center(p1):
     return x_0, y_0
 
 
-# same as above method, but with polygons
-def connect_polygon_cloud_2(points1, points2):
-
-    # points = points1 + points2
-
-    points = np.array(list(points1) + list(points2))
-
-    p1_range = range(len(points1))
-
-    # p2_range = range(len(points1), len(points))
-
-    N = points.shape[0]
-
-    # I, J = np.indices((N, N))
-    # d = np.sqrt(sum((points[I, i] - points[J, i]) ** 2 for i in range(points.shape[1])))
+# calculate distance matrix, used for polygon cloud connections
+def calculate_distance_matrix(points):
 
     d = np.zeros((len(points), len(points)))
 
@@ -118,6 +105,29 @@ def connect_polygon_cloud_2(points1, points2):
                 d[i, j] = pc.min_poly_distance(p1, p2)
 
     del pc
+
+    return d
+
+
+# connect polygons to each other, targeting minimum connection length. Used to map percentage numbers to captions.
+# You can supply a pre-calculated distance matrix as d.
+def connect_polygon_cloud_2(points1, points2, d=None):
+
+    # points = points1 + points2
+
+    points = np.array(list(points1) + list(points2))
+
+    p1_range = range(len(points1))
+
+    # p2_range = range(len(points1), len(points))
+
+    N = points.shape[0]
+
+    # I, J = np.indices((N, N))
+    # d = np.sqrt(sum((points[I, i] - points[J, i]) ** 2 for i in range(points.shape[1])))
+
+    if d is None:
+        d = calculate_distance_matrix(points)
 
     use = cvxpy.Variable((N, N), integer=True)
     # each entry use[i,j] indicates that the point i is connected to point j
