@@ -249,13 +249,13 @@ def main(path):
         if has_legend:
             legend_colors = [el['dominant_color'] for el in legend_shapes]
 
-            legend_centers = shape_detection.detect_ellipse_sectors(img, legend_colors, chart_ellipse[1])
+            sector_centers = shape_detection.detect_ellipse_sectors(img, legend_colors, chart_ellipse[1])
 
             chart_data.update({
                 "legend_type": legend_type,
                 "legend_shapes": legend_shapes,
                 "legend_colors": legend_colors,
-                "legend_centers": legend_centers
+                "sector_centers": sector_centers
             })
 
     chart_data.update({"has_legend": has_legend, "has_chart_ellipse": has_chart_ellipse})
