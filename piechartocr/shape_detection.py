@@ -725,4 +725,6 @@ def detect_ellipse_sectors(img, legend_colors, chart_ellipse, max_color_distance
 
     del cp
 
+    logging.info("centers: {0}".format(centers))
+
     return centers
