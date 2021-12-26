@@ -231,7 +231,8 @@ def main(path):
     #
     # legend_rectangles = shape_detection.filter_legend_rectangles(detected_shapes)
 
-    chart_ellipse, legend_squares, legend_rectangles = shape_detection.optimize_detected_shapes(img, COLORS_NUM)
+    chart_ellipse, legend_squares, legend_rectangles = shape_detection.optimize_detected_shapes(img, img_bin,
+                                                                                                COLORS_NUM)
 
     logging.info("legend_squares: {0}".format(legend_squares))
 
