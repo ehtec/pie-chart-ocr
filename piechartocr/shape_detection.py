@@ -572,7 +572,7 @@ def filter_chart_ellipse(detected_shapes):
 
 
 # filter the main chart circle / ellipse from the res_dict of detected shapes
-def filter_legend_squares(detected_shapes):
+def filter_legend_squares(detected_shapes, img, colors_num):
 
     filtered_shapes = copy.deepcopy(detected_shapes)
 
@@ -598,6 +598,9 @@ def filter_legend_squares(detected_shapes):
 
     logging.info("filtered_shapes: {0}".format(filtered_shapes))
 
+    # add color info
+    filtered_shapes = add_color_info(filtered_shapes, img, colors_num)
+
     filtered_square_a_values = [el["a"] for el in filtered_shapes['squares']]
 
     a_clusters = cluster_abs_1d(filtered_square_a_values, MAX_LEGEND_ATOL)
@@ -619,7 +622,9 @@ def filter_legend_squares(detected_shapes):
     if not bool(shape_clusters):
         return None
 
-    return shape_clusters[0]
+    shape_cluster = shape_clusters[0]
+
+    return shape_cluster
 
 
 # filter the main chart circle / ellipse from the res_dict of detected shapes
