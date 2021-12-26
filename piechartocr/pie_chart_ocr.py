@@ -80,24 +80,6 @@ SAVE_TEMP_IMAGES = True
 PARAGRAPH_THRESHOLD_DIST = 5.0
 
 
-# def partition(pred, iterable):
-#     t1, t2 = itertools.tee(iterable)
-#     return itertools.filterfalse(pred, t1), filter(pred, t2)
-
-
-# check if a color is closer to black or white
-# 0: black, 1: white
-def white_or_black(pixel):
-
-    luminance = 0.2126 * pixel[0] + 0.7152 * pixel[1] + 0.0722 * pixel[2]
-
-    if luminance < 128:
-        return 0
-
-    else:
-        return 1
-
-
 def main(path):
 
     clean_folder_contents(os.path.join(get_root_path(), 'temp1'))
