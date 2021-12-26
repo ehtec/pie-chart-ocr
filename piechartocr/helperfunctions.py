@@ -489,3 +489,16 @@ def get_image_color_pixels(img, contour, erosion_kernel_size, erosion_iterations
     logging.info("color_pixels.shape: {0}".format(color_pixels.shape))
 
     return color_pixels
+
+
+# check if a color is closer to black or white
+# 0: black, 1: white
+def white_or_black(pixel):
+
+    luminance = 0.2126 * pixel[0] + 0.7152 * pixel[1] + 0.0722 * pixel[2]
+
+    if luminance < 128:
+        return 0
+
+    else:
+        return 1
