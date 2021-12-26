@@ -1,11 +1,12 @@
 import cv2
 from cv2 import dnn_superres
-from .data_helpers import get_steph_test_path
+from .data_helpers import get_steph_test_path, get_upscaled_steph_test_path
 # import mser_functions
 import os
 import numpy as np
 import math
 from .helperfunctions import get_root_path
+import shutil
 
 
 # target pixel number after neural network upscale
@@ -43,8 +44,8 @@ def upsample_image(image):
     return result
 
 
-# upscale image file from test dataset
-def upscale_test_image_file(n):
+# upscale image file from test dataset (old directory)
+def old_upscale_test_image_file(n):
 
     if not os.path.isfile(os.path.join(get_root_path(), 'temp2', 'upscaled{0}.png'.format(n))):
 
@@ -57,3 +58,23 @@ def upscale_test_image_file(n):
         output_path = os.path.join(get_root_path(), 'temp2', 'upscaled{0}.png'.format(n))
 
         cv2.imwrite(output_path, result)
+
+
+# upscale image file from test dataset
+def upscale_test_image_file(n):
+
+    if not os.path.isfile(get_upscaled_steph_test_path(n)[1]):
+
+        csvpath, imagepath = get_steph_test_path(n)
+
+        image = cv2.imread(imagepath)
+
+        result = upsample_image(image)
+
+        csv_output_path, image_output_path = get_upscaled_steph_test_path(n)
+
+        os.mkdir(os.path.dirname(image_output_path))
+
+        shutil.copyfile(csvpath, csv_output_path)
+
+        cv2.imwrite(image_output_path, result)

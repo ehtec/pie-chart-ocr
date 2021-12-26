@@ -8,7 +8,7 @@ def main():
 
     superreshelper.upscale_test_image_file(n)
 
-    mser_functions.main('temp2/upscaled{0}.png'.format(n))
+    # mser_functions.main('temp2/upscaled{0}.png'.format(n))
 
 
 if __name__ == "__main__":
