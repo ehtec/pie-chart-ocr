@@ -210,7 +210,11 @@ def main(path):
 
     legend_squares = shape_detection.filter_legend_squares(detected_shapes)
 
+    legend_rectangles = shape_detection.filter_legend_rectangles(detected_shapes)
+
     logging.info("legend_squares: {0}".format(legend_squares))
+
+    logging.info("legend_rectangles: {0}".format(legend_rectangles))
 
     logging.info("chart_ellipse: {0}".format(chart_ellipse))
 
