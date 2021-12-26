@@ -12,7 +12,7 @@ import re
 from PIL import Image  # , ImageFilter
 # from helperfunctions import get_cv2_dominant_color, get_cv2_dominant_color_2, get_cv2_dominant_color_3,\
 #     get_cv2_dominant_color_4, get_cv2_dominant_color_5
-from .helperfunctions import get_cv2_dominant_color_3, get_root_path
+from .helperfunctions import get_cv2_dominant_color_3, get_root_path, remove_sc_prefix, remove_sc_suffix
 # from polygon_helperfunctions import group_words
 from .polygon_calc_wrapper import PolygonCalc
 from pytesseract import Output
@@ -498,6 +498,9 @@ def main(path):
                 logging.info("{0}             {1} {2} {3} {4}".format(d['text'][i], x, y, (x + w), (y + h)))
 
                 res_tuple = (d['conf'][i], d['text'][i].strip(), x, y, (x + w), (y + h), 10000 * k + i)
+
+                the_str = remove_sc_prefix(the_str)
+                the_str = remove_sc_suffix(the_str)
 
                 the_str = d['text'][i].strip()
 
