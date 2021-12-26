@@ -415,10 +415,13 @@ def cluster_rel_1d(input_values, rtol):
 
 
 # cluster multidimensional array with the DBSCAN algorithm
-def cluster_dbscan(input_array, eps, min_samples=1):
+def cluster_dbscan(input_array, eps, min_samples=1, input_objects=None):
 
     if input_array is None:
         return []
+
+    if input_objects is not None:
+        assert len(input_objects) == len(input_array)
 
     if isinstance(input_array, np.ndarray):
         parsed_input_array = input_array.tolist()
@@ -434,11 +437,18 @@ def cluster_dbscan(input_array, eps, min_samples=1):
     the_labels = db.labels_.tolist()
 
     res_clusters = [[] for _ in range(max(the_labels) + 1)]
+    obj_clusters = copy.deepcopy(res_clusters)
 
     for i in range(len(the_labels)):
         j = the_labels[i]
         res_clusters[j].append(parsed_input_array[i])
+        if input_objects is not None:
+            obj_clusters[j].append(input_objects[i])
 
     res_clusters = list(sorted(res_clusters, key=lambda x: len(x), reverse=True))
+    obj_clusters = list(sorted(obj_clusters, key=lambda x: len(x), reverse=True))
+
+    if input_objects is not None:
+        return res_clusters, obj_clusters
 
     return res_clusters
