@@ -742,7 +742,7 @@ def detect_ellipse_sectors(img, legend_colors, chart_ellipse, max_color_distance
 
 
 # optimize detected shapes by executing different erosion dilation operations
-def optimize_detected_shapes(img):
+def optimize_detected_shapes(img, colors_num):
 
     # separate operations for chart ellipse detection to deal with larger gaps
     chart_ellipse_operations_set = [[
@@ -794,3 +794,59 @@ def optimize_detected_shapes(img):
             chart_ellipse = chart_ellipse_results[middle_index]
 
     logging.debug("chart_ellipse: {0}".format(chart_ellipse))
+
+    for i in range(len(operations_set)):
+
+        operations = operations_set[i]
+
+        img_bin = erosion_dilation_operations(img, operations)
+
+        detected_shapes = detect_shapes(img_bin)
+
+        legend_squares = filter_legend_squares(detected_shapes, img, colors_num)
+
+        legend_rectangles = filter_legend_rectangles(detected_shapes)
+
+        legend_squares_results.append(legend_squares)
+        legend_rectangles_results.append(legend_rectangles)
+
+    legend_squares_int_results = []
+    legend_rectangles_int_results = []
+
+    for el in legend_squares_results:
+        if el is None:
+            legend_squares_int_results.append(0)
+
+        else:
+            legend_squares_int_results.append(len(el))
+
+    for el in legend_rectangles_results:
+        if el is None:
+            legend_rectangles_int_results.append(0)
+
+        else:
+            legend_rectangles_int_results.append(len(el))
+
+    logging.debug("legend_squares_int_results: {0}".format(legend_squares_int_results))
+    logging.debug("legend_rectangles_int_results: {0}".format(legend_rectangles_int_results))
+
+    legend_squares = None
+    legend_rectangles = None
+
+    if any(legend_squares_int_results):
+        max_square_legends = max(legend_squares_int_results)
+        middle_index = find_longest_sequence(legend_squares_int_results, lambda x: x == max_square_legends)
+        logging.debug("middle_index: {0}".format(middle_index))
+        legend_squares = legend_squares_results[middle_index]
+
+    logging.debug("legend_squares: {0}".format(legend_squares))
+
+    if any(legend_rectangles_int_results):
+        max_rectangles_legends = max(legend_rectangles_int_results)
+        middle_index = find_longest_sequence(legend_rectangles_int_results, lambda x: x == max_rectangles_legends)
+        logging.debug("middle_index: {0}".format(middle_index))
+        legend_rectangles = legend_rectangles_results[middle_index]
+
+    logging.debug("legend_rectangles: {0}".format(legend_rectangles))
+
+    return chart_ellipse, legend_squares, legend_rectangles
