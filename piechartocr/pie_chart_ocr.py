@@ -313,7 +313,9 @@ def main(path, interactive=True):
             assert len(legend_polygons) == len(polygons_percent)
 
             # we cannot proceed if there is less text than percent numbers. Probably too many overlaps detected
-            assert len(polygons_percent) <= len(polygons_text)
+            # assert len(polygons_percent) <= len(polygons_text)
+            if len(polygons_percent) >= len(polygons_text):
+                return {"success": False, "error": "Not enough text areas detected"}
 
             # polygons made of a single point
             sector_polygons = [[el] for el in sector_centers]
@@ -457,3 +459,12 @@ def main(path, interactive=True):
     # cv2.imwrite('test.png', img)
     # cv2.imshow('img', img)
     # cv2.waitKey(0)
+
+    data = {
+        "success": True,
+        "res": res,
+        "fallback_used": fallback_used,
+        "percent_sum": percent_sum
+    }
+
+    return data
