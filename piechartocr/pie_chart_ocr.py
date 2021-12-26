@@ -311,6 +311,8 @@ def main(path, interactive=True):
             else:
                 logging.info("The percent numbers seem to be in or next to the sectors.")
 
+            assert 1 == 2
+
         else:
             logging.info("We are dealing with a chart WITHOUT legend.")
             pairs = connect_polygon_cloud_2(polygons_percent, polygons_text)
