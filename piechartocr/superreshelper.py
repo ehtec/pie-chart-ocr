@@ -1,12 +1,14 @@
+import logging
 import cv2
 from cv2 import dnn_superres
-from .data_helpers import get_steph_test_path, get_upscaled_steph_test_path
+from .data_helpers import get_steph_test_path, get_upscaled_steph_test_path, test_data_percentages
 # import mser_functions
 import os
 import numpy as np
 import math
 from .helperfunctions import get_root_path
 import shutil
+from tqdm import tqdm
 
 
 # target pixel number after neural network upscale
@@ -78,3 +80,14 @@ def upscale_test_image_file(n):
         shutil.copyfile(csvpath, csv_output_path)
 
         cv2.imwrite(image_output_path, result)
+
+
+# upscale all valid charts from steph
+def upscale_all_images():
+
+    correct_numbers = test_data_percentages()
+
+    logging.info("correct_numbers: {0}".format(correct_numbers))
+
+    for n in tqdm(correct_numbers):
+        upscale_test_image_file(n)
