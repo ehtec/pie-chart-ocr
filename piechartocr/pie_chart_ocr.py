@@ -255,6 +255,16 @@ def main(path, interactive=True):
 
             polygons_text.append(p1)
 
+    # actually not needed, but suppresses warning in PyCharm
+    res = None
+    pairs = None
+
+    # this variable is only set to False in a specific case where results are calculated differently
+    calculate_res = True
+
+    # specify if a fallback was used (the results might be wrong / inaccurate)
+    fallback_used = False
+
     if any([
         not bool(polygons_percent),
         not bool(polygons_text)
@@ -267,6 +277,16 @@ def main(path, interactive=True):
             logging.warning("The chart has a legend, but no chart ellipse was found.")
             logging.warning("Falling back to legacy method. The results might be wrong.")
             chart_data['has_legend'] = False
+            fallback_used = True
+
+        if chart_data['has_legend']:
+            if len(chart_data['legend_shapes']) != len(polygons_percent):
+                logging.warning("Number of legend shapes does not match the number of percent texts: {0} vs {1}".format(
+                    len(chart_data['legend_shapes']), len(polygons_percent)
+                ))
+                logging.warning("Falling back to legacy method. The results might be wrong.")
+                chart_data['has_legend'] = False
+                fallback_used = True
 
         if chart_data['has_legend']:
             logging.info("We are dealing with a chart WITH legend.")
@@ -275,6 +295,7 @@ def main(path, interactive=True):
             sector_centers = chart_data['sector_centers']
 
             assert len(legend_polygons) == len(sector_centers)
+            assert len(legend_polygons) == len(polygons_percent)
 
             # polygons made of a single point
             sector_polygons = [[el] for el in sector_centers]
@@ -307,11 +328,58 @@ def main(path, interactive=True):
 
             if total_legend_polygons_distance < total_sector_centers_distance:
                 logging.info("The percent numbers seem to be next to the legend.")
+                logging.info("Therefore, we can handle this pie chart as if there was no legend.")
+                pairs = connect_polygon_cloud_2(polygons_percent, polygons_text)
 
             else:
                 logging.info("The percent numbers seem to be in or next to the sectors.")
 
-            assert 1 == 2
+                # calculate pairs between legend polygons and text polygons
+                legend_text_pairs = connect_polygon_cloud_2(legend_polygons, polygons_text)
+
+                logging.debug("legend_text_pairs: {0}".format(legend_text_pairs))
+
+                # create dictionary from sector_index to percent_index
+                sector_percent_dict = {}
+                for i1, i2 in zip(*np.nonzero(sector_centers_percent_pairs)):
+
+                    if i1 > i2:
+                        i1, i2 = i2, i1
+
+                    sector_index = i1
+                    percent_index = i2 - len(sector_centers)
+
+                    sector_percent_dict.update({sector_index: percent_index})
+
+                logging.debug("sector_percent_dict: {0}".format(sector_percent_dict))
+
+                # create dictionary from legend_index to text_index (legend_index == sector_index)
+                legend_text_dict = {}
+                for i1, i2 in zip(*np.nonzero(legend_text_pairs)):
+
+                    if i1 > i2:
+                        i1, i2 = i2, i1
+
+                    legend_index = i1
+                    text_index = i2 - len(legend_polygons)
+
+                    legend_text_dict.update({legend_index: text_index})
+
+                logging.debug("legend_text_dict: {0}".format(legend_text_dict))
+
+                calculate_res = False
+
+                res = []
+
+                for i in range(len(sector_centers)):
+
+                    percent_index = sector_percent_dict[i]
+                    text_index = legend_text_dict[i]
+
+                    percent_elem = polygons_percent_data[percent_index]
+                    text_elem = polygons_text_data[text_index]
+
+                    res.append((percent_elem[1], text_elem[1]))
 
         else:
             logging.info("We are dealing with a chart WITHOUT legend.")
@@ -320,25 +388,32 @@ def main(path, interactive=True):
     logging.debug("pairs: {0}".format(pairs))
     # pprint(pairs)
 
-    res = []
+    if calculate_res:
+        res = []
 
-    p = polygons_percent_data + polygons_text_data
+        p = polygons_percent_data + polygons_text_data
 
-    for i1, i2 in zip(*np.nonzero(pairs)):
+        for i1, i2 in zip(*np.nonzero(pairs)):
 
-        if i1 > i2:
+            if i1 > i2:
 
-            i1, i2 = i2, i1
+                i1, i2 = i2, i1
 
-        res.append((p[i1][1], p[i2][1]))
+            res.append((p[i1][1], p[i2][1]))
 
-    print("res: {0}".format(res))
+    logging.info("res: {0}".format(res))
     # pprint(res)
 
     percent_sum = sum([elem[0] for elem in res])
 
     if percent_sum != 1.0:
         logging.warning("Percentages sum does not add up to 100%!")
+
+    if fallback_used:
+        logging.warning("fallback_used: {0}".format(fallback_used))
+
+    else:
+        logging.info("fallback_used: {0}".format(fallback_used))
 
     stop_time = datetime.now()
 
