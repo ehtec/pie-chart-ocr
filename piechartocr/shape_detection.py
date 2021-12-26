@@ -745,7 +745,7 @@ def detect_ellipse_sectors(img, legend_colors, chart_ellipse, max_color_distance
 
 
 # optimize detected shapes by executing different erosion dilation operations
-def optimize_detected_shapes(img, img_bin, colors_num):
+def optimize_detected_shapes(img, img_bin, colors_num, interactive=True):
 
     # separate operations for chart ellipse detection to deal with larger gaps
     chart_ellipse_operations_set = [[
@@ -768,7 +768,7 @@ def optimize_detected_shapes(img, img_bin, colors_num):
 
         img_bin_chart_ellipse = erosion_dilation_operations(img_bin, chart_ellipse_operations)
 
-        chart_ellipse_detected_shapes = detect_shapes(img_bin_chart_ellipse)
+        chart_ellipse_detected_shapes = detect_shapes(img_bin_chart_ellipse, interactive=interactive)
 
         chart_ellipse = filter_chart_ellipse(chart_ellipse_detected_shapes)
 
@@ -804,7 +804,7 @@ def optimize_detected_shapes(img, img_bin, colors_num):
 
         img_bin = erosion_dilation_operations(img_bin, operations)
 
-        detected_shapes = detect_shapes(img_bin)
+        detected_shapes = detect_shapes(img_bin, interactive=interactive)
 
         legend_squares = filter_legend_squares(detected_shapes, img, colors_num)
 
