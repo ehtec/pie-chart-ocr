@@ -61,7 +61,7 @@ unzip data/charts_steph.zip -d data
 Run unit tests:
 
 ```commandline
-python3 -m nose2 --start-dir tests/
+python3 -m nose2 --start-dir tests/ --with-coverage
 ```
 
 Run legacy tests / examples:
