@@ -196,12 +196,12 @@ def main(path):
     #
     # img_bin = cv2.dilate(img_bin, kernel, iterations=2)
 
-    operations = [
-        ("erosion", 5, 1),
-        ("dilation", 5, 2)
-    ]
-
-    img_bin = erosion_dilation_operations(img_bin, operations)
+    # operations = [
+    #     ("erosion", 5, 1),
+    #     ("dilation", 5, 2)
+    # ]
+    #
+    # img_bin = erosion_dilation_operations(img_bin, operations)
 
     # separate operations for chart ellipse detection to deal with larger gaps
     # chart_ellipse_operations = [
