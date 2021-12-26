@@ -460,15 +460,17 @@ def cluster_dbscan(input_array, eps, min_samples=1, input_objects=None):
 
 
 # get color pixels inside contour of opencv image as 1d array
-def get_image_color_pixels(img, contour):
+def get_image_color_pixels(img, contour, erosion_kernel_size, erosion_iterations=1):
 
     img_mask = np.full(img.shape, 0)
     img_mask = np.ascontiguousarray(img_mask, dtype=np.uint8)
 
-    logging.info("img: {0}".format(img))
-    logging.info("img_mask: {0}".format(img_mask))
-
     cv2.drawContours(img_mask, [contour], -1, color=(255, 255, 255), thickness=cv2.FILLED)
+
+    # apply erode filter
+    if erosion_iterations > 0:
+        kernel = np.ones((erosion_kernel_size, erosion_kernel_size), np.uint8)
+        img_mask = cv2.erode(img_mask, kernel, iterations=erosion_iterations)
 
     vis = img_mask.copy()
     cv2.namedWindow('vis', cv2.WINDOW_NORMAL)
