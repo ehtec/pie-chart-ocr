@@ -518,9 +518,9 @@ def add_color_info(input_shapes, img, colors_num, erosion_kernel_size=COLOR_DETE
 
             contour = input_shapes[k][i]['approx']
 
-            color_pixels = get_image_color_pixels(img, contour, erosion_kernel_size)
+            color_pixels = get_image_color_pixels(img, contour, erosion_kernel_size).astype(float)
 
-            dominant_color = get_cv2_dominant_color_3(color_pixels, colors_num)
+            dominant_color = get_cv2_dominant_color_3(color_pixels, colors_num, reshape=False)
 
             output_shapes[k][i].update({'dominant_color': dominant_color})
 
