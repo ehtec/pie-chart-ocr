@@ -551,3 +551,16 @@ def find_longest_sequence(elements, condition):
     middle_index = int(sum([el[0] for el in r]) / len(r))
 
     return middle_index
+
+
+# remove special characters from beginning of string
+def remove_sc_prefix(s):
+
+    sc_regex = r'[A-Za-z0-9].*'
+
+    res = re.findall(sc_regex, s)
+
+    if not bool(res):
+        return ''
+
+    return res[0]
