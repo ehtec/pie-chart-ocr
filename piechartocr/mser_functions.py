@@ -218,7 +218,7 @@ def main(path):
 
     logging.info("chart_ellipse: {0}".format(chart_ellipse))
 
-    get_image_color_pixels(img_bin, chart_ellipse[1]['approx'])
+    get_image_color_pixels(img_bin, chart_ellipse[1]['approx'], 7)
 
     # logging.info("MAX AREA: {0}".format(total_area * MAX_MSER_BOX_RATIO))
 
