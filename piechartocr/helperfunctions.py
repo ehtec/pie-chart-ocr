@@ -478,3 +478,7 @@ def get_image_color_pixels(img, contour, erosion_kernel_size, erosion_iterations
     cv2.resizeWindow('vis', 800, 800)
     cv2.waitKey(0)
     cv2.destroyAllWindows()
+
+    condition = np.where(img_mask == (255, 255, 255))[:-1]
+
+    logging.info("condition: {0}".format(condition))
