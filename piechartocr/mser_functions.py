@@ -208,7 +208,7 @@ def main(path):
 
     chart_ellipse = shape_detection.filter_chart_ellipse(detected_shapes)
 
-    legend_squares = shape_detection.filter_legend_squares(detected_shapes)
+    legend_squares = shape_detection.filter_legend_squares(detected_shapes, img, COLORS_NUM)
 
     legend_rectangles = shape_detection.filter_legend_rectangles(detected_shapes)
 
