@@ -22,6 +22,7 @@ import re
 # import uuid
 from .polygon_calc_wrapper import PolygonCalc
 import os
+import logging
 
 
 # white rgb pixel
@@ -87,20 +88,20 @@ def main(path):
 
     start_time = datetime.now()
 
-    print("START TIME: {0}".format(start_time))
+    logging.info("START TIME: {0}".format(start_time))
 
     filtered_res_tuples, img, chart_data = mser_functions.main(path)
 
-    print("Starting with step 5...")
+    logging.debug("Starting with step 5...")
 
     pc = PolygonCalc()
 
     word_grouped_tuples = pc.group_elements(filtered_res_tuples, MAX_WORD_DISTANCE_RATIO, -1, start_pos=2)
 
-    print("word_grouped_tuples:")
-    pprint(word_grouped_tuples)
+    logging.debug("word_grouped_tuples: {0}".format(word_grouped_tuples))
+    # pprint(word_grouped_tuples)
 
-    print("Starting with step 6...")
+    logging.debug("Starting with step 6...")
 
     all_paragraph_tuples = []
 
@@ -116,12 +117,12 @@ def main(path):
 
         all_paragraph_tuples.append(paragraph_tuples)
 
-        print("paragraph_tuples:")
-        pprint(paragraph_tuples)
+        logging.debug("paragraph_tuples: {0}".format(paragraph_tuples))
+        # pprint(paragraph_tuples)
 
     joined_tuples = []
 
-    print("Starting with step 7...")
+    logging.debug("Starting with step 7...")
 
     old_all_paragraph_tuples = copy.deepcopy(all_paragraph_tuples)
 
@@ -158,7 +159,7 @@ def main(path):
 
                         blocked_elems.append(elem_counter + 1)
 
-                print("elem: {0}".format(elem))
+                logging.debug("elem: {0}".format(elem))
 
                 if detect_percentage(elem[1]) is not None:
                     all_paragraph_tuples.append([[elem]])
@@ -209,10 +210,10 @@ def main(path):
 
         joined_tuples.append(res_tuple)
 
-    print("joined_tuples:")
-    pprint(joined_tuples)
+    logging.debug("joined_tuples: {0}".format(joined_tuples))
+    # pprint(joined_tuples)
 
-    print("Starting with step 8...")
+    logging.debug("Starting with step 8...")
 
     for res_tuple in joined_tuples:
 
@@ -232,7 +233,7 @@ def main(path):
     polygons_percent_data = []
     polygons_text_data = []
 
-    print("Starting with step 9...")
+    logging.debug("Starting with step 9...")
 
     for res_tuple in joined_tuples:
 
@@ -263,8 +264,8 @@ def main(path):
     else:
         pairs = connect_polygon_cloud_2(polygons_percent, polygons_text)
 
-    print("pairs:")
-    pprint(pairs)
+    logging.debug("pairs: {0}".format(pairs))
+    # pprint(pairs)
 
     res = []
 
@@ -278,21 +279,21 @@ def main(path):
 
         res.append((p[i1][1], p[i2][1]))
 
-    print("res:")
-    pprint(res)
+    print("res: {0}".format(res))
+    # pprint(res)
 
     percent_sum = sum([elem[0] for elem in res])
 
     if percent_sum != 1.0:
-        print("Percentages sum does not add up to 100%!")
+        logging.warning("Percentages sum does not add up to 100%!")
 
     stop_time = datetime.now()
 
     seconds_elapsed = (stop_time - start_time).total_seconds()
 
-    print("STOP TIME: {0}".format(stop_time))
+    logging.info("STOP TIME: {0}".format(stop_time))
 
-    print("SECONDS ELAPSED: {0}".format(seconds_elapsed))
+    logging.info("SECONDS ELAPSED: {0}".format(seconds_elapsed))
 
     # cv2.imshow('img', img)
     # cv2.waitKey(0)
