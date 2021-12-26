@@ -13,7 +13,7 @@ from pytesseract import image_to_string
 from PIL import Image  # , ImageFilter
 # from helperfunctions import get_cv2_dominant_color, get_cv2_dominant_color_2, get_cv2_dominant_color_3,\
 #     get_cv2_dominant_color_4, get_cv2_dominant_color_5
-from .helperfunctions import get_cv2_dominant_color_3, get_root_path
+from .helperfunctions import get_cv2_dominant_color_3, get_root_path, get_image_color_pixels
 # from polygon_helperfunctions import group_words
 from .polygon_calc_wrapper import PolygonCalc
 from pytesseract import Output
@@ -217,6 +217,8 @@ def main(path):
     logging.info("legend_rectangles: {0}".format(legend_rectangles))
 
     logging.info("chart_ellipse: {0}".format(chart_ellipse))
+
+    get_image_color_pixels(img_bin, chart_ellipse[1]['approx'])
 
     # logging.info("MAX AREA: {0}".format(total_area * MAX_MSER_BOX_RATIO))
 
