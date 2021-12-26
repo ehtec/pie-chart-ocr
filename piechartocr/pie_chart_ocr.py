@@ -107,7 +107,7 @@ def main(path):
 
     print("START TIME: {0}".format(start_time))
 
-    filtered_res_tuples, img = mser_functions.main(path)
+    filtered_res_tuples, img, chart_data = mser_functions.main(path)
 
     print("Starting with step 5...")
 

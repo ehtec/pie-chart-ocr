@@ -142,6 +142,9 @@ def main(path):
 
     cp = ColorProcesser()
 
+    # general chart data, like discovered chart ellipse and legend
+    chart_data = {}
+
     # color_thief = ColorThief(path)
 
     # dominant_color = color_thief.get_color(quality=1)
@@ -218,12 +221,44 @@ def main(path):
 
     logging.info("chart_ellipse: {0}".format(chart_ellipse))
 
-    get_image_color_pixels(img_bin, chart_ellipse[1]['approx'], 7)
+    # this was only for testing, it is automatically used in the filter functions now
+    # get_image_color_pixels(img_bin, chart_ellipse[1]['approx'], 7)
 
-    # only for squares for testing
-    legend_colors = [el['dominant_color'] for el in legend_squares]
+    has_chart_ellipse = False
+    has_legend = False
 
-    shape_detection.detect_ellipse_sectors(img, legend_colors, chart_ellipse[1])
+    # actually we do not need these, but it prevents referenced before assignment in PyCharm
+    legend_type = None
+    legend_shapes = None
+
+    if bool(chart_ellipse):
+        has_chart_ellipse = True
+        chart_data.update({'chart_ellipse': chart_ellipse})
+
+        # we only take care of legends if a chart ellipse is found
+        if bool(legend_squares):
+            has_legend = True
+            legend_type = 'squares'
+            legend_shapes = legend_squares
+
+        elif bool(legend_rectangles):
+            has_legend = True
+            legend_type = 'rectangles'
+            legend_shapes = legend_rectangles
+
+        if has_legend:
+            legend_colors = [el['dominant_color'] for el in legend_shapes]
+
+            legend_centers = shape_detection.detect_ellipse_sectors(img, legend_colors, chart_ellipse[1])
+
+            chart_data.update({
+                "legend_type": legend_type,
+                "legend_shapes": legend_shapes,
+                "legend_colors": legend_colors,
+                "legend_centers": legend_centers
+            })
+
+    chart_data.update({"has_legend": has_legend, "has_chart_ellipse": has_chart_ellipse})
 
     # logging.info("MAX AREA: {0}".format(total_area * MAX_MSER_BOX_RATIO))
 
@@ -556,7 +591,7 @@ def main(path):
     #
     # cv2.waitKey(0)
 
-    return res_tuples, img
+    return res_tuples, img, chart_data
 
 
 def main2(path):
