@@ -499,10 +499,10 @@ def main(path):
 
                 res_tuple = (d['conf'][i], d['text'][i].strip(), x, y, (x + w), (y + h), 10000 * k + i)
 
+                the_str = d['text'][i].strip()
+
                 the_str = remove_sc_prefix(the_str)
                 the_str = remove_sc_suffix(the_str)
-
-                the_str = d['text'][i].strip()
 
                 if not bool(re.findall(r'[A-Za-z0-9%]+', the_str)):
                     logging.info("Discarding {0} because it does not have at least one needed character.".format(res_tuple))
