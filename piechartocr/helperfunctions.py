@@ -564,3 +564,16 @@ def remove_sc_prefix(s):
         return ''
 
     return res[0]
+
+
+# remove special characters from end of string
+def remove_sc_suffix(s):
+
+    sc_regex = r'.*[A-Za-z0-9]'
+
+    res = re.findall(sc_regex, s)
+
+    if not bool(res):
+        return ''
+
+    return res[0]
