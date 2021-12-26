@@ -658,6 +658,9 @@ def filter_legend_rectangles(detected_shapes):
     filtered_shapes["rectangles"] = [el for el in filtered_shapes["rectangles"]
                                      if el["area_ratio"] <= MAX_LEGEND_SHAPE_AREA_RATIO]
 
+    # Remove rectangles with wrong aspect ratio
+    filtered_shapes["rectangles"] = [el for el in filtered_shapes["rectangles"] if el["delta_x"] >= el["delta_y"]]
+
     logging.info("filtered_shapes: {0}".format(filtered_shapes))
 
     filtered_square_ab_values = [[el["delta_x"], el["delta_y"]] for el in filtered_shapes['rectangles']]
