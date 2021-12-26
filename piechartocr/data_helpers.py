@@ -35,6 +35,27 @@ def get_steph_test_path(n):
     return csvpath, imagepath
 
 
+# get (csvpath, imagepath) by number from the upscaled version of stephs first dataset
+def get_upscaled_steph_test_path(n, existence_check=False):
+
+    basepath = os.path.join(get_root_path(), "data", "charts_steph_upscaled", "Chart_{0}".format(n))
+
+    logging.debug("basepath: {0}".format(basepath))
+
+    imagepath = os.path.join(basepath, 'upscaled.png')
+
+    csvpath = os.path.join(basepath, 'annotation.csv')
+
+    if existence_check:
+        if not os.path.isfile(imagepath):
+            raise FileNotFoundError("No upscaled image found for chart number {0}".format(n))
+
+        if not os.path.isfile(csvpath):
+            raise FileNotFoundError("No upscaled annotation found for chart number {0}".format(n))
+
+    return csvpath, imagepath
+
+
 # load annotations csv into tuples with percentages as ratios
 def load_annotations_from_csv(csvpath):
 
