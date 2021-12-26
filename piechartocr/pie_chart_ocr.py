@@ -81,7 +81,7 @@ SAVE_TEMP_IMAGES = True
 PARAGRAPH_THRESHOLD_DIST = 5.0
 
 
-def main(path):
+def main(path, interactive=True):
 
     clean_folder_contents(os.path.join(get_root_path(), 'temp1'))
     clean_folder_contents(os.path.join(get_root_path(), 'temp'))
@@ -298,13 +298,14 @@ def main(path):
     # cv2.imshow('img', img)
     # cv2.waitKey(0)
 
-    # show resized window with image instead
-    cv2.namedWindow('img', cv2.WINDOW_NORMAL)
-    # cv2.drawContours(vis, [contour], -1, (0, 255, 0), 2)
-    cv2.imshow('img', img)
-    cv2.resizeWindow('img', 800, 800)
-    cv2.waitKey(0)
-    cv2.destroyAllWindows()
+    if interactive:
+        # show resized window with image instead
+        cv2.namedWindow('img', cv2.WINDOW_NORMAL)
+        # cv2.drawContours(vis, [contour], -1, (0, 255, 0), 2)
+        cv2.imshow('img', img)
+        cv2.resizeWindow('img', 800, 800)
+        cv2.waitKey(0)
+        cv2.destroyAllWindows()
 
     # img = img[162:184, 633:650]
     # cv2.imwrite('test.png', img)

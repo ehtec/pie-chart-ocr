@@ -311,7 +311,7 @@ def check_rect_or_square(arr, max_deviation=MAX_DEVIATION):
 
 
 # detect shapes in black-white RGB formatted cv2 image
-def detect_shapes(img):
+def detect_shapes(img, interactive=True):
 
     res_dict = {
         "rectangles": [],
@@ -499,12 +499,13 @@ def detect_shapes(img):
         # cv2.waitKey(0)
         # cv2.destroyAllWindows()
 
-    cv2.namedWindow('vis', cv2.WINDOW_NORMAL)
-    # cv2.drawContours(vis, [contour], -1, (0, 255, 0), 2)
-    cv2.imshow('vis', vis)
-    cv2.resizeWindow('vis', 800, 800)
-    cv2.waitKey(0)
-    cv2.destroyAllWindows()
+    if interactive:
+        cv2.namedWindow('vis', cv2.WINDOW_NORMAL)
+        # cv2.drawContours(vis, [contour], -1, (0, 255, 0), 2)
+        cv2.imshow('vis', vis)
+        cv2.resizeWindow('vis', 800, 800)
+        cv2.waitKey(0)
+        cv2.destroyAllWindows()
 
     # logging.info("res_dict: {0}".format(res_dict))
 
