@@ -7,7 +7,7 @@ from ellipse import LsqEllipse
 from .polygon_calc_wrapper import PolygonCalc
 # from pprint import pprint
 # from hull_computation import concave_hull
-from .helperfunctions import cluster_abs_1d, cluster_dbscan
+from .helperfunctions import cluster_abs_1d, cluster_dbscan, get_image_color_pixels, get_cv2_dominant_color_3
 from .basefunctions import complex_to_real
 
 
@@ -46,6 +46,9 @@ MAX_CIRCLE_DEVIATION = 0.1
 
 # accuracy parameter for approxPolyDP
 APPROX_POLY_ACCURACY = 0.02
+
+# color detection erosion kernel size
+COLOR_DETECTION_EROSION_KERNEL_SIZE = 7
 
 
 # get number of parents of a contour
@@ -502,6 +505,26 @@ def detect_shapes(img):
     # logging.info("res_dict: {0}".format(res_dict))
 
     return res_dict
+
+
+# add color info to a list of shapes
+def add_color_info(input_shapes, img, colors_num, erosion_kernel_size=COLOR_DETECTION_EROSION_KERNEL_SIZE):
+
+    output_shapes = copy.deepcopy(input_shapes)
+
+    for k, v in input_shapes.items():
+
+        for i in range(len(v)):
+
+            contour = input_shapes[k][i]['approx']
+
+            color_pixels = get_image_color_pixels(img, contour, erosion_kernel_size)
+
+            dominant_color = get_cv2_dominant_color_3(color_pixels, colors_num)
+
+            output_shapes[k][i].update({'dominant_color': dominant_color})
+
+    return output_shapes
 
 
 # filter the main chart circle / ellipse from the res_dict of detected shapes
