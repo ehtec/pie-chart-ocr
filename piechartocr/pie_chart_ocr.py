@@ -8,7 +8,7 @@ import copy
 # from pylab import *
 # from scipy.ndimage import measurements
 from . import mser_functions
-from .helperfunctions import clean_folder_contents, get_root_path
+from .helperfunctions import clean_folder_contents, get_root_path, calculate_distance_matrix
 from .helperfunctions import pre_rectangle_center, rect_from_pre, detect_percentage, connect_polygon_cloud_2
 # import time
 # import itertools
@@ -275,6 +275,41 @@ def main(path, interactive=True):
             sector_centers = chart_data['sector_centers']
 
             assert len(legend_polygons) == len(sector_centers)
+
+            # polygons made of a single point
+            sector_polygons = [[el] for el in sector_centers]
+
+            sector_centers_percent_dm = calculate_distance_matrix(np.array(sector_polygons, polygons_percent))
+            legend_polygons_percent_dm = calculate_distance_matrix(np.array(legend_polygons, polygons_percent))
+
+            logging.debug("sector_centers_percent_dm: {0}".format(sector_centers_percent_dm))
+            logging.debug("legend_polygons_percent_dm: {0}".format(legend_polygons_percent_dm))
+
+            sector_centers_percent_pairs = connect_polygon_cloud_2(sector_polygons, polygons_percent,
+                                                                   sector_centers_percent_dm)
+            legend_polygons_percent_pairs = connect_polygon_cloud_2(legend_polygons, polygons_percent,
+                                                                    legend_polygons_percent_dm)
+
+            logging.debug("sector_centers_percent_pairs: {0}".format(sector_centers_percent_pairs))
+            logging.debug("legend_polygons_percent_pairs: {0}".format(legend_polygons_percent_pairs))
+
+            used_sector_centers_distance = sector_centers_percent_pairs * sector_centers_percent_dm
+            used_legend_polygons_distance = legend_polygons_percent_pairs * legend_polygons_percent_dm
+
+            logging.debug("used_sector_centers_distance: {0}".format(used_sector_centers_distance))
+            logging.debug("used_legend_polygons_distance: {0}".format(used_legend_polygons_distance))
+
+            total_sector_centers_distance = used_sector_centers_distance.sum()
+            total_legend_polygons_distance = used_legend_polygons_distance.sum()
+
+            logging.debug("total_sector_centers_distance: {0}".format(total_sector_centers_distance))
+            logging.debug("total_legend_polygons_distance: {0}".format(total_legend_polygons_distance))
+
+            if total_legend_polygons_distance < total_sector_centers_distance:
+                logging.info("The percent numbers seem to be next to the legend.")
+
+            else:
+                logging.info("The percent numbers seem to be in or next to the sectors.")
 
         else:
             logging.info("We are dealing with a chart WITHOUT legend.")
