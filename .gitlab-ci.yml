@@ -32,3 +32,4 @@ nose2:
       cobertura: coverage.xml
   only:
     - merge_requests
+    - tags
