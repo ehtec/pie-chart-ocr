@@ -30,5 +30,5 @@ nose2:
   artifacts:
     reports:
       cobertura: coverage.xml
-#  only:
-#    - merge_requests
+  only:
+    - merge_requests
