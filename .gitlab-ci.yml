@@ -19,8 +19,6 @@ nose2:
     - pip install -r requirements.txt
     - git submodule update --init --recursive
     - python3 setup.py build_ext
-    - mkdir lib
-    - python3 setup.py install --install-lib lib/
     - mkdir temp
     - mkdir temp1
     - mkdir temp2
