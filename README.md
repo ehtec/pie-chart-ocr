@@ -52,6 +52,7 @@ Unpack test charts:
 
 ```commandline
 unzip data/charts_steph.zip -d data
+unzip data/charts_steph_upsampled.zip -d data
 ```
 
 # Usage
