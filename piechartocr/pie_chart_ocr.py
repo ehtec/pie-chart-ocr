@@ -467,6 +467,9 @@ def main(path, interactive=True):
         "percent_sum": percent_sum
     }
 
+    # also include data previously computed, like legend type
+    data.update(chart_data)
+
     logging.info("data: {0}".format(data))
 
     return data
