@@ -467,4 +467,6 @@ def main(path, interactive=True):
         "percent_sum": percent_sum
     }
 
+    logging.info("data: {0}".format(data))
+
     return data
