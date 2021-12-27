@@ -314,8 +314,12 @@ def main(path, interactive=True):
 
             # we cannot proceed if there is less text than percent numbers. Probably too many overlaps detected
             # assert len(polygons_percent) <= len(polygons_text)
-            if len(polygons_percent) >= len(polygons_text):
-                return {"success": False, "error": "Not enough text areas detected"}
+            if len(polygons_percent) > len(polygons_text):
+                logging.warning("Not enough text areas detected. Aborting.")
+                data = {"success": False, "error": "Not enough text areas detected"}
+                data.update(chart_data)
+                logging.info("data: {0}".format(data))
+                return data
 
             # polygons made of a single point
             sector_polygons = [[el] for el in sector_centers]
