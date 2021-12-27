@@ -34,16 +34,16 @@ def upsample_image(image):
 
         sr = dnn_superres.DnnSuperResImpl_create()
 
-        # try to use GPU
-        sr.setPreferableBackend(cv2.dnn.DNN_BACKEND_CUDA)
-        sr.setPreferableTarget(cv2.dnn.DNN_TARGET_CUDA)
-
         # models taken from https://github.com/Saafke/EDSR_Tensorflow
         path = os.path.join(get_root_path(), "models", "EDSR_x{0}.pb".format(upscale_factor))
 
         sr.readModel(path)
 
         sr.setModel("edsr", upscale_factor)
+
+        # try to use GPU
+        sr.setPreferableBackend(cv2.dnn.DNN_BACKEND_CUDA)
+        sr.setPreferableTarget(cv2.dnn.DNN_TARGET_CUDA)
 
         result = sr.upsample(image)
 
