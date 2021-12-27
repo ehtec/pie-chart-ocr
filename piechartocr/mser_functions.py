@@ -134,7 +134,7 @@ def get_background_color(img, padding_height=PADDING_HEIGHT, measurement_height=
     return dominant_color
 
 
-def main(path):
+def main(path, interactive=True):
 
     if not os.path.isfile(path):
         raise FileNotFoundError("Input image file does not exist!")
@@ -232,7 +232,8 @@ def main(path):
     # legend_rectangles = shape_detection.filter_legend_rectangles(detected_shapes)
 
     chart_ellipse, legend_squares, legend_rectangles = shape_detection.optimize_detected_shapes(img, img_bin,
-                                                                                                COLORS_NUM)
+                                                                                                COLORS_NUM,
+                                                                                                interactive=interactive)
 
     logging.info("legend_squares: {0}".format(legend_squares))
 

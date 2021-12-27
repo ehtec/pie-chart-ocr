@@ -59,7 +59,7 @@ def main():
 
     _, path = get_upscaled_steph_test_path(n, existence_check=True)
 
-    pie_chart_ocr.main(path)
+    pie_chart_ocr.main(path, interactive=False)
 
 
 if __name__ == "__main__":

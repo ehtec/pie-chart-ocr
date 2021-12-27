@@ -91,7 +91,7 @@ def main(path, interactive=True):
 
     logging.info("START TIME: {0}".format(start_time))
 
-    filtered_res_tuples, img, chart_data = mser_functions.main(path)
+    filtered_res_tuples, img, chart_data = mser_functions.main(path, interactive=interactive)
 
     logging.debug("Starting with step 5...")
 
