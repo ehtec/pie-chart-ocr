@@ -1,7 +1,7 @@
 import logging
 import os.path
 import cv2
-import cv2.cv2
+# import cv2.cv2
 import numpy as np
 import re
 # import pytesseract
