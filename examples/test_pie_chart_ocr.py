@@ -8,6 +8,7 @@ from piechartocr.data_helpers import get_steph_test_path, load_annotations_from_
     test_data_duplicates, test_data_percentages
 from piechartocr.helperfunctions import get_root_path
 import os
+from piechartocr.data_helpers import get_upscaled_steph_test_path
 
 
 def main():
@@ -54,7 +55,9 @@ def main():
 
     n = int(input("Image id: "))
 
-    path = os.path.join(get_root_path(), "temp2", "upscaled{0}.png".format(n))
+    # path = os.path.join(get_root_path(), "data", "charts_steph_upscaled", "Chart_{0}".format(n), "upscaled.png")
+
+    _, path = get_upscaled_steph_test_path(n, existence_check=True)
 
     pie_chart_ocr.main(path)
 
