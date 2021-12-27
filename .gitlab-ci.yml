@@ -23,6 +23,7 @@ nose2:
     - mkdir temp1
     - mkdir temp2
     - unzip data/charts_steph.zip -d data
+    - unzip data/charts_steph_upscaled.zip -d data
   script:
     - python3 -m nose2 --start-dir tests/ --with-coverage
     - python3 -m coverage xml --fail-under 0
