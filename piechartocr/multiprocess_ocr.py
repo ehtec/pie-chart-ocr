@@ -8,6 +8,7 @@ from .helperfunctions import delete_keys_from_dict, get_root_path
 import os
 import json
 from datetime import datetime
+from tqdm import tqdm
 
 
 # get the path for upscaled test image n and execute pie_chart_ocr.main() non-interactively
@@ -27,7 +28,7 @@ def pie_chart_ocr_wrapper(n):
 
 
 # execute pie_chart_ocr_wrapper(n) for multiple arguments in parallel
-def multiprocess_pie_chart_ocr(n_list, worker_count=None):
+def multiprocess_pie_chart_ocr(n_list, worker_count=None, show_progress=True):
 
     if worker_count is None:
         worker_count = multiprocessing.cpu_count()
@@ -37,6 +38,12 @@ def multiprocess_pie_chart_ocr(n_list, worker_count=None):
     fut_count = 0
 
     allres = []
+
+    # actually not needed, but suppresses PyCharm warning
+    pbar = None
+
+    if show_progress:
+        pbar = tqdm(total=total_fut_count)
 
     with pebble.ProcessPool(max_workers=worker_count, max_tasks=1) as executor:
 
@@ -52,6 +59,11 @@ def multiprocess_pie_chart_ocr(n_list, worker_count=None):
                 res = future.result()
                 allres.append(res)
                 fut_count += 1
+                if show_progress:
+                    pbar.update(1)
+
+    if show_progress:
+        pbar.close()
 
     allres.sort(key=lambda x: x[0])
 
