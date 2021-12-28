@@ -127,6 +127,15 @@ def check_percent_numbers_match(annotations1, data):
     return set(percent_numbers_1) == set(percent_numbers_2)
 
 
+# check if an error occurred during annotation computation
+def check_success(annotations1, data):
+
+    if 'res' not in data.keys():
+        return False
+
+    return data['success']
+
+
 # compute all metrics
 def compute_metrics(test_metrics=None, filename=METRICS_FILENAME, interactive=False):
 
@@ -138,7 +147,8 @@ def compute_metrics(test_metrics=None, filename=METRICS_FILENAME, interactive=Fa
     metric_functions = [
         check_simple_annotations_match,
         check_simple_annotations_match_but_one,
-        check_percent_numbers_match
+        check_percent_numbers_match,
+        check_success
     ]
 
     res_dict = {func.__name__: [] for func in metric_functions}
