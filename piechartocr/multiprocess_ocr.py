@@ -66,8 +66,13 @@ def multiprocess_pie_chart_ocr(n_list, worker_count=None, show_progress=True):
         while fut_count < total_fut_count:
 
             for future in concurrent.futures.as_completed(jobs):
-                res = future.result()
-                allres.append(res)
+
+                try:
+                    res = future.result()
+                    allres.append(res)
+                except Exception as e:
+                    logging.exception(e)
+
                 fut_count += 1
                 if show_progress:
                     pbar.update(1)
