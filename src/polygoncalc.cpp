@@ -451,9 +451,9 @@ class PolygonCalc{
             std::list< std::list<unsigned long> > res = {};
 
             
-            std::cout << "threshold_dist: " << threshold_dist << std::endl;
+//            std::cout << "threshold_dist: " << threshold_dist << std::endl;
             
-            std::cout << "Computing polygon distances..." << std::endl;
+//            std::cout << "Computing polygon distances..." << std::endl;
             
             for (i = 0; i < n; i++) {
                 
@@ -555,7 +555,7 @@ class PolygonCalc{
                 
             } while (std::prev_permutation(v.begin(), v.end()));
                         
-            std::cout << "Combining to nested list..." << std::endl;
+//            std::cout << "Combining to nested list..." << std::endl;
             
             connectedcomponents(n, to_process, res);
             
