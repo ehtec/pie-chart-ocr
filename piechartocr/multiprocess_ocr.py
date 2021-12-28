@@ -18,17 +18,23 @@ MAX_WORKERS_CAP = 24
 # get the path for upscaled test image n and execute pie_chart_ocr.main() non-interactively
 def pie_chart_ocr_wrapper(n):
 
-    logging.info("Executing pie_chart_ocr for test image {0}...".format(n))
+    try:
 
-    _, path = get_upscaled_steph_test_path(n)
+        logging.info("Executing pie_chart_ocr for test image {0}...".format(n))
 
-    logging.info("Upscaled image path for chart {0}: {1}".format(n, path))
+        _, path = get_upscaled_steph_test_path(n)
 
-    ocr_res = pie_chart_ocr.main(path, interactive=False)
+        logging.info("Upscaled image path for chart {0}: {1}".format(n, path))
 
-    logging.info("Result for chart {0}: {1}".format(n, ocr_res))
+        ocr_res = pie_chart_ocr.main(path, interactive=False)
 
-    return n, ocr_res
+        logging.info("Result for chart {0}: {1}".format(n, ocr_res))
+
+        return n, ocr_res
+
+    except Exception as e:
+        logging.exception(e)
+        raise e
 
 
 # execute pie_chart_ocr_wrapper(n) for multiple arguments in parallel
