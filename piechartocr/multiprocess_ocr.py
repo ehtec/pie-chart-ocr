@@ -7,6 +7,7 @@ import concurrent.futures
 from .helperfunctions import delete_keys_from_dict, get_root_path
 import os
 import json
+from datetime import datetime
 
 
 # get the path for upscaled test image n and execute pie_chart_ocr.main() non-interactively
@@ -86,6 +87,9 @@ def generate_test_metrics_json():
 
     logging.info("Generating test metrics...")
 
+    start_time = datetime.now()
+    logging.info("START TIME: {0}".format(start_time))
+
     logging.debug("Fetching list of usable charts...")
     n_list = test_data_percentages()
     logging.debug("{0} usable charts found.".format(len(n_list)))
@@ -97,4 +101,9 @@ def generate_test_metrics_json():
     logging.debug("Storing ocr results to artifacts/ocr_test_metrics.json...")
     store_ocr_results_as_json(ocr_res, 'ocr_test_metrics.json')
 
+    stop_time = datetime.now()
+
     logging.info("Test metrics successfully generated!")
+
+    logging.info("STOP TIME: {0}".format(stop_time))
+    logging.info("EXECUTION TIME: {0}".format((stop_time - start_time).total_seconds()))
