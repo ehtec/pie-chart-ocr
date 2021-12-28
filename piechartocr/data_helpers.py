@@ -57,7 +57,7 @@ def get_upscaled_steph_test_path(n, existence_check=False):
 
 
 # load annotations csv into tuples with percentages as ratios
-def load_annotations_from_csv(csvpath):
+def load_annotations_from_csv(csvpath, load_reversed=False):
 
     res_tuples = []
 
@@ -72,6 +72,9 @@ def load_annotations_from_csv(csvpath):
                 continue
 
             res_tuples.append((row[0].strip(), float(row[1].strip()) / 100.0))
+
+    if load_reversed:
+        res_tuples = [tuple(reversed(res_tuple)) for res_tuple in res_tuples]
 
     logging.debug("res_tuples: {0}".format(res_tuples))
 

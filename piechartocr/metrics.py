@@ -57,7 +57,7 @@ def load_test_annotations(n):
 
     csvpath, _ = get_upscaled_steph_test_path(n, existence_check=True)
 
-    res_tuples = load_annotations_from_csv(csvpath)
+    res_tuples = load_annotations_from_csv(csvpath, load_reversed=True)
 
     return res_tuples
 
@@ -99,7 +99,7 @@ def compute_metrics(test_metrics=None, filename=METRICS_FILENAME):
 
         for func in metric_functions:
             res = func(annotations1, annotations2)
-            res_dict[func.__name__: res].append(res)
+            res_dict[func.__name__].append(res)
 
     final_dict = {}
 
