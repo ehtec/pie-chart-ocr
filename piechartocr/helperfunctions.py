@@ -19,6 +19,7 @@ from sklearn.cluster import DBSCAN
 import cv2
 import operator
 from collections import MutableMapping
+import json
 
 
 # equivalent to rm -rf
@@ -609,3 +610,15 @@ def delete_keys_from_dict(dictionary, keys):
                 modified_dict[key] = value
 
     return modified_dict
+
+
+# encoder to dump numpy data types. Use like this: json.dumps(data, cls=NpEncoder)
+class NpEncoder(json.JSONEncoder):
+    def default(self, obj):
+        if isinstance(obj, np.integer):
+            return int(obj)
+        if isinstance(obj, np.floating):
+            return float(obj)
+        if isinstance(obj, np.ndarray):
+            return obj.tolist()
+        return super(NpEncoder, self).default(obj)
