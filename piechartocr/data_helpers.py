@@ -121,11 +121,11 @@ def test_data_format():
     correct_percentage = round(100 * correct_count / total_count, 2)
     wrong_percentage = round(100 * wrong_count / total_count, 2)
 
-    print("total_count: {0}".format(total_count))
-    print("correct_count: {0} ({1}%)".format(correct_count, correct_percentage))
-    print("wrong_count: {0} ({1}%)".format(wrong_count, wrong_percentage))
-    print("")
-    print("failed_numbers: {0}".format(failed_numbers))
+    logging.info("total_count: {0}".format(total_count))
+    logging.info("correct_count: {0} ({1}%)".format(correct_count, correct_percentage))
+    logging.info("wrong_count: {0} ({1}%)".format(wrong_count, wrong_percentage))
+    logging.info("")
+    logging.info("failed_numbers: {0}".format(failed_numbers))
 
     return correct_numbers
 
@@ -158,12 +158,12 @@ def test_data_duplicates():
     annotation_duplicates = [el for el in all_annotation_tuples if all_annotations.count(el[1]) > 1]
     file_duplicates = [el for el in all_file_tuples if all_files.count(el[1]) > 1]
 
-    print("{0} annotation duplicates found!".format(len(annotation_duplicates)))
-    print(annotation_duplicates)
-    print("")
-    print("{0} file duplicates found!".format(len(file_duplicates)))
-    print(file_duplicates)
-    print("")
+    logging.info("{0} annotation duplicates found!".format(len(annotation_duplicates)))
+    logging.info(annotation_duplicates)
+    logging.info("")
+    logging.info("{0} file duplicates found!".format(len(file_duplicates)))
+    logging.info(file_duplicates)
+    logging.info("")
 
     remaining_annotation_duplicates = []
     remaining_file_duplicates = []
@@ -197,12 +197,12 @@ def test_data_duplicates():
             remaining_files.append(el[1])
 
     # annotation duplicates are most of the time ok
-    print("Remaining annotation duplicates: {0}".format(remaining_annotation_duplicates))
-    print("Deleted annotation duplicates: {0}".format(deleted_annotation_duplicates))
-    print("")
-    print("Remaining file duplicates: {0}".format(remaining_file_duplicates))
-    print("Deleted file duplicates: {0}".format(deleted_file_duplicates))
-    print("")
+    logging.info("Remaining annotation duplicates: {0}".format(remaining_annotation_duplicates))
+    logging.info("Deleted annotation duplicates: {0}".format(deleted_annotation_duplicates))
+    logging.info("")
+    logging.info("Remaining file duplicates: {0}".format(remaining_file_duplicates))
+    logging.info("Deleted file duplicates: {0}".format(deleted_file_duplicates))
+    logging.info("")
 
 
 # check if percentages add up to 1
@@ -241,10 +241,10 @@ def test_data_percentages(approximation_inaccuracy=0.02):
     correct_percentage = round(100 * correct_count / total_count, 2)
     wrong_percentage = round(100 * wrong_count / total_count, 2)
 
-    print("total_count: {0}".format(total_count))
-    print("correct_count: {0} ({1}%)".format(correct_count, correct_percentage))
-    print("wrong_count: {0} ({1}%)".format(wrong_count, wrong_percentage))
-    print("")
-    print("wrong_numbers_2: {0}".format(wrong_numbers_2))
+    logging.info("total_count: {0}".format(total_count))
+    logging.info("correct_count: {0} ({1}%)".format(correct_count, correct_percentage))
+    logging.info("wrong_count: {0} ({1}%)".format(wrong_count, wrong_percentage))
+    logging.info("")
+    logging.info("wrong_numbers_2: {0}".format(wrong_numbers_2))
 
     return correct_numbers_2
