@@ -142,6 +142,7 @@ dmypy.json
 # test data charts
 /data
 /test_data
+/artifacts
 !*.zip
 !/data/charts_steph_upscaled.zip
 
