@@ -4,7 +4,7 @@ import logging
 from . import pie_chart_ocr
 from .data_helpers import get_upscaled_steph_test_path
 import concurrent.futures
-from .helperfunctions import delete_keys_from_dict
+from .helperfunctions import delete_keys_from_dict, get_root_path
 
 
 # get the path for upscaled test image n and execute pie_chart_ocr.main() non-interactively
@@ -53,3 +53,14 @@ def multiprocess_pie_chart_ocr(n_list, worker_count=None):
     allres.sort(key=lambda x: x[0])
 
     return allres
+
+
+# convert ocr results to dictionary
+def convert_ocr_results_to_dict(ocr_res):
+
+    dictionary = dict(ocr_res)
+
+    # remove the approx key because ndarray is not JSON serializable
+    dictionary = delete_keys_from_dict(dictionary, ['approx'])
+
+    return dictionary
