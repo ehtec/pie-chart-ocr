@@ -123,6 +123,11 @@ https://realpython.com/python-testing
 A project-specific example:
 https://git.ehtec.co/research/pie-chart-ocr/-/blob/main/tests/unit/test_basefunctions.py
 
+To try out the unit tests:
+```commandline
+python3 -m nose2 --start-dir tests/ --with-coverage
+```
+
 The request will be merged by the maintainer (Elias Hohl). Do not push anything else
 before the merge is completed, as new commits will automatically be added to the merge
 request.
