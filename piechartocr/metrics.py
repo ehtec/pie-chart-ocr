@@ -79,7 +79,7 @@ def check_simple_annotations_match(annotations1, annotations2, ignorecase=True):
 
 
 # compute all metrics
-def compute_metrics(test_metrics=None, filename=METRICS_FILENAME):
+def compute_metrics(test_metrics=None, filename=METRICS_FILENAME, interactive=False):
 
     if test_metrics is None:
         test_metrics = load_test_metrics_json(filename=filename)
@@ -110,7 +110,8 @@ def compute_metrics(test_metrics=None, filename=METRICS_FILENAME):
             logging.info("{0}: {1}".format(func.__name__, res))
             res_dict[func.__name__].append(res)
 
-        input()
+        if interactive:
+            input()
 
     final_dict = {}
 
