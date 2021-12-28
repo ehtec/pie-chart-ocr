@@ -516,19 +516,27 @@ def detect_shapes(img, interactive=True):
 # add color info to a list of shapes
 def add_color_info(input_shapes, img, colors_num, erosion_kernel_size=COLOR_DETECTION_EROSION_KERNEL_SIZE):
 
-    output_shapes = copy.deepcopy(input_shapes)
+    output_shapes = {k: [] for k in input_shapes.keys()}
 
     for k, v in input_shapes.items():
 
         for i in range(len(v)):
 
-            contour = input_shapes[k][i]['approx']
+            data = input_shapes[k][i]
+
+            contour = data['approx']
 
             color_pixels = get_image_color_pixels(img, contour, erosion_kernel_size).astype(float)
 
+            if color_pixels.size == 0:
+                logging.warning("Empty color_pixels encountered. Skipping shape.")
+                continue
+
             dominant_color = get_cv2_dominant_color_3(color_pixels, colors_num, reshape=False)
 
-            output_shapes[k][i].update({'dominant_color': dominant_color})
+            data.update({'dominant_color': dominant_color})
+
+            output_shapes[k].append(data)
 
     return output_shapes
 
