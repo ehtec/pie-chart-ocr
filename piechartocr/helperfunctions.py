@@ -18,6 +18,7 @@ from colormath.color_conversions import convert_color
 from sklearn.cluster import DBSCAN
 import cv2
 import operator
+from collections import MutableMapping
 
 
 # equivalent to rm -rf
@@ -577,3 +578,21 @@ def remove_sc_suffix(s):
         return ''
 
     return res[0]
+
+
+# remove a set of keys from a nested dictionary
+def delete_keys_from_dict(dictionary, keys):
+
+    keys_set = set(keys)
+
+    modified_dict = {}
+
+    for key, value in dictionary.items():
+        if key not in keys_set:
+            if isinstance(value, MutableMapping):
+                modified_dict[key] = delete_keys_from_dict(value, keys_set)
+
+            else:
+                modified_dict[key] = value
+
+    return modified_dict
