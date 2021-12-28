@@ -5,6 +5,8 @@ from . import pie_chart_ocr
 from .data_helpers import get_upscaled_steph_test_path
 import concurrent.futures
 from .helperfunctions import delete_keys_from_dict, get_root_path
+import os
+import json
 
 
 # get the path for upscaled test image n and execute pie_chart_ocr.main() non-interactively
@@ -64,3 +66,16 @@ def convert_ocr_results_to_dict(ocr_res):
     dictionary = delete_keys_from_dict(dictionary, ['approx'])
 
     return dictionary
+
+
+# store ocr results as JSON
+def store_ocr_results_as_json(ocr_res, filename):
+
+    path = os.path.join(get_root_path(), 'artifacts', filename)
+
+    dictionary = convert_ocr_results_to_dict(ocr_res)
+
+    logging.info("Dumping dictionary to path: {0}".format(path))
+
+    with open(path, 'w') as jsonfile:
+        json.dump(dictionary, jsonfile)
