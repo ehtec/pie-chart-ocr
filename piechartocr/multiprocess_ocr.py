@@ -4,7 +4,7 @@ import logging
 from . import pie_chart_ocr
 from .data_helpers import get_upscaled_steph_test_path, test_data_percentages
 import concurrent.futures
-from .helperfunctions import delete_keys_from_dict, get_root_path
+from .helperfunctions import delete_keys_from_dict, get_root_path, NpEncoder
 import os
 import json
 from datetime import datetime
@@ -106,7 +106,7 @@ def store_ocr_results_as_json(ocr_res, filename):
     logging.info("Dumping dictionary to path: {0}".format(path))
 
     with open(path, 'w') as jsonfile:
-        json.dump(dictionary, jsonfile)
+        json.dump(dictionary, jsonfile, cls=NpEncoder)
 
 
 # generate test metrics JSON
