@@ -95,7 +95,15 @@ def compute_metrics(test_metrics=None, filename=METRICS_FILENAME):
         n = int(n_str)
 
         annotations1 = load_test_annotations(n)
+
+        if 'res' not in data.keys():
+            logging.warning("res key not found")
+            continue
+
         annotations2 = data['res']
+
+        logging.info("annotations1: {0}".format(annotations1))
+        logging.info("annotations2: {0}".format(annotations2))
 
         for func in metric_functions:
             res = func(annotations1, annotations2)
