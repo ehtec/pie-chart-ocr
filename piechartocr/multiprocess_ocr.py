@@ -91,7 +91,7 @@ def multiprocess_pie_chart_ocr(n_list, worker_count=None, show_progress=True):
                         n_list_done.append(res[0])
 
                     except ProcessExpired:
-                        logging.warning("Received ProcessExpired error!")
+                        logging.critical("Received ProcessExpired error!")
 
                     except Exception as e:
                         logging.exception(e)
@@ -102,8 +102,10 @@ def multiprocess_pie_chart_ocr(n_list, worker_count=None, show_progress=True):
 
         n_list_copy = [el for el in n_list_copy if el not in n_list_done]
 
+        logging.critical("n_list_copy after iteration {0}: {1}".format(it_counter, n_list_copy))
+
         if bool(n_list_copy) and (it_counter > MAX_RETRIES):
-            raise Exception("Max retries ({0}) reached but job still failing!".format(MAX_RETRIES))
+            logging.critical("Max retries ({0}) reached but job still failing!".format(MAX_RETRIES))
 
     if show_progress:
         pbar.close()
