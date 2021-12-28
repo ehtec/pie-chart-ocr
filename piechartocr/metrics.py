@@ -68,8 +68,8 @@ def check_simple_annotations_match(annotations1, annotations2, ignorecase=True):
     annotations1_copy = copy.deepcopy(annotations1)
     annotations2_copy = copy.deepcopy(annotations2)
 
-    annotations1_copy = [(round(a, MATCHING_PRECISION), b) for a, b in annotations1_copy]
-    annotations2_copy = [(round(a, MATCHING_PRECISION), b) for a, b in annotations2_copy]
+    annotations1_copy = [(round(float(a), MATCHING_PRECISION), b) for a, b in annotations1_copy]
+    annotations2_copy = [(round(float(a), MATCHING_PRECISION), b) for a, b in annotations2_copy]
 
     if ignorecase:
         annotations1_copy = [(a, b.lower()) for a, b in annotations1_copy]
