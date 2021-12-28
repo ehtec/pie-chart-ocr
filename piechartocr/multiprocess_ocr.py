@@ -2,7 +2,7 @@ import multiprocessing
 import pebble
 import logging
 from . import pie_chart_ocr
-from .data_helpers import get_upscaled_steph_test_path
+from .data_helpers import get_upscaled_steph_test_path, test_data_percentages
 import concurrent.futures
 from .helperfunctions import delete_keys_from_dict, get_root_path
 import os
@@ -79,3 +79,22 @@ def store_ocr_results_as_json(ocr_res, filename):
 
     with open(path, 'w') as jsonfile:
         json.dump(dictionary, jsonfile)
+
+
+# generate test metrics JSON
+def generate_test_metrics_json():
+
+    logging.info("Generating test metrics...")
+
+    logging.debug("Fetching list of usable charts...")
+    n_list = test_data_percentages()
+    logging.debug("{0} usable charts found.".format(len(n_list)))
+
+    worker_count = multiprocessing.cpu_count()
+    logging.debug("Parsing charts using {0} cores...".format(worker_count))
+    ocr_res = multiprocess_pie_chart_ocr(n_list)
+
+    logging.debug("Storing ocr results to artifacts/ocr_test_metrics.json...")
+    store_ocr_results_as_json(ocr_res, 'ocr_test_metrics.json')
+
+    logging.info("Test metrics successfully generated!")
