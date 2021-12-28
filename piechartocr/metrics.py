@@ -107,7 +107,7 @@ def check_simple_annotations_match_but_one(annotations1, data, ignorecase=True):
     return (len(diff1) <= 1) and (len(diff2) <= 1)
 
 
-# check if annotations match exactly apart from one element
+# check percent numbers match exactly
 def check_percent_numbers_match(annotations1, data):
 
     if 'res' not in data.keys():
@@ -127,7 +127,7 @@ def check_percent_numbers_match(annotations1, data):
     return set(percent_numbers_1) == set(percent_numbers_2)
 
 
-# check if annotations match exactly apart from one element
+# check if texts match exactly
 def check_simple_texts_match(annotations1, data, ignorecase=True):
 
     if 'res' not in data.keys():
@@ -151,6 +151,12 @@ def check_simple_texts_match(annotations1, data, ignorecase=True):
     return set(texts_1) == set(texts_2)
 
 
+# check if texts and percentages match (only the order might be wrong)
+def check_simple_texts_and_percentages_match(annotations1, data, ignorecase=True):
+
+    return check_simple_texts_match(annotations1, data, ignorecase) and check_percent_numbers_match(annotations1, data)
+
+
 # check if an error occurred during annotation computation
 def check_success(annotations1, data):
 
@@ -160,7 +166,16 @@ def check_success(annotations1, data):
     return data['success']
 
 
-# check if annotations match exactly apart from one element
+# check if annotations are not empty
+def check_not_empty(annotations1, data):
+
+    if not check_success(annotations1, data):
+        return False
+
+    return bool(data['res'])
+
+
+# check if annotations length matches
 def check_annotations_len_match(annotations1, data):
 
     if 'res' not in data.keys():
@@ -169,6 +184,28 @@ def check_annotations_len_match(annotations1, data):
     annotations2 = data['res']
 
     return len(annotations1) == len(annotations2)
+
+
+# check if annotations length matches or is 1 too high
+def check_annotations_len_match_plus_one(annotations1, data):
+
+    if 'res' not in data.keys():
+        return False
+
+    annotations2 = data['res']
+
+    return len(annotations1) <= len(annotations2) <= len(annotations1) + 1
+
+
+# check if annotations length matches or is 1 too low
+def check_annotations_len_match_minus_one(annotations1, data):
+
+    if 'res' not in data.keys():
+        return False
+
+    annotations2 = data['res']
+
+    return len(annotations1) - 1 <= len(annotations2) <= len(annotations1)
 
 
 # compute all metrics
@@ -185,7 +222,11 @@ def compute_metrics(test_metrics=None, filename=METRICS_FILENAME, interactive=Fa
         check_percent_numbers_match,
         check_success,
         check_simple_texts_match,
-        check_annotations_len_match
+        check_annotations_len_match,
+        check_simple_texts_and_percentages_match,
+        check_annotations_len_match_minus_one,
+        check_annotations_len_match_plus_one,
+        check_not_empty
     ]
 
     res_dict = {func.__name__: [] for func in metric_functions}
