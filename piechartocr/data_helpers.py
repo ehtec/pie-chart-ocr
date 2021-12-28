@@ -96,7 +96,7 @@ def test_data_format():
 
             try:
 
-                csvpath, IMG_INPUT_PATH = get_steph_test_path(i)
+                csvpath, img_input_path = get_steph_test_path(i)
 
             except FileNotFoundError:
                 logging.warning("No chart found for id {0}".format(i))
