@@ -1,5 +1,6 @@
 import multiprocessing
 import pebble
+from pebble.common import ProcessExpired
 import logging
 from . import pie_chart_ocr
 from .data_helpers import get_upscaled_steph_test_path, test_data_percentages
@@ -9,10 +10,14 @@ import os
 import json
 from datetime import datetime
 from tqdm import tqdm
+import copy
 
 
 # maximum cap of workers, in case there are more CPUs
 MAX_WORKERS_CAP = 24
+
+# maximum number of iterations to repeat failed pebble jobs
+MAX_RETRIES = 5
 
 
 # get the path for upscaled test image n and execute pie_chart_ocr.main() non-interactively
@@ -43,39 +48,59 @@ def multiprocess_pie_chart_ocr(n_list, worker_count=None, show_progress=True):
     if worker_count is None:
         worker_count = multiprocessing.cpu_count()
 
-    total_fut_count = len(n_list)
-
-    fut_count = 0
-
     allres = []
+    n_list_done = []
+    it_counter = 0
+
+    n_list_copy = copy.deepcopy(n_list)
 
     # actually not needed, but suppresses PyCharm warning
     pbar = None
 
     if show_progress:
-        pbar = tqdm(total=total_fut_count)
+        pbar = tqdm(total=len(n_list_copy))
 
-    with pebble.ProcessPool(max_workers=worker_count, max_tasks=1) as executor:
+    while bool(n_list_copy):
 
-        jobs = {}
+        it_counter += 1
 
-        for n in n_list:
-            job = executor.schedule(pie_chart_ocr_wrapper, args=[n])
-            jobs[job] = n
+        total_fut_count = len(n_list_copy)
 
-        while fut_count < total_fut_count:
+        fut_count = 0
 
-            for future in concurrent.futures.as_completed(jobs):
+        logging.info("Creating process pool: try {0}".format(it_counter))
 
-                try:
-                    res = future.result()
-                    allres.append(res)
-                except Exception as e:
-                    logging.exception(e)
+        with pebble.ProcessPool(max_workers=worker_count, max_tasks=1) as executor:
 
-                fut_count += 1
-                if show_progress:
-                    pbar.update(1)
+            jobs = {}
+
+            for n in n_list_copy:
+                job = executor.schedule(pie_chart_ocr_wrapper, args=[n])
+                jobs[job] = n
+
+            while fut_count < total_fut_count:
+
+                for future in concurrent.futures.as_completed(jobs):
+
+                    try:
+                        res = future.result()
+                        allres.append(res)
+                        n_list_done.append(res[0])
+
+                    except ProcessExpired:
+                        logging.warning("Received ProcessExpired error!")
+
+                    except Exception as e:
+                        logging.exception(e)
+
+                    fut_count += 1
+                    if show_progress:
+                        pbar.update(1)
+
+        n_list_copy = [el for el in n_list_copy if el not in n_list_done]
+
+        if bool(n_list_copy) and (it_counter > MAX_RETRIES):
+            raise Exception("Max retries ({0}) reached but job still failing!".format(MAX_RETRIES))
 
     if show_progress:
         pbar.close()
