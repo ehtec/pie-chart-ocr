@@ -107,7 +107,10 @@ def compute_metrics(test_metrics=None, filename=METRICS_FILENAME):
 
         for func in metric_functions:
             res = func(annotations1, annotations2)
+            logging.info("{0}: {1}".format(func.__name__, res))
             res_dict[func.__name__].append(res)
+
+        input()
 
     final_dict = {}
 
