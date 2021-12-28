@@ -285,11 +285,18 @@ def get_cv2_dominant_color_3(img, colors_num, reshape=True, return_integers=True
 
         img = img.reshape(scipy.product(shape[:2]), shape[2]).astype(float)
 
-    codes, dist = scipy.cluster.vq.kmeans(img, colors_num)
+    try:
 
-    vecs, dist = scipy.cluster.vq.vq(img, codes)
+        codes, dist = scipy.cluster.vq.kmeans(img, colors_num)
 
-    counts, bins = scipy.histogram(vecs, len(codes))
+        vecs, dist = scipy.cluster.vq.vq(img, codes)
+
+        counts, bins = scipy.histogram(vecs, len(codes))
+
+    except ValueError as e:
+        logging.warning("ValueError encountered when executing get_cv2_dominant_color_3; img: {0}, colors_num: {1}"
+                        .format(img, colors_num))
+        raise e
 
     # index_max = scipy.argmax(counts)
     #
