@@ -20,9 +20,10 @@ def load_test_metrics_json():
 
 
 # compare loaded test metrics to existing data files
-def compare_test_metrics(error_on_diff=True, error_on_miss=True):
+def compare_test_metrics(error_on_diff=True, error_on_miss=True, test_metrics=None):
 
-    test_metrics = load_test_metrics_json()
+    if test_metrics is None:
+        test_metrics = load_test_metrics_json()
 
     n_list = test_data_percentages()
     n_list = [str(n) for n in n_list]
