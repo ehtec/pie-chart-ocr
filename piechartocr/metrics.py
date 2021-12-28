@@ -1,9 +1,15 @@
+import copy
+
 from .data_helpers import test_data_percentages, get_upscaled_steph_test_path, load_annotations_from_csv
 from .helperfunctions import get_root_path
 import os
 import json
 import logging
 from .multiprocess_ocr import METRICS_FILENAME
+
+
+# matching precision when comparing annotations
+MATCHING_PRECISION = 5
 
 
 # load test metrics from the JSON file
@@ -54,3 +60,19 @@ def load_test_annotations(n):
     res_tuples = load_annotations_from_csv(csvpath)
 
     return res_tuples
+
+
+# check if annotations match exactly
+def check_simple_annotations_match(annotations1, annotations2, ignorecase=True):
+
+    annotations1_copy = copy.deepcopy(annotations1)
+    annotations2_copy = copy.deepcopy(annotations2)
+
+    annotations1_copy = [(round(a, MATCHING_PRECISION), b) for a, b in annotations1_copy]
+    annotations2_copy = [(round(a, MATCHING_PRECISION), b) for a, b in annotations2_copy]
+
+    if ignorecase:
+        annotations1_copy = [(a, b.lower()) for a, b in annotations1_copy]
+        annotations2_copy = [(a, b.lower()) for a, b in annotations2_copy]
+
+    return set(annotations1_copy) == set(annotations2_copy)
