@@ -1,9 +1,10 @@
 import multiprocessing
 import pebble
 import logging
-from piechartocr import pie_chart_ocr
-from piechartocr.data_helpers import get_upscaled_steph_test_path
+from . import pie_chart_ocr
+from .data_helpers import get_upscaled_steph_test_path
 import concurrent.futures
+from .helperfunctions import delete_keys_from_dict
 
 
 # get the path for upscaled test image n and execute pie_chart_ocr.main() non-interactively
