@@ -178,7 +178,7 @@ def detect_percentage(s):
 
     res = re.findall(r'\d+\.?\d*', s)
 
-    print("res: {0}".format(res))
+    logging.debug("res: {0}".format(res))
 
     if not bool(res):
         logging.debug("No float found in string {0}".format(s))
