@@ -127,6 +127,30 @@ def check_percent_numbers_match(annotations1, data):
     return set(percent_numbers_1) == set(percent_numbers_2)
 
 
+# check if annotations match exactly apart from one element
+def check_simple_texts_match(annotations1, data, ignorecase=True):
+
+    if 'res' not in data.keys():
+        return False
+
+    annotations2 = data['res']
+
+    annotations1_copy = copy.deepcopy(annotations1)
+    annotations2_copy = copy.deepcopy(annotations2)
+
+    annotations1_copy = [(round(float(a), MATCHING_PRECISION), b) for a, b in annotations1_copy]
+    annotations2_copy = [(round(float(a), MATCHING_PRECISION), b) for a, b in annotations2_copy]
+
+    if ignorecase:
+        annotations1_copy = [(a, b.lower()) for a, b in annotations1_copy]
+        annotations2_copy = [(a, b.lower()) for a, b in annotations2_copy]
+
+    texts_1 = [el[1] for el in annotations1_copy]
+    texts_2 = [el[1] for el in annotations2_copy]
+
+    return set(texts_1) == set(texts_2)
+
+
 # check if an error occurred during annotation computation
 def check_success(annotations1, data):
 
@@ -134,6 +158,17 @@ def check_success(annotations1, data):
         return False
 
     return data['success']
+
+
+# check if annotations match exactly apart from one element
+def check_annotations_len_match(annotations1, data):
+
+    if 'res' not in data.keys():
+        return False
+
+    annotations2 = data['res']
+
+    return len(annotations1) == len(annotations2)
 
 
 # compute all metrics
@@ -148,7 +183,9 @@ def compute_metrics(test_metrics=None, filename=METRICS_FILENAME, interactive=Fa
         check_simple_annotations_match,
         check_simple_annotations_match_but_one,
         check_percent_numbers_match,
-        check_success
+        check_success,
+        check_simple_texts_match,
+        check_annotations_len_match
     ]
 
     res_dict = {func.__name__: [] for func in metric_functions}
