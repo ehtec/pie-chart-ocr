@@ -127,6 +127,29 @@ def check_percent_numbers_match(annotations1, data):
     return set(percent_numbers_1) == set(percent_numbers_2)
 
 
+# check percent numbers match exactly but one
+def check_percent_numbers_match_but_one(annotations1, data):
+
+    if 'res' not in data.keys():
+        return False
+
+    annotations2 = data['res']
+
+    annotations1_copy = copy.deepcopy(annotations1)
+    annotations2_copy = copy.deepcopy(annotations2)
+
+    annotations1_copy = [(round(float(a), MATCHING_PRECISION), b) for a, b in annotations1_copy]
+    annotations2_copy = [(round(float(a), MATCHING_PRECISION), b) for a, b in annotations2_copy]
+
+    percent_numbers_1 = [el[0] for el in annotations1_copy]
+    percent_numbers_2 = [el[0] for el in annotations2_copy]
+
+    diff1 = set(percent_numbers_1) - set(percent_numbers_2)
+    diff2 = set(percent_numbers_2) - set(percent_numbers_1)
+
+    return (len(diff1) <= 1) and (len(diff2) <= 1)
+
+
 # check if texts match exactly
 def check_simple_texts_match(annotations1, data, ignorecase=True):
 
@@ -226,7 +249,8 @@ def compute_metrics(test_metrics=None, filename=METRICS_FILENAME, interactive=Fa
         check_simple_texts_and_percentages_match,
         check_annotations_len_match_minus_one,
         check_annotations_len_match_plus_one,
-        check_not_empty
+        check_not_empty,
+        check_percent_numbers_match_but_one
     ]
 
     res_dict = {func.__name__: [] for func in metric_functions}
