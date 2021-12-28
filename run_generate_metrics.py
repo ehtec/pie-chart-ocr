@@ -1,5 +1,5 @@
 import logging
-logging.basicConfig(level=logging.CRITICAL)
+logging.basicConfig(level=logging.ERROR)
 from piechartocr.multiprocess_ocr import generate_test_metrics_json
 
 
