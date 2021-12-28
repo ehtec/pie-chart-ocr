@@ -112,7 +112,7 @@ def generate_test_metrics_json():  # pragma: no cover
 
     worker_count = min(multiprocessing.cpu_count() - 2, MAX_WORKERS_CAP)
     logging.debug("Parsing charts using {0} cores...".format(worker_count))
-    ocr_res = multiprocess_pie_chart_ocr(n_list)
+    ocr_res = multiprocess_pie_chart_ocr(n_list, worker_count=worker_count)
 
     logging.debug("Storing ocr results to artifacts/ocr_test_metrics.json...")
     store_ocr_results_as_json(ocr_res, 'ocr_test_metrics.json')
