@@ -95,7 +95,7 @@ def store_ocr_results_as_json(ocr_res, filename):
 
 
 # generate test metrics JSON
-def generate_test_metrics_json():
+def generate_test_metrics_json():  # pragma: no cover
 
     logging.info("Generating test metrics...")
 
