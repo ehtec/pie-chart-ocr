@@ -63,7 +63,12 @@ def load_test_annotations(n):
 
 
 # check if annotations match exactly
-def check_simple_annotations_match(annotations1, annotations2, ignorecase=True):
+def check_simple_annotations_match(annotations1, data, ignorecase=True):
+
+    if 'res' not in data.keys():
+        return False
+
+    annotations2 = data['res']
 
     annotations1_copy = copy.deepcopy(annotations1)
     annotations2_copy = copy.deepcopy(annotations2)
@@ -79,7 +84,12 @@ def check_simple_annotations_match(annotations1, annotations2, ignorecase=True):
 
 
 # check if annotations match exactly apart from one element
-def check_simple_annotations_match_but_one(annotations1, annotations2, ignorecase=True):
+def check_simple_annotations_match_but_one(annotations1, data, ignorecase=True):
+
+    if 'res' not in data.keys():
+        return False
+
+    annotations2 = data['res']
 
     annotations1_copy = copy.deepcopy(annotations1)
     annotations2_copy = copy.deepcopy(annotations2)
@@ -98,7 +108,12 @@ def check_simple_annotations_match_but_one(annotations1, annotations2, ignorecas
 
 
 # check if annotations match exactly apart from one element
-def check_percent_numbers_match(annotations1, annotations2):
+def check_percent_numbers_match(annotations1, data):
+
+    if 'res' not in data.keys():
+        return False
+
+    annotations2 = data['res']
 
     annotations1_copy = copy.deepcopy(annotations1)
     annotations2_copy = copy.deepcopy(annotations2)
@@ -134,17 +149,20 @@ def compute_metrics(test_metrics=None, filename=METRICS_FILENAME, interactive=Fa
 
         annotations1 = load_test_annotations(n)
 
-        if 'res' not in data.keys():
-            logging.warning("res key not found")
-            continue
-
-        annotations2 = data['res']
+        # if 'res' not in data.keys():
+        #     logging.warning("res key not found")
+        #     continue
+        #
+        # annotations2 = data['res']
 
         logging.info("annotations1: {0}".format(annotations1))
-        logging.info("annotations2: {0}".format(annotations2))
+
+        if 'res' in data.keys():
+            annotations2 = data['res']
+            logging.info("annotations2: {0}".format(annotations2))
 
         for func in metric_functions:
-            res = func(annotations1, annotations2)
+            res = func(annotations1, data)
             logging.info("{0}: {1}".format(func.__name__, res))
             res_dict[func.__name__].append(res)
 
