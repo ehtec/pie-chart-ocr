@@ -11,6 +11,10 @@ from datetime import datetime
 from tqdm import tqdm
 
 
+# maximum cap of workers, in case there are more CPUs
+MAX_WORKERS_CAP = 24
+
+
 # get the path for upscaled test image n and execute pie_chart_ocr.main() non-interactively
 def pie_chart_ocr_wrapper(n):
 
@@ -106,7 +110,7 @@ def generate_test_metrics_json():  # pragma: no cover
     n_list = test_data_percentages()
     logging.debug("{0} usable charts found.".format(len(n_list)))
 
-    worker_count = multiprocessing.cpu_count() - 2
+    worker_count = min(multiprocessing.cpu_count() - 2, MAX_WORKERS_CAP)
     logging.debug("Parsing charts using {0} cores...".format(worker_count))
     ocr_res = multiprocess_pie_chart_ocr(n_list)
 
