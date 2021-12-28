@@ -94,7 +94,7 @@ def generate_test_metrics_json():
     n_list = test_data_percentages()
     logging.debug("{0} usable charts found.".format(len(n_list)))
 
-    worker_count = multiprocessing.cpu_count()
+    worker_count = multiprocessing.cpu_count() - 2
     logging.debug("Parsing charts using {0} cores...".format(worker_count))
     ocr_res = multiprocess_pie_chart_ocr(n_list)
 
