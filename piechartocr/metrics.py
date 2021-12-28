@@ -1,4 +1,4 @@
-from .data_helpers import test_data_percentages
+from .data_helpers import test_data_percentages, get_upscaled_steph_test_path, load_annotations_from_csv
 from .helperfunctions import get_root_path
 import os
 import json
@@ -44,3 +44,13 @@ def compare_test_metrics(error_on_diff=True, error_on_miss=True, test_metrics=No
             raise ValueError("Some metrics are missing")
 
     return missing_metrics, additional_metrics
+
+
+# load annotations from test dataset
+def load_test_annotations(n):
+
+    csvpath, _ = get_upscaled_steph_test_path(n, existence_check=True)
+
+    res_tuples = load_annotations_from_csv(csvpath)
+
+    return res_tuples
