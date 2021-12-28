@@ -76,3 +76,40 @@ def check_simple_annotations_match(annotations1, annotations2, ignorecase=True):
         annotations2_copy = [(a, b.lower()) for a, b in annotations2_copy]
 
     return set(annotations1_copy) == set(annotations2_copy)
+
+
+# compute all metrics
+def compute_metrics(test_metrics=None, filename=METRICS_FILENAME):
+
+    if test_metrics is None:
+        test_metrics = load_test_metrics_json(filename=filename)
+
+    total_metrics_count = len(test_metrics)
+
+    metric_functions = [check_simple_annotations_match]
+
+    res_dict = {func.__name__: [] for func in metric_functions}
+
+    for n_str, data in test_metrics.items():
+
+        n = int(n_str)
+
+        annotations1 = load_test_annotations(n)
+        annotations2 = data['res']
+
+        for func in metric_functions:
+            res = func(annotations1, annotations2)
+            res_dict[func.__name__: res].append(res)
+
+    final_dict = {}
+
+    for func in metric_functions:
+
+        if func.__name__.startswith("check"):
+            true_values_count = sum(res_dict[func.__name__])
+            true_ratio = true_values_count / total_metrics_count
+            final_dict.update({func.__name__: true_ratio})
+
+    logging.info("final_dict: {0}".format(final_dict))
+
+    return final_dict
