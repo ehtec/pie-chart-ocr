@@ -78,6 +78,25 @@ def check_simple_annotations_match(annotations1, annotations2, ignorecase=True):
     return set(annotations1_copy) == set(annotations2_copy)
 
 
+# check if annotations match exactly apart from one element
+def check_simple_annotations_match_but_one(annotations1, annotations2, ignorecase=True):
+
+    annotations1_copy = copy.deepcopy(annotations1)
+    annotations2_copy = copy.deepcopy(annotations2)
+
+    annotations1_copy = [(round(float(a), MATCHING_PRECISION), b) for a, b in annotations1_copy]
+    annotations2_copy = [(round(float(a), MATCHING_PRECISION), b) for a, b in annotations2_copy]
+
+    if ignorecase:
+        annotations1_copy = [(a, b.lower()) for a, b in annotations1_copy]
+        annotations2_copy = [(a, b.lower()) for a, b in annotations2_copy]
+
+    diff1 = set(annotations1_copy) - set(annotations2_copy)
+    diff2 = set(annotations2_copy) - set(annotations1_copy)
+
+    return (len(diff1) <= 1) and (len(diff2) <= 1)
+
+
 # compute all metrics
 def compute_metrics(test_metrics=None, filename=METRICS_FILENAME, interactive=False):
 
@@ -86,7 +105,10 @@ def compute_metrics(test_metrics=None, filename=METRICS_FILENAME, interactive=Fa
 
     total_metrics_count = len(test_metrics)
 
-    metric_functions = [check_simple_annotations_match]
+    metric_functions = [
+        check_simple_annotations_match,
+        check_simple_annotations_match_but_one
+    ]
 
     res_dict = {func.__name__: [] for func in metric_functions}
 
