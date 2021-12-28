@@ -141,6 +141,7 @@ dmypy.json
 
 # test data charts
 /data
+/test_data
 !*.zip
 !/data/charts_steph_upscaled.zip
 
