@@ -19,6 +19,9 @@ MAX_WORKERS_CAP = 24
 # maximum number of iterations to repeat failed pebble jobs
 MAX_RETRIES = 5
 
+# metrics filename
+METRICS_FILENAME = 'ocr_test_metrics.json'
+
 
 # get the path for upscaled test image n and execute pie_chart_ocr.main() non-interactively
 def pie_chart_ocr_wrapper(n):
@@ -135,7 +138,7 @@ def store_ocr_results_as_json(ocr_res, filename):
 
 
 # generate test metrics JSON
-def generate_test_metrics_json():  # pragma: no cover
+def generate_test_metrics_json(filename=METRICS_FILENAME):  # pragma: no cover
 
     logging.info("Generating test metrics...")
 
@@ -151,7 +154,7 @@ def generate_test_metrics_json():  # pragma: no cover
     ocr_res = multiprocess_pie_chart_ocr(n_list, worker_count=worker_count)
 
     logging.debug("Storing ocr results to artifacts/ocr_test_metrics.json...")
-    store_ocr_results_as_json(ocr_res, 'ocr_test_metrics.json')
+    store_ocr_results_as_json(ocr_res, filename)
 
     stop_time = datetime.now()
 

@@ -3,12 +3,13 @@ from .helperfunctions import get_root_path
 import os
 import json
 import logging
+from .multiprocess_ocr import METRICS_FILENAME
 
 
 # load test metrics from the JSON file
-def load_test_metrics_json():
+def load_test_metrics_json(filename=METRICS_FILENAME):
 
-    path = os.path.join(get_root_path(), 'artifacts', 'ocr_test_metrics.json')
+    path = os.path.join(get_root_path(), 'artifacts', filename)
     logging.debug("Path to JSON test metrics: {0}".format(path))
 
     with open(path, 'r') as jsonfile:
@@ -20,10 +21,10 @@ def load_test_metrics_json():
 
 
 # compare loaded test metrics to existing data files
-def compare_test_metrics(error_on_diff=True, error_on_miss=True, test_metrics=None):
+def compare_test_metrics(error_on_diff=True, error_on_miss=True, test_metrics=None, filename=METRICS_FILENAME):
 
     if test_metrics is None:
-        test_metrics = load_test_metrics_json()
+        test_metrics = load_test_metrics_json(filename=filename)
 
     n_list = test_data_percentages()
     n_list = [str(n) for n in n_list]
