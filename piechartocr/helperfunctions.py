@@ -583,6 +583,9 @@ def remove_sc_suffix(s):
 # remove a set of keys from a nested dictionary
 def delete_keys_from_dict(dictionary, keys):
 
+    if not isinstance(dictionary, MutableMapping):
+        return dictionary
+
     keys_set = set(keys)
 
     modified_dict = {}
@@ -591,6 +594,9 @@ def delete_keys_from_dict(dictionary, keys):
         if key not in keys_set:
             if isinstance(value, MutableMapping):
                 modified_dict[key] = delete_keys_from_dict(value, keys_set)
+
+            elif isinstance(value, list) or isinstance(value, tuple):
+                modified_dict[key] = [delete_keys_from_dict(value[i], keys_set) for i in range(len(value))]
 
             else:
                 modified_dict[key] = value
