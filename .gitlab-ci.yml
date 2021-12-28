@@ -11,8 +11,6 @@ flake8:
     - flake8 .
 
 .nose2:
-  stage: test
-  image: python:3.7-buster
   before_script:
     - apt-get update
     - apt-get install libboost-system-dev tesseract-ocr build-essential git -y
@@ -33,3 +31,23 @@ flake8:
   only:
     - merge_requests
     - tags
+
+nose2-3.7-buster:
+  extends: .nose2
+  stage: test
+  image: python:3.7-buster
+
+nose2-3.8-buster:
+  extends: .nose2
+  stage: test
+  image: python:3.8-buster
+
+nose2-3.9-bullseye:
+  extends: .nose2
+  stage: test
+  image: python:3.9-bullseye
+
+nose2-3.10-bullseye:
+  extends: .nose2
+  stage: test
+  image: python:3.10-bullseye
