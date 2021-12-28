@@ -290,6 +290,8 @@ def compute_metrics(test_metrics=None, filename=METRICS_FILENAME, interactive=Fa
             true_ratio = true_values_count / total_metrics_count
             final_dict.update({func.__name__: true_ratio})
 
+    final_dict = dict(sorted(final_dict.items(), key=lambda x: x[0]))
+
     logging.info("final_dict: {0}".format(final_dict))
 
     return final_dict
