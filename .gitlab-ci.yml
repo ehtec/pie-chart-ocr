@@ -14,7 +14,7 @@ flake8:
 .nose2:
   before_script:
     - apt-get update
-    - apt-get install libboost-system-dev tesseract-ocr build-essential git cmake -y
+    - apt-get install libboost-system-dev tesseract-ocr build-essential git cmake ffmpeg libsm6 libext6 -y
     - pip install --upgrade pip
     - pip install -r requirements.txt
     - git submodule update --init --recursive
@@ -63,7 +63,7 @@ generatemetrics:
   image: python:3.9-bullseye
   before_script:
     - apt-get update
-    - apt-get install libboost-system-dev tesseract-ocr build-essential git cmake -y
+    - apt-get install libboost-system-dev tesseract-ocr build-essential git cmake ffmpeg libsm6 libext6 -y
     - pip install --upgrade pip
     - pip install -r requirements.txt
     - git submodule update --init --recursive
@@ -77,8 +77,6 @@ generatemetrics:
     - cp old/ocr_test_metrics.json artifacts/ocr_test_metrics.json
     - python3 run_process_metrics.py
   artifacts:
-    reports:
-      cobertura: coverage.xml
     paths:
       - artifacts/ocr_test_metrics.json
       - artifacts/ocr_test_metrics.png
