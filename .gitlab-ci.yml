@@ -74,9 +74,9 @@ generatemetrics:
     - python3 run_generate_metrics.py
     - python3 run_process_metrics.py
   artifacts:
-    paths:
-      - artifacts/ocr_test_metrics.json
-      - artifacts/ocr_test_metrics.png
+    paths: [artifacts/ocr_test_metrics.json, artifacts/ocr_test_metrics.png]
+    expose_as: "Metrics"
+    expire_in: never
   only:
     - merge_requests
     - tags
