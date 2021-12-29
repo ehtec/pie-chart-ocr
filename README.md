@@ -39,8 +39,6 @@ Compile libraries:
 python3 setup.py build_ext
 ```
 
-Eventually change the `MAX_WORKERS` number in `pie_chart_ocr.py`.
-
 Create temporary directories:
 ```commandline
 mkdir temp
