@@ -26,9 +26,12 @@ flake8:
   script:
     - python3 -m nose2 --start-dir tests/ --with-coverage
     - python3 -m coverage xml --fail-under 0
+    - touch artifacts/test.txt
   artifacts:
     reports:
       cobertura: coverage.xml
+    paths:
+      - artifacts/test.txt
   only:
     - merge_requests
     - tags
@@ -39,17 +42,17 @@ nose2-3.7-buster:
   stage: test
   image: python:3.7-buster
 
-nose2-3.8-buster:
-  extends: .nose2
-  stage: test
-  image: python:3.8-buster
-
-nose2-3.9-bullseye:
-  extends: .nose2
-  stage: test
-  image: python:3.9-bullseye
-
-nose2-3.10-bullseye:
-  extends: .nose2
-  stage: test
-  image: python:3.10-bullseye
+#nose2-3.8-buster:
+#  extends: .nose2
+#  stage: test
+#  image: python:3.8-buster
+#
+#nose2-3.9-bullseye:
+#  extends: .nose2
+#  stage: test
+#  image: python:3.9-bullseye
+#
+#nose2-3.10-bullseye:
+#  extends: .nose2
+#  stage: test
+#  image: python:3.10-bullseye
