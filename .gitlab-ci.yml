@@ -1,6 +1,7 @@
 stages:
   - linting
   - test
+  - metrics
 
 flake8:
   stage: linting
@@ -56,3 +57,32 @@ nose2-3.7-buster:
 #  extends: .nose2
 #  stage: test
 #  image: python:3.10-bullseye
+
+generatemetrics:
+  stage: metrics
+  image: python:3.9-bullseye
+  before_script:
+    - apt-get update
+    - apt-get install libboost-system-dev tesseract-ocr build-essential git cmake -y
+    - pip install --upgrade pip
+    - pip install -r requirements.txt
+    - git submodule update --init --recursive
+    - python3 setup.py build_ext
+    - mkdir temp
+    - mkdir temp1
+    - mkdir temp2
+    - unzip data/charts_steph.zip -d data
+    - unzip data/charts_steph_upscaled.zip -d data
+  script:
+    - cp old/ocr_test_metrics.json artifacts/ocr_test_metrics.json
+    - python3 run_process_metrics.py
+  artifacts:
+    reports:
+      cobertura: coverage.xml
+    paths:
+      - artifacts/ocr_test_metrics.json
+      - artifacts/ocr_test_metrics.png
+  only:
+    - merge_requests
+    - tags
+    - main
