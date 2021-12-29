@@ -32,6 +32,7 @@ flake8:
   only:
     - merge_requests
     - tags
+    - master
 
 nose2-3.7-buster:
   extends: .nose2
