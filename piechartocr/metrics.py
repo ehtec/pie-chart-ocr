@@ -6,6 +6,7 @@ import os
 import json
 import logging
 from .multiprocess_ocr import METRICS_FILENAME
+import matplotlib.pyplot as plt
 
 
 # matching precision when comparing annotations
@@ -295,3 +296,19 @@ def compute_metrics(test_metrics=None, filename=METRICS_FILENAME, interactive=Fa
     logging.info("final_dict: {0}".format(final_dict))
 
     return final_dict
+
+
+# create metrics plot
+def create_metrics_plot(metrics_dict):
+
+    plt.barh(range(len(metrics_dict)), metrics_dict.values())
+
+    plt.yticks(range(len(metrics_dict)), metrics_dict.keys())
+
+    plt.xlabel('Percentage')
+    plt.ylabel('Metric')
+
+    plt.tight_layout()
+
+    path = os.path.join(get_root_path(), 'artifacts', 'ocr_test_metrics.png')
+    plt.savefig(path)
