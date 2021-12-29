@@ -293,6 +293,8 @@ def compute_metrics(test_metrics=None, filename=METRICS_FILENAME, interactive=Fa
 
     final_dict = dict(sorted(final_dict.items(), key=lambda x: x[0]))
 
+    final_dict = {k: round(100 * v, 2) for k, v in final_dict.items()}
+
     logging.info("final_dict: {0}".format(final_dict))
 
     return final_dict
