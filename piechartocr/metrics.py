@@ -303,6 +303,8 @@ def compute_metrics(test_metrics=None, filename=METRICS_FILENAME, interactive=Fa
 # create metrics plot
 def create_metrics_plot(metrics_dict):
 
+    plt.figure(figsize=(8.4, 4.8))
+
     plt.barh(range(len(metrics_dict)), metrics_dict.values())
 
     plt.yticks(range(len(metrics_dict)), metrics_dict.keys())
