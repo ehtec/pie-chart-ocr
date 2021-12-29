@@ -40,20 +40,20 @@ nose2-3.7-buster:
   stage: test
   image: python:3.7-buster
 
-#nose2-3.8-buster:
-#  extends: .nose2
-#  stage: test
-#  image: python:3.8-buster
-#
-#nose2-3.9-bullseye:
-#  extends: .nose2
-#  stage: test
-#  image: python:3.9-bullseye
-#
-#nose2-3.10-bullseye:
-#  extends: .nose2
-#  stage: test
-#  image: python:3.10-bullseye
+nose2-3.8-buster:
+  extends: .nose2
+  stage: test
+  image: python:3.8-buster
+
+nose2-3.9-bullseye:
+  extends: .nose2
+  stage: test
+  image: python:3.9-bullseye
+
+nose2-3.10-bullseye:
+  extends: .nose2
+  stage: test
+  image: python:3.10-bullseye
 
 generatemetrics:
   stage: metrics
