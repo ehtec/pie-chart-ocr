@@ -27,12 +27,9 @@ flake8:
   script:
     - python3 -m nose2 --start-dir tests/ --with-coverage
     - python3 -m coverage xml --fail-under 0
-    - touch artifacts/test.txt
   artifacts:
     reports:
       cobertura: coverage.xml
-    paths:
-      - artifacts/test.txt
   only:
     - merge_requests
     - tags
