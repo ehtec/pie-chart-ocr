@@ -71,7 +71,7 @@ generatemetrics:
     - unzip data/charts_steph.zip -d data
     - unzip data/charts_steph_upscaled.zip -d data
   script:
-    - cp old/ocr_test_metrics.json artifacts/ocr_test_metrics.json
+    - python3 run_generate_metrics.py
     - python3 run_process_metrics.py
   artifacts:
     paths:
