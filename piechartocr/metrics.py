@@ -77,8 +77,8 @@ def check_simple_annotations_match(annotations1, data, ignorecase=True):
     annotations1_copy = copy.deepcopy(annotations1)
     annotations2_copy = copy.deepcopy(annotations2)
 
-    annotations1_copy = [(round(float(a), MATCHING_PRECISION), b) for a, b in annotations1_copy]
-    annotations2_copy = [(round(float(a), MATCHING_PRECISION), b) for a, b in annotations2_copy]
+    annotations1_copy = [(round(float(a) * 10 ** MATCHING_PRECISION), b) for a, b in annotations1_copy]
+    annotations2_copy = [(round(float(a) * 10 ** MATCHING_PRECISION), b) for a, b in annotations2_copy]
 
     if ignorecase:
         annotations1_copy = [(a, b.lower()) for a, b in annotations1_copy]
@@ -101,8 +101,8 @@ def check_fuzz_ratio_annotations_match(annotations1, data, ignorecase=True, min_
     annotations1_copy = copy.deepcopy(annotations1)
     annotations2_copy = copy.deepcopy(annotations2)
 
-    annotations1_copy = [(round(float(a), MATCHING_PRECISION), b) for a, b in annotations1_copy]
-    annotations2_copy = [(round(float(a), MATCHING_PRECISION), b) for a, b in annotations2_copy]
+    annotations1_copy = [(round(float(a) * 10 ** MATCHING_PRECISION), b) for a, b in annotations1_copy]
+    annotations2_copy = [(round(float(a) * 10 ** MATCHING_PRECISION), b) for a, b in annotations2_copy]
 
     if ignorecase:
         annotations1_copy = [(a, b.lower()) for a, b in annotations1_copy]
@@ -150,8 +150,8 @@ def check_simple_annotations_match_but_one(annotations1, data, ignorecase=True):
     annotations1_copy = copy.deepcopy(annotations1)
     annotations2_copy = copy.deepcopy(annotations2)
 
-    annotations1_copy = [(round(float(a), MATCHING_PRECISION), b) for a, b in annotations1_copy]
-    annotations2_copy = [(round(float(a), MATCHING_PRECISION), b) for a, b in annotations2_copy]
+    annotations1_copy = [(round(float(a) * 10 ** MATCHING_PRECISION), b) for a, b in annotations1_copy]
+    annotations2_copy = [(round(float(a) * 10 ** MATCHING_PRECISION), b) for a, b in annotations2_copy]
 
     if ignorecase:
         annotations1_copy = [(a, b.lower()) for a, b in annotations1_copy]
@@ -174,8 +174,8 @@ def check_percent_numbers_match(annotations1, data):
     annotations1_copy = copy.deepcopy(annotations1)
     annotations2_copy = copy.deepcopy(annotations2)
 
-    annotations1_copy = [(round(float(a), MATCHING_PRECISION), b) for a, b in annotations1_copy]
-    annotations2_copy = [(round(float(a), MATCHING_PRECISION), b) for a, b in annotations2_copy]
+    annotations1_copy = [(round(float(a) * 10 ** MATCHING_PRECISION), b) for a, b in annotations1_copy]
+    annotations2_copy = [(round(float(a) * 10 ** MATCHING_PRECISION), b) for a, b in annotations2_copy]
 
     percent_numbers_1 = [el[0] for el in annotations1_copy]
     percent_numbers_2 = [el[0] for el in annotations2_copy]
@@ -194,8 +194,8 @@ def check_percent_numbers_match_but_one(annotations1, data):
     annotations1_copy = copy.deepcopy(annotations1)
     annotations2_copy = copy.deepcopy(annotations2)
 
-    annotations1_copy = [(round(float(a), MATCHING_PRECISION), b) for a, b in annotations1_copy]
-    annotations2_copy = [(round(float(a), MATCHING_PRECISION), b) for a, b in annotations2_copy]
+    annotations1_copy = [(round(float(a) * 10 ** MATCHING_PRECISION), b) for a, b in annotations1_copy]
+    annotations2_copy = [(round(float(a) * 10 ** MATCHING_PRECISION), b) for a, b in annotations2_copy]
 
     percent_numbers_1 = [el[0] for el in annotations1_copy]
     percent_numbers_2 = [el[0] for el in annotations2_copy]
@@ -217,8 +217,8 @@ def check_simple_texts_match(annotations1, data, ignorecase=True):
     annotations1_copy = copy.deepcopy(annotations1)
     annotations2_copy = copy.deepcopy(annotations2)
 
-    annotations1_copy = [(round(float(a), MATCHING_PRECISION), b) for a, b in annotations1_copy]
-    annotations2_copy = [(round(float(a), MATCHING_PRECISION), b) for a, b in annotations2_copy]
+    annotations1_copy = [(round(float(a) * 10 ** MATCHING_PRECISION), b) for a, b in annotations1_copy]
+    annotations2_copy = [(round(float(a) * 10 ** MATCHING_PRECISION), b) for a, b in annotations2_copy]
 
     if ignorecase:
         annotations1_copy = [(a, b.lower()) for a, b in annotations1_copy]
