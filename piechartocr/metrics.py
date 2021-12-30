@@ -1,5 +1,5 @@
 import copy
-
+from fuzzywuzzy import fuzz
 from .data_helpers import test_data_percentages, get_upscaled_steph_test_path, load_annotations_from_csv
 from .helperfunctions import get_root_path
 import os
@@ -11,6 +11,9 @@ import matplotlib.pyplot as plt
 
 # matching precision when comparing annotations
 MATCHING_PRECISION = 5
+
+# default fuzzywuzzy minimum score
+DEFAULT_FUZZ_MIN_SCORE = 90
 
 
 # load test metrics from the JSON file
@@ -82,6 +85,58 @@ def check_simple_annotations_match(annotations1, data, ignorecase=True):
         annotations2_copy = [(a, b.lower()) for a, b in annotations2_copy]
 
     return set(annotations1_copy) == set(annotations2_copy)
+
+
+# check if annotations match with fuzz ratio
+def check_fuzz_ratio_annotations_match(annotations1, data, ignorecase=True, min_score=DEFAULT_FUZZ_MIN_SCORE):
+
+    if 'res' not in data.keys():
+        return False
+
+    annotations2 = data['res']
+
+    if len(annotations1) != len(annotations2):
+        return False
+
+    annotations1_copy = copy.deepcopy(annotations1)
+    annotations2_copy = copy.deepcopy(annotations2)
+
+    annotations1_copy = [(round(float(a), MATCHING_PRECISION), b) for a, b in annotations1_copy]
+    annotations2_copy = [(round(float(a), MATCHING_PRECISION), b) for a, b in annotations2_copy]
+
+    if ignorecase:
+        annotations1_copy = [(a, b.lower()) for a, b in annotations1_copy]
+        annotations2_copy = [(a, b.lower()) for a, b in annotations2_copy]
+
+    correct_count = 0
+
+    for a, b in annotations1_copy:
+
+        valid = [el[1] for el in annotations2_copy if el[0] == a]
+
+        if not bool(valid):
+            continue
+
+        scores = [fuzz.ratio(b, el) for el in valid]
+
+        max_score = max(scores)
+
+        if max_score >= min_score:
+            correct_count += 1
+
+    return correct_count == len(annotations1)
+
+
+# wrapper for check_fuzz_ratio_annotations_match with min_score=90
+def check_fuzz_ratio_annotations_match_90(annotations1, data, ignorecase=True):
+
+    return check_fuzz_ratio_annotations_match(annotations1, data, ignorecase=ignorecase, min_score=90)
+
+
+# wrapper for check_fuzz_ratio_annotations_match with min_score=80
+def check_fuzz_ratio_annotations_match_80(annotations1, data, ignorecase=True):
+
+    return check_fuzz_ratio_annotations_match(annotations1, data, ignorecase=ignorecase, min_score=80)
 
 
 # check if annotations match exactly apart from one element
@@ -251,7 +306,9 @@ def compute_metrics(test_metrics=None, filename=METRICS_FILENAME, interactive=Fa
         check_annotations_len_match_minus_one,
         check_annotations_len_match_plus_one,
         check_not_empty,
-        check_percent_numbers_match_but_one
+        check_percent_numbers_match_but_one,
+        check_fuzz_ratio_annotations_match_80,
+        check_fuzz_ratio_annotations_match_90
     ]
 
     res_dict = {func.__name__: [] for func in metric_functions}
