@@ -88,7 +88,20 @@ def check_simple_annotations_match(annotations1, data, ignorecase=True):
 
 
 # check if annotations match with fuzz ratio
-def check_fuzz_ratio_annotations_match(annotations1, data, ignorecase=True, min_score=DEFAULT_FUZZ_MIN_SCORE):
+def check_fuzz_ratio_annotations_match(annotations1, data, ignorecase=True, min_score=DEFAULT_FUZZ_MIN_SCORE,
+                                       mode='ratio'):
+
+    if mode == 'ratio':
+        score_func = fuzz.ratio
+
+    elif mode == 'partial_ratio':
+        score_func = fuzz.partial_ratio
+
+    elif mode == 'partial_ratio_reversed':
+        score_func = lambda a, b: fuzz.partial_ratio(b, a)
+
+    else:
+        raise NotImplementedError("Mode {0} not implemented".format(mode))
 
     if 'res' not in data.keys():
         return False
@@ -117,7 +130,7 @@ def check_fuzz_ratio_annotations_match(annotations1, data, ignorecase=True, min_
         if not bool(valid):
             continue
 
-        scores = [fuzz.ratio(b, el) for el in valid]
+        scores = [score_func(b, el) for el in valid]
 
         max_score = max(scores)
 
@@ -130,13 +143,61 @@ def check_fuzz_ratio_annotations_match(annotations1, data, ignorecase=True, min_
 # wrapper for check_fuzz_ratio_annotations_match with min_score=90
 def check_fuzz_ratio_annotations_match_90(annotations1, data, ignorecase=True):
 
-    return check_fuzz_ratio_annotations_match(annotations1, data, ignorecase=ignorecase, min_score=90)
+    return check_fuzz_ratio_annotations_match(annotations1, data, ignorecase=ignorecase, min_score=90, mode='ratio')
 
 
 # wrapper for check_fuzz_ratio_annotations_match with min_score=80
 def check_fuzz_ratio_annotations_match_80(annotations1, data, ignorecase=True):
 
-    return check_fuzz_ratio_annotations_match(annotations1, data, ignorecase=ignorecase, min_score=80)
+    return check_fuzz_ratio_annotations_match(annotations1, data, ignorecase=ignorecase, min_score=80, mode='ratio')
+
+
+# wrapper for check_fuzz_ratio_annotations_match with min_score=70
+def check_fuzz_ratio_annotations_match_70(annotations1, data, ignorecase=True):
+
+    return check_fuzz_ratio_annotations_match(annotations1, data, ignorecase=ignorecase, min_score=70, mode='ratio')
+
+
+# wrapper for check_fuzz_ratio_annotations_match with min_score=90 and mode='partial_ratio'
+def check_fuzz_partial_ratio_annotations_match_90(annotations1, data, ignorecase=True):
+
+    return check_fuzz_ratio_annotations_match(annotations1, data, ignorecase=ignorecase, min_score=90,
+                                              mode='partial_ratio')
+
+
+# wrapper for check_fuzz_ratio_annotations_match with min_score=80 and mode='partial_ratio'
+def check_fuzz_partial_ratio_annotations_match_80(annotations1, data, ignorecase=True):
+
+    return check_fuzz_ratio_annotations_match(annotations1, data, ignorecase=ignorecase, min_score=80,
+                                              mode='partial_ratio')
+
+
+# wrapper for check_fuzz_ratio_annotations_match with min_score=70 and mode='partial_ratio'
+def check_fuzz_partial_ratio_annotations_match_70(annotations1, data, ignorecase=True):
+
+    return check_fuzz_ratio_annotations_match(annotations1, data, ignorecase=ignorecase, min_score=70,
+                                              mode='partial_ratio')
+
+
+# wrapper for check_fuzz_ratio_annotations_match with min_score=90 and mode='partial_ratio_reversed'
+def check_fuzz_partial_ratio_reversed_annotations_match_90(annotations1, data, ignorecase=True):
+
+    return check_fuzz_ratio_annotations_match(annotations1, data, ignorecase=ignorecase, min_score=90,
+                                              mode='partial_ratio_reversed')
+
+
+# wrapper for check_fuzz_ratio_annotations_match with min_score=80 and mode='partial_ratio'
+def check_fuzz_partial_ratio_reversed_annotations_match_80(annotations1, data, ignorecase=True):
+
+    return check_fuzz_ratio_annotations_match(annotations1, data, ignorecase=ignorecase, min_score=80,
+                                              mode='partial_ratio_reversed')
+
+
+# wrapper for check_fuzz_ratio_annotations_match with min_score=70 and mode='partial_ratio'
+def check_fuzz_partial_ratio_reversed_annotations_match_70(annotations1, data, ignorecase=True):
+
+    return check_fuzz_ratio_annotations_match(annotations1, data, ignorecase=ignorecase, min_score=70,
+                                              mode='partial_ratio_reversed')
 
 
 # check if annotations match exactly apart from one element
@@ -307,8 +368,15 @@ def compute_metrics(test_metrics=None, filename=METRICS_FILENAME, interactive=Fa
         check_annotations_len_match_plus_one,
         check_not_empty,
         check_percent_numbers_match_but_one,
+        check_fuzz_ratio_annotations_match_70,
         check_fuzz_ratio_annotations_match_80,
-        check_fuzz_ratio_annotations_match_90
+        check_fuzz_ratio_annotations_match_90,
+        check_fuzz_partial_ratio_annotations_match_70,
+        check_fuzz_partial_ratio_annotations_match_80,
+        check_fuzz_partial_ratio_annotations_match_90,
+        check_fuzz_partial_ratio_reversed_annotations_match_70,
+        check_fuzz_partial_ratio_reversed_annotations_match_80,
+        check_fuzz_partial_ratio_reversed_annotations_match_90
     ]
 
     res_dict = {func.__name__: [] for func in metric_functions}
