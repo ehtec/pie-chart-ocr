@@ -18,3 +18,4 @@ sklearn
 nose2
 coverage
 pebble
+fuzzywuzzy
