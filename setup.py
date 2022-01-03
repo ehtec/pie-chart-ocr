@@ -21,13 +21,13 @@ polygoncalc_module = Extension(
 
 setup(name="piechartocr",
       packages=['piechartocr'],
-      version="0.5.3",
+      version="0.5.4",
       license="MIT",
       description="Pie Chart Optical Character Recognition",
       author="Elias Hohl",
       author_email="elias.hohl@ehtec.co",
       url="https://git.ehtec.co/research/pie-chart-ocr",
-      download_url="https://git.ehtec.co/research/pie-chart-ocr/-/archive/v0.5.3-beta/pie-chart-ocr-v0.5.3-beta.zip",
+      download_url="https://git.ehtec.co/research/pie-chart-ocr/-/archive/v0.5.4-beta/pie-chart-ocr-v0.5.4-beta.zip",
       keywords="pie chart parsing ocr",
       install_requires=[
           "Cython",
