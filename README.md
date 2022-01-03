@@ -14,6 +14,19 @@ https://github.com/ehtec/pie-chart-ocr is a mirror.
 
 # Installation
 
+### Install via PyPi
+
+You can install all tagged versions of `piechartocr` from PyPi:
+
+```commandline
+python3 -m pip install --upgrade piechartocr
+```
+
+Note: You cannot run tests and examples from the PyPi installation. The required
+files need to be downloaded from Gitlab.
+
+### Install from source
+
 Install Boost and Tesseract:
 
 ```commandline
