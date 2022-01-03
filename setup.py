@@ -51,14 +51,14 @@ setup(name="piechartocr",
           "coverage"
       ],
       classifiers=[
-            'Development Status :: 4 - Beta',
-            'Intended Audience :: Developers',
-            'Topic :: Scientific/Engineering :: Image Recognition',
-            'License :: OSI Approved :: MIT License',
-            'Programming Language :: Python :: 3',
-            'Programming Language :: Python :: 3.7',
-            'Programming Language :: Python :: 3.8',
-            'Programming Language :: Python :: 3.9',
-            'Programming Language :: Python :: 3.10'
+          'Development Status :: 4 - Beta',
+          'Intended Audience :: Developers',
+          'Topic :: Scientific/Engineering :: Image Recognition',
+          'License :: OSI Approved :: MIT License',
+          'Programming Language :: Python :: 3',
+          'Programming Language :: Python :: 3.7',
+          'Programming Language :: Python :: 3.8',
+          'Programming Language :: Python :: 3.9',
+          'Programming Language :: Python :: 3.10'
       ],
       ext_modules=[colorprocesser_module, polygoncalc_module])
