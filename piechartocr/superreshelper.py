@@ -16,7 +16,7 @@ TARGET_PIXEL_SIZE = 1000 * 1000
 
 
 # upsample image using superres method
-def upsample_image(image):
+def upsample_image(image, use_gpu=False):
 
     pixel_size = np.prod(image.shape[:-1])
 
@@ -41,9 +41,10 @@ def upsample_image(image):
 
         sr.setModel("edsr", upscale_factor)
 
-        # try to use GPU
-        sr.setPreferableBackend(cv2.dnn.DNN_BACKEND_CUDA)
-        sr.setPreferableTarget(cv2.dnn.DNN_TARGET_CUDA)
+        if use_gpu:
+            # try to use GPU
+            sr.setPreferableBackend(cv2.dnn.DNN_BACKEND_CUDA)
+            sr.setPreferableTarget(cv2.dnn.DNN_TARGET_CUDA)
 
         result = sr.upsample(image)
 
