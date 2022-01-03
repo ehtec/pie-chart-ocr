@@ -2,7 +2,7 @@ from setuptools import setup, Extension
 
 
 # version of the package
-VERSION = "0.5.6"
+VERSION = "0.5.7"
 
 
 colorprocesser_module = Extension(

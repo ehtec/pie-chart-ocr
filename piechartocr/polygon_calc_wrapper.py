@@ -10,8 +10,9 @@ from .basefunctions import find_lib, get_root_path
 import os
 
 
-# relative path to colorprocesser library
-RELATIVE_LIBRARY_PATH = "build/"
+# relative path to polygoncalc library
+RELATIVE_LIBRARY_PATH = ""
+# RELATIVE_LIBRARY_PATH = "build/"
 
 
 # lib_path = find_library('polygoncalc')

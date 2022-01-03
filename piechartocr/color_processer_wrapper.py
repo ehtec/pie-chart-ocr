@@ -11,7 +11,8 @@ import os
 
 
 # relative path to colorprocesser library
-RELATIVE_LIBRARY_PATH = "build/"
+RELATIVE_LIBRARY_PATH = ""
+# RELATIVE_LIBRARY_PATH = "build/"
 
 
 # lib_path = find_library('colorprocesser')
