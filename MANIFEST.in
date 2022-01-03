@@ -2,3 +2,4 @@ prune data
 prune pie_charts
 prune old
 recursive-include color/src *
+recursive-include models *

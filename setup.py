@@ -1,10 +1,15 @@
 from setuptools import setup, Extension
 
 
+# version of the package
+VERSION = "0.5.6"
+
+
 colorprocesser_module = Extension(
     'libcolorprocesser',
     sources=['src/colorprocesser.cpp'],
-    define_macros=[('MAJOR_VERSION', '0'), ('MINOR_VERSION', 5)],
+    # define_macros=[('MAJOR_VERSION', '0'), ('MINOR_VERSION', 5)],
+    version=VERSION,
     include_dirs=['color/src'],
     libraries=[],
     library_dirs=['/usr/local/lib']
@@ -13,7 +18,8 @@ colorprocesser_module = Extension(
 polygoncalc_module = Extension(
     'libpolygoncalc',
     sources=['src/polygoncalc.cpp'],
-    define_macros=[('MAJOR_VERSION', '0'), ('MINOR_VERSION', 5)],
+    # define_macros=[('MAJOR_VERSION', '0'), ('MINOR_VERSION', 5)],
+    version=VERSION,
     include_dirs=[],
     libraries=['boost_system'],
     library_dirs=['/usr/local/lib']
@@ -21,13 +27,13 @@ polygoncalc_module = Extension(
 
 setup(name="piechartocr",
       packages=['piechartocr'],
-      version="0.5.5",
+      version=VERSION,
       license="MIT",
       description="Pie Chart Optical Character Recognition",
       author="Elias Hohl",
       author_email="elias.hohl@ehtec.co",
       url="https://git.ehtec.co/research/pie-chart-ocr",
-      download_url="https://git.ehtec.co/research/pie-chart-ocr/-/archive/v0.5.5-beta/pie-chart-ocr-v0.5.5-beta.zip",
+      download_url=f"https://git.ehtec.co/research/pie-chart-ocr/-/archive/v{VERSION}-beta/pie-chart-ocr-v{VERSION}-beta.zip",
       keywords="pie chart parsing ocr",
       install_requires=[
           "Cython",
