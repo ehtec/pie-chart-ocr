@@ -1,15 +1,21 @@
 from setuptools import setup, Extension
 
 
+# version parameters
+MAJOR_VERSION = "0"
+MINOR_VERSION = "5"
+SUB_MINOR_VERSION = "7"
+
 # version of the package
-VERSION = "0.5.7"
+# VERSION = "0.5.7"
+VERSION = f"{MAJOR_VERSION}.{MINOR_VERSION}.{SUB_MINOR_VERSION}"
 
 
 colorprocesser_module = Extension(
     'libcolorprocesser',
     sources=['src/colorprocesser.cpp'],
-    # define_macros=[('MAJOR_VERSION', '0'), ('MINOR_VERSION', 5)],
-    version=VERSION,
+    define_macros=[('MAJOR_VERSION', MAJOR_VERSION), ('MINOR_VERSION', MINOR_VERSION)],
+    # version=VERSION,
     include_dirs=['color/src'],
     libraries=[],
     library_dirs=['/usr/local/lib']
@@ -18,8 +24,8 @@ colorprocesser_module = Extension(
 polygoncalc_module = Extension(
     'libpolygoncalc',
     sources=['src/polygoncalc.cpp'],
-    # define_macros=[('MAJOR_VERSION', '0'), ('MINOR_VERSION', 5)],
-    version=VERSION,
+    define_macros=[('MAJOR_VERSION', MAJOR_VERSION), ('MINOR_VERSION', MINOR_VERSION)],
+    # version=VERSION,
     include_dirs=[],
     libraries=['boost_system'],
     library_dirs=['/usr/local/lib']
