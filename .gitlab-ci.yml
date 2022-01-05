@@ -99,6 +99,16 @@ generatemetrics:
     - if: '$CI_COMMIT_TAG'
       when: manual
 
+generatemetrics-coveragehack:
+  stage: metrics
+  image: python:3.9-bullseye
+  script:
+    - echo 'This script will allow the coverage report to be shown before the metrics are generated.'
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "main"'
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+    - if: '$CI_COMMIT_TAG'
+
 pypi:
   stage: deploy
   image: python:3.9-bullseye
