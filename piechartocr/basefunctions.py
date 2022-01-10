@@ -15,7 +15,8 @@ def complex_to_real(c):
     if not isinstance(c, complex):
         return c
 
-    assert c.imag == 0
+    if c.imag != 0:
+        raise ValueError("Imaginary part not zero")
 
     return c.real
 
@@ -24,12 +25,12 @@ def complex_to_real(c):
 def find_lib(search_path, keyword):
 
     if not os.path.isdir(search_path):
-        logging.warning("Path {0} is not a directory".format(search_path))
+        logging.warning("Path {0} is not a directory".format(search_path))  # pragma: no cover
         return None
 
     # files = os.listdir(search_path)
 
-    if platform.system().upper() == "WINDOWS":
+    if platform.system().upper() == "WINDOWS":  # pragma: no cover
         fileext = ".dll"
 
     else:
@@ -56,7 +57,7 @@ def find_lib(search_path, keyword):
         return None
 
     if len(files) > 1:
-        logging.warning("Multiple matches found: {0}".format(files))
+        logging.warning("Multiple matches found: {0}".format(files))  # pragma: no cover
 
     logging.info("Matching library found: {0}".format(files[0]))
 
