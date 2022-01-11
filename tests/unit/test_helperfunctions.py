@@ -2,7 +2,7 @@ import unittest
 from piechartocr import helperfunctions
 
 
-class TestBaseFunctions(unittest.TestCase):
+class TestHelperFunctions(unittest.TestCase):
 
     def test_remove_sc_prefix(self):
 
