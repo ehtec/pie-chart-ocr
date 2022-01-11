@@ -18,7 +18,7 @@ from colormath.color_conversions import convert_color
 from sklearn.cluster import DBSCAN
 import cv2
 import operator
-from collections import MutableMapping
+from collections.abc import MutableMapping
 import json
 import math
 
