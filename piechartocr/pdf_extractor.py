@@ -106,7 +106,7 @@ def extract_tuples_from_pdf(path, max_pdf_pages=MAX_PDF_PAGES, return_unsorted_o
         orig_output = []
 
         for i, page in enumerate(pages_list):
-            print('Processing next page...')
+            logging.info('Processing page {0}...'.format(i))
             interpreter.process_page(page)
             layout = device.get_result()
             for lobj in layout:
@@ -199,6 +199,9 @@ def extract_tuples_from_pdf(path, max_pdf_pages=MAX_PDF_PAGES, return_unsorted_o
     if return_unsorted_output:
         for el in unsorted_output:
             logging.info("unsorted_output: {0}".format(el))
+
+        logging.warning("len(unsorted_output): {0}".format(len(unsorted_output)))
+
         return res_dict, orig_output, pages_nr, unsorted_output, p_font_size
 
     return res_dict, orig_output, pages_nr
