@@ -20,6 +20,25 @@ import cv2
 import operator
 from collections import MutableMapping
 import json
+import math
+
+
+# checks if a string is a valid float
+def isfloat(value):
+    try:
+
+        float(value)
+
+        if math.isnan(value):
+            return False
+
+        if np.isnan(value):
+            return False
+
+        return True
+
+    except (ValueError, TypeError):
+        return False
 
 
 # equivalent to rm -rf
