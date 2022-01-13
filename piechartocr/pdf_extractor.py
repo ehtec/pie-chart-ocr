@@ -40,6 +40,34 @@ def get_textbox_font(obj):
     return font_name, font_size
 
 
+# get the font name and size of a LTTextLine object
+# get the font name and size of a LTTextBox object
+def get_textline_font(obj):
+
+    # we need to average in case a text box has multiple different font sizes and names
+    all_font_names = []
+    all_font_sizes = []
+
+    if not isinstance(obj, LTTextLine):
+        raise TypeError("Supplied object is not a LTTextLine, but {0}".format(type(obj)))
+
+    text = obj.get_text()
+    if text.strip():
+        for c in obj._objs:
+            if isinstance(c, LTChar):
+                all_font_names.append(c.fontname)
+                all_font_sizes.append(int(round(c.size)))
+
+    if (not bool(all_font_sizes)) or (not bool(all_font_sizes)):
+        logging.warning("Unable to determine font size of object because it contains no text")
+        return None, None
+
+    font_name = max(all_font_names, key=all_font_names.count)
+    font_size = max(all_font_sizes, key=all_font_sizes.count)
+
+    return font_name, font_size
+
+
 # extract tuples with formatting info from pdf
 #   order is preserved.
 def extract_tuples_from_pdf(path, max_pdf_pages=MAX_PDF_PAGES, return_unsorted_output=False):
