@@ -4,4 +4,4 @@ from piechartocr.pdf_extractor import extract_tuples_from_pdf
 
 
 path = "/home/elias/collected-whitepapers/METASEER_Whitepaper_v7.7.pdf"
-extract_tuples_from_pdf(path)
+extract_tuples_from_pdf(path, return_unsorted_output=True)
