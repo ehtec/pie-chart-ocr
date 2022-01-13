@@ -7,7 +7,7 @@ from io import BytesIO
 import logging
 import copy
 import re
-from helperfunctions import isfloat
+from .helperfunctions import isfloat
 import gc
 gc.enable()
 
