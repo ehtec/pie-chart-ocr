@@ -1,4 +1,5 @@
-path = "/home/elias/collected-whitepapers/Finminity-Brochure(1).pdf"
+# path = "/home/elias/collected-whitepapers/Finminity-Brochure(1).pdf"
+path = "/home/elias/collected-whitepapers/METASEER_Whitepaper_v7.7.pdf"
 
 from pdfminer.layout import LAParams, LTTextBox
 from pdfminer.pdfpage import PDFPage
@@ -6,18 +7,21 @@ from pdfminer.pdfinterp import PDFResourceManager
 from pdfminer.pdfinterp import PDFPageInterpreter
 from pdfminer.converter import PDFPageAggregator
 
-fp = open('yourpdf.pdf', 'rb')
+fp = open(path, 'rb')
 rsrcmgr = PDFResourceManager()
 laparams = LAParams()
 device = PDFPageAggregator(rsrcmgr, laparams=laparams)
 interpreter = PDFPageInterpreter(rsrcmgr, device)
 pages = PDFPage.get_pages(fp)
 
-for page in pages:
+for i, page in enumerate(pages):
     print('Processing next page...')
     interpreter.process_page(page)
     layout = device.get_result()
     for lobj in layout:
         if isinstance(lobj, LTTextBox):
-            x, y, text = lobj.bbox[0], lobj.bbox[3], lobj.get_text()
-            print('At %r is text: %s' % ((x, y), text))
+            # x0, y0, x1, y1
+            bbox = lobj.bbox
+            text = lobj.get_text()
+            # x, y = bbox[0], bbox[3]
+            print('Page %s: At %r is text: %s' % (i, bbox, text))
