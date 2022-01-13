@@ -96,55 +96,55 @@ def extract_tuples_from_pdf(path, max_pdf_pages=MAX_PDF_PAGES, return_unsorted_o
         pages_nr = len(pages_list)
         logging.warning("pages_nr: {0}".format(pages_nr))
 
-    if not pages_nr:
-        raise Exception("pages number could not be determined")
+        if not pages_nr:
+            raise Exception("pages number could not be determined")
 
-    if pages_nr > max_pdf_pages:
-        raise Exception("Too many pdf pages: {0}".format(pages_nr))
+        if pages_nr > max_pdf_pages:
+            raise Exception("Too many pdf pages: {0}".format(pages_nr))
 
-    output = []
-    orig_output = []
+        output = []
+        orig_output = []
 
-    for i, page in enumerate(pages_list):
-        print('Processing next page...')
-        interpreter.process_page(page)
-        layout = device.get_result()
-        for lobj in layout:
-            if isinstance(lobj, LTTextBox):
-                for o in lobj._objs:
+        for i, page in enumerate(pages_list):
+            print('Processing next page...')
+            interpreter.process_page(page)
+            layout = device.get_result()
+            for lobj in layout:
+                if isinstance(lobj, LTTextBox):
+                    for o in lobj._objs:
 
-                    if not isinstance(o, LTTextLine):
-                        continue
+                        if not isinstance(o, LTTextLine):
+                            continue
 
-                    # x0, y0, x1, y1
-                    bbox = o.bbox
-                    the_text = o.get_text()
-                    # x, y = bbox[0], bbox[3]
+                        # x0, y0, x1, y1
+                        bbox = o.bbox
+                        the_text = o.get_text()
+                        # x, y = bbox[0], bbox[3]
 
-                    orig_text = copy.deepcopy(the_text)
+                        orig_text = copy.deepcopy(the_text)
 
-                    # strip the_text
-                    the_text = the_text.strip()
+                        # strip the_text
+                        the_text = the_text.strip()
 
-                    # discard if text is empty
-                    if not bool(the_text):
-                        continue
+                        # discard if text is empty
+                        if not bool(the_text):
+                            continue
 
-                    # discard text if it is only a float (might be a page number)
-                    if isfloat(the_text.replace(' ', '').replace('\n', '').replace('\r', '')):
-                        continue
+                        # discard text if it is only a float (might be a page number)
+                        if isfloat(the_text.replace(' ', '').replace('\n', '').replace('\r', '')):
+                            continue
 
-                    # discard text if it has no alphanumeric character
-                    if not bool(re.findall(r'[A-z0-9]+', the_text)):
-                        continue
+                        # discard text if it has no alphanumeric character
+                        if not bool(re.findall(r'[A-z0-9]+', the_text)):
+                            continue
 
-                    font_name, font_size = get_textline_font(o)
+                        font_name, font_size = get_textline_font(o)
 
-                    # we don't have anything implemented to fetch font style
-                    font_style = None
+                        # we don't have anything implemented to fetch font style
+                        font_style = None
 
-                    output.append((the_text, font_size, font_name, font_style, i, bbox))
-                    orig_output.append((orig_text, font_size, font_name, font_style, i, bbox))
+                        output.append((the_text, font_size, font_name, font_style, i, bbox))
+                        orig_output.append((orig_text, font_size, font_name, font_style, i, bbox))
 
     words_tuples = []
     font_sizes = []
