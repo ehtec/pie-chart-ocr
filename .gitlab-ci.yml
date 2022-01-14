@@ -19,7 +19,7 @@ flake8:
 .nose2:
   before_script:
     - apt-get update
-    - apt-get install libboost-system-dev tesseract-ocr build-essential git cmake ffmpeg libsm6 libxext6 -y
+    - apt-get install libboost-system-dev tesseract-ocr build-essential git cmake ffmpeg libsm6 libxext6 python3-pdfminer -y
     - pip install --upgrade pip
     - pip install -r requirements.txt
     - git submodule update --init --recursive
@@ -80,7 +80,7 @@ generatemetrics:
   image: python:3.9-bullseye
   before_script:
     - apt-get update
-    - apt-get install libboost-system-dev tesseract-ocr build-essential git cmake ffmpeg libsm6 libxext6 -y
+    - apt-get install libboost-system-dev tesseract-ocr build-essential git cmake ffmpeg libsm6 libxext6 python3-pdfminer -y
     - pip install --upgrade pip
     - pip install -r requirements.txt
     - git submodule update --init --recursive

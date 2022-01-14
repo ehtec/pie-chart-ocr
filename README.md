@@ -30,7 +30,7 @@ files need to be downloaded from Gitlab.
 Install Boost and Tesseract:
 
 ```commandline
-sudo apt install libboost-system-dev tesseract-ocr build-essential git
+sudo apt install libboost-system-dev tesseract-ocr build-essential git python3-pdfminer
 ```
 
 Clone this repository including submodules:
