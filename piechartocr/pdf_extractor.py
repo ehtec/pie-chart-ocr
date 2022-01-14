@@ -79,7 +79,9 @@ def get_textline_font(obj):
 # extract tuples with formatting info from pdf
 #   order is preserved.
 # if sort_direction is specified, unsorted_output will be sorted. sort_direction can be top-to-bottom or left-to-right
-def extract_tuples_from_pdf(path, max_pdf_pages=MAX_PDF_PAGES, return_unsorted_output=False, sort_direction=None):
+# x_coordinate, y_coordinate: coordinates used for sorting, x_coordinate = left | right, y_coordinate = top | bottom
+def extract_tuples_from_pdf(path, max_pdf_pages=MAX_PDF_PAGES, return_unsorted_output=False, sort_direction=None,
+                            x_coordinate='right', y_coordinate='top'):
 
     with open(path, 'rb') as orig_fp:
         content = orig_fp.read()
@@ -182,20 +184,38 @@ def extract_tuples_from_pdf(path, max_pdf_pages=MAX_PDF_PAGES, return_unsorted_o
 
         sorted_pagified_output = []
 
+        if x_coordinate == "left":
+            x_coord = 0
+
+        elif x_coordinate == "right":
+            x_coord = 2
+
+        else:
+            raise NotImplementedError("Invalid x_coordinate: {0}".format(x_coordinate))
+
+        if y_coordinate == "top":
+            y_coord = 3
+
+        elif y_coordinate == "bottom":
+            y_coord = 1
+
+        else:
+            raise NotImplementedError("Invalid y_coordinate: {0}".format(y_coordinate))
+
         if sort_direction == "top-to-bottom":
 
             for elem in pagified_output:
                 elem_copy = copy.deepcopy(elem)
-                elem_copy.sort(key=lambda x: x[5][0])
-                elem_copy.sort(key=lambda x: x[5][1], reverse=True)
+                elem_copy.sort(key=lambda x: x[5][x_coord])
+                elem_copy.sort(key=lambda x: x[5][y_coord], reverse=True)
                 sorted_pagified_output.append(elem_copy)
 
         elif sort_direction == "left-to-right":
 
             for elem in pagified_output:
                 elem_copy = copy.deepcopy(elem)
-                elem_copy.sort(key=lambda x: x[5][1], reverse=True)
-                elem_copy.sort(key=lambda x: x[5][0])
+                elem_copy.sort(key=lambda x: x[5][y_coord], reverse=True)
+                elem_copy.sort(key=lambda x: x[5][x_coord])
                 sorted_pagified_output.append(elem_copy)
 
         else:
