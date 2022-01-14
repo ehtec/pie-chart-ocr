@@ -78,7 +78,8 @@ def get_textline_font(obj):
 
 # extract tuples with formatting info from pdf
 #   order is preserved.
-def extract_tuples_from_pdf(path, max_pdf_pages=MAX_PDF_PAGES, return_unsorted_output=False):
+# if sort_direction is specified, unsorted_output will be sorted. sort_direction can be top-to-bottom or left-to-right
+def extract_tuples_from_pdf(path, max_pdf_pages=MAX_PDF_PAGES, return_unsorted_output=False, sort_direction=None):
 
     with open(path, 'rb') as orig_fp:
         content = orig_fp.read()
@@ -169,6 +170,38 @@ def extract_tuples_from_pdf(path, max_pdf_pages=MAX_PDF_PAGES, return_unsorted_o
     logging.info("p font size: {0}".format(p_font_size))
 
     unsorted_output = copy.deepcopy(output)
+
+    # sort unsorted_output if a sort direction is specified
+    if sort_direction is not None:
+
+        old_unsorted_output = copy.deepcopy(unsorted_output)
+
+        distinct_pages = list(range(pages_nr))
+
+        pagified_output = [[el for el in old_unsorted_output if el[4] == i] for i in distinct_pages]
+
+        sorted_pagified_output = []
+
+        if sort_direction == "top-to-bottom":
+
+            for elem in pagified_output:
+                elem_copy = copy.deepcopy(elem)
+                elem_copy.sort(key=lambda x: x[5][0])
+                elem_copy.sort(key=lambda x: x[5][1], reverse=True)
+                sorted_pagified_output.append(elem_copy)
+
+        elif sort_direction == "left-to-right":
+
+            for elem in pagified_output:
+                elem_copy = copy.deepcopy(elem)
+                elem_copy.sort(key=lambda x: x[5][1], reverse=True)
+                elem_copy.sort(key=lambda x: x[5][0])
+                sorted_pagified_output.append(elem_copy)
+
+        else:
+            raise NotImplementedError("Unknown sort direction: {0}".format(sort_direction))
+
+        unsorted_output = [el for elem in sorted_pagified_output for el in elem]
 
     output.sort(key=lambda x: x[1], reverse=True)
 
