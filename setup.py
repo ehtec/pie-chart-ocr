@@ -3,8 +3,8 @@ from setuptools import setup, Extension
 
 # version parameters
 MAJOR_VERSION = "0"
-MINOR_VERSION = "5"
-SUB_MINOR_VERSION = "7"
+MINOR_VERSION = "6"
+SUB_MINOR_VERSION = "1"
 
 # version of the package
 # VERSION = "0.5.7"
