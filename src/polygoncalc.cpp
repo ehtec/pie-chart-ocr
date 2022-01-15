@@ -419,7 +419,7 @@ class PolygonCalc{
         
         unsigned long* group_elements(unsigned long *a, unsigned long *b,
             unsigned long *c, unsigned long *d, unsigned long n,
-            double threshold_dist, double slov_ratio)
+            double threshold_dist, double slov_ratio, int size_metric_mode)
         {
             
             unsigned long *element_groups = new unsigned long[n];
@@ -482,7 +482,30 @@ class PolygonCalc{
                 
                 width = std::max(abs(double(c[w[0]] - a[w[0]])), abs(double(c[w[1]] - a[w[1]])));
                 
-                size_metric = std::max(height, width);
+                switch (size_metric_mode) {
+                    
+                    case 0:
+                        size_metric = std::max(height, width);
+                        break;
+                       
+                    case 1:
+                        size_metric = height;
+                        break;
+                        
+                    case 2:
+                        size_metric = width;
+                        break;
+                        
+                    case 3:
+                        size_metric = std::min(height, width);
+                        break;
+                        
+                    default:
+                        throw std::invalid_argument("Unknown size metric mode");
+                    
+                }
+                
+//                size_metric = std::max(height, width);
                 
                 min_x_dist = std::min({abs(double(a[w[0]] - c[w[1]])), abs(double(c[w[0]] - a[w[1]])), abs(double(a[w[0]] - a[w[1]])), abs(double(c[w[0]] - c[w[1]]))});
                 
@@ -601,9 +624,9 @@ extern "C" {
 
     }
     
-    unsigned long* PolygonCalc_group_elements(PolygonCalc* polygoncalc, unsigned long *a, unsigned long *b, unsigned long *c, unsigned long *d, unsigned long n, double threshold_dist, double slov_ratio) {
+    unsigned long* PolygonCalc_group_elements(PolygonCalc* polygoncalc, unsigned long *a, unsigned long *b, unsigned long *c, unsigned long *d, unsigned long n, double threshold_dist, double slov_ratio, int size_metric_mode) {
         
-        return polygoncalc->group_elements(a, b, c, d, n, threshold_dist, slov_ratio);
+        return polygoncalc->group_elements(a, b, c, d, n, threshold_dist, slov_ratio, size_metric_mode);
         
     }
     
