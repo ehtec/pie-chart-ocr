@@ -417,8 +417,8 @@ class PolygonCalc{
             
         }
         
-        unsigned long* group_elements(unsigned long *a, unsigned long *b,
-            unsigned long *c, unsigned long *d, unsigned long n,
+        unsigned long* group_elements(double *a, double *b,
+            double *c, double *d, unsigned long n,
             double threshold_dist, double slov_ratio, int size_metric_mode)
         {
             
@@ -444,7 +444,7 @@ class PolygonCalc{
             
             double totalArea;
             
-            unsigned long y1, y2;
+            double y1, y2;
             
             std::vector< std::vector<unsigned long> > to_process = {};
             
@@ -624,7 +624,7 @@ extern "C" {
 
     }
     
-    unsigned long* PolygonCalc_group_elements(PolygonCalc* polygoncalc, unsigned long *a, unsigned long *b, unsigned long *c, unsigned long *d, unsigned long n, double threshold_dist, double slov_ratio, int size_metric_mode) {
+    unsigned long* PolygonCalc_group_elements(PolygonCalc* polygoncalc, double *a, double *b, double *c, double *d, unsigned long n, double threshold_dist, double slov_ratio, int size_metric_mode) {
         
         return polygoncalc->group_elements(a, b, c, d, n, threshold_dist, slov_ratio, size_metric_mode);
         
