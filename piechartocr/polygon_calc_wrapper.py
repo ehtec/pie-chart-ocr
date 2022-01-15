@@ -216,10 +216,10 @@ class PolygonCalc(object):
 
         n = len(elements)
 
-        a = np.ascontiguousarray(a, dtype=np.uint)
-        b = np.ascontiguousarray(b, dtype=np.uint)
-        c = np.ascontiguousarray(c, dtype=np.uint)
-        d = np.ascontiguousarray(d, dtype=np.uint)
+        a = np.ascontiguousarray(a, dtype=np.double)
+        b = np.ascontiguousarray(b, dtype=np.double)
+        c = np.ascontiguousarray(c, dtype=np.double)
+        d = np.ascontiguousarray(d, dtype=np.double)
 
         lib.PolygonCalc_group_elements.restype = ndpointer(dtype=c_ulong, shape=(n,))
 
