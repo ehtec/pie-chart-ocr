@@ -57,7 +57,7 @@ CONTRAST_FACTOR = 1.0  # 1.2
 MIN_INTERSECTION_AREA_RATIO = 0.75
 
 # maximum distance of words to be recognized as belonging to the same paragraph in terms of letter height
-MAX_WORD_DISTANCE_RATIO = 0.2  # 0.75
+MAX_WORD_DISTANCE_RATIO = 0.60  # 0.20  # 0.75
 
 # number of colors to use
 COLORS_NUM = 120
@@ -79,7 +79,7 @@ SAVE_TEMP_IMAGES = True
 
 # threshold distance for paragraph sentence grouping. Not used if everything went well before (because only words near
 #   enough each other should have been grouped into the same paragraph)
-PARAGRAPH_THRESHOLD_DIST = 5.0
+PARAGRAPH_THRESHOLD_DIST = 0.5  # 0  # 1.0  # 5.0
 
 
 def main(path, interactive=True):
@@ -97,7 +97,8 @@ def main(path, interactive=True):
 
     pc = PolygonCalc()
 
-    word_grouped_tuples = pc.group_elements(filtered_res_tuples, MAX_WORD_DISTANCE_RATIO, -1, start_pos=2)
+    word_grouped_tuples = pc.group_elements(filtered_res_tuples, MAX_WORD_DISTANCE_RATIO, -1, start_pos=2,
+                                            size_metric_mode=1)
 
     logging.debug("word_grouped_tuples: {0}".format(word_grouped_tuples))
     # pprint(word_grouped_tuples)
@@ -108,7 +109,8 @@ def main(path, interactive=True):
 
     for paragraph in word_grouped_tuples:
 
-        paragraph_tuples = pc.group_elements(paragraph, PARAGRAPH_THRESHOLD_DIST, mser_functions.SLOV_RATIO, start_pos=2)
+        paragraph_tuples = pc.group_elements(paragraph, PARAGRAPH_THRESHOLD_DIST, mser_functions.SLOV_RATIO,
+                                             start_pos=2, size_metric_mode=1)
 
         for elem in paragraph_tuples:
 
