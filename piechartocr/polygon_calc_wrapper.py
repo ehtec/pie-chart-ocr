@@ -199,7 +199,8 @@ class PolygonCalc(object):
             n
         )
 
-    def group_elements(self, elements, threshold_dist, slov_ratio, return_indices=False, start_pos=0):
+    def group_elements(self, elements, threshold_dist, slov_ratio, return_indices=False, start_pos=0,
+                       size_metric_mode=0):
 
         a = []
         b = []
@@ -230,7 +231,8 @@ class PolygonCalc(object):
             ctypes.c_void_p(d.ctypes.data),
             n,
             ctypes.c_double(threshold_dist),
-            ctypes.c_double(slov_ratio)
+            ctypes.c_double(slov_ratio),
+            ctypes.c_int(size_metric_mode)
         )
 
         res_array_copy = copy.deepcopy(res_array)
