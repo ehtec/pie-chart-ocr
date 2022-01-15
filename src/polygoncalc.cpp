@@ -509,7 +509,7 @@ class PolygonCalc{
                 
                 min_x_dist = std::min({abs(double(a[w[0]] - c[w[1]])), abs(double(c[w[0]] - a[w[1]])), abs(double(a[w[0]] - a[w[1]])), abs(double(c[w[0]] - c[w[1]]))});
                 
-                min_y_dist = std::min({abs(double(b[w[0] - d[w[1]]])), abs(double(d[w[0]] - b[w[1]])), abs(double(b[w[0] - b[w[1]]])), abs(double(d[w[0]] - d[w[1]]))});
+                min_y_dist = std::min({abs(double(b[w[0]] - d[w[1]])), abs(double(d[w[0]] - b[w[1]])), abs(double(b[w[0]] - b[w[1]])), abs(double(d[w[0]] - d[w[1]]))});
                 
                 min_normal_dist = std::min(min_x_dist, min_y_dist);
                 
