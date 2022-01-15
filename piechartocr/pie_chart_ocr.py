@@ -326,8 +326,10 @@ def main(path, interactive=True):
             # polygons made of a single point
             sector_polygons = [[el] for el in sector_centers]
 
-            sector_centers_percent_dm = calculate_distance_matrix(np.array(sector_polygons + polygons_percent))
-            legend_polygons_percent_dm = calculate_distance_matrix(np.array(legend_polygons + polygons_percent))
+            sector_centers_percent_dm = calculate_distance_matrix(np.array(sector_polygons + polygons_percent,
+                                                                           dtype=object))
+            legend_polygons_percent_dm = calculate_distance_matrix(np.array(legend_polygons + polygons_percent,
+                                                                            dtype=object))
 
             logging.debug("sector_centers_percent_dm: {0}".format(sector_centers_percent_dm))
             logging.debug("legend_polygons_percent_dm: {0}".format(legend_polygons_percent_dm))

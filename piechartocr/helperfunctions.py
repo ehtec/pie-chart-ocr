@@ -137,7 +137,7 @@ def connect_polygon_cloud_2(points1, points2, d=None):
 
     # points = points1 + points2
 
-    points = np.array(list(points1) + list(points2))
+    points = np.array(list(points1) + list(points2), dtype=object)
 
     p1_range = range(len(points1))
 
