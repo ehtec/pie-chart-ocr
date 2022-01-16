@@ -4,7 +4,7 @@ from setuptools import setup, Extension
 # version parameters
 MAJOR_VERSION = "0"
 MINOR_VERSION = "6"
-SUB_MINOR_VERSION = "1"
+SUB_MINOR_VERSION = "2"
 
 # version of the package
 # VERSION = "0.5.7"
