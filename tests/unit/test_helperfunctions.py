@@ -24,8 +24,7 @@ class TestHelperFunctions(unittest.TestCase):
         self.assertEqual(p1, p2)
 
     def test_hash_file(self):
-    
-        path = helperfunctions.get_root_path()
 
-        file_path = helperfunctions.hash_file(os.path.join(path, 'tox.ini'))
-        self.assertEqual(file_path, 'fb4ac58dca8206f0e8362ad989b0c53c584e88072a32b5f6ef6278de3507a5fb')
+        path = helperfunctions.get_root_path()
+        file_hash = helperfunctions.hash_file(os.path.join(path, 'test_data', 'tox.ini'))
+        self.assertEqual(file_hash, '918f4920ab0b03269643a62cd017e35b0dc4ac5fdc3b9486a0f8c2b7b71eb7d2')
