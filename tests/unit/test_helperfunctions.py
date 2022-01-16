@@ -28,3 +28,9 @@ class TestHelperFunctions(unittest.TestCase):
         path = helperfunctions.get_root_path()
         file_hash = helperfunctions.hash_file(os.path.join(path, 'test_data', 'tox.ini'))
         self.assertEqual(file_hash, '918f4920ab0b03269643a62cd017e35b0dc4ac5fdc3b9486a0f8c2b7b71eb7d2')
+
+    def test_integerize(self):
+
+        list1 = helperfunctions.integerize([2.0, 3.0])
+        list2 = ([2, 3])
+        self.assertAlmostEqual(list1, list2)
