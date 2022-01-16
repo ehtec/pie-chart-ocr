@@ -34,6 +34,5 @@ class TestHelperFunctions(unittest.TestCase):
         list1 = helperfunctions.integerize([2.0, 3.0])
         list2 = ([2, 3])
         self.assertAlmostEqual(list1, list2)
-        i = []
         for i in list1:
             self.assertIsInstance(i, int)
