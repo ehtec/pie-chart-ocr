@@ -12,7 +12,7 @@ Developers of this project should only take care of issues assigned to them by t
 Maintainer (Elias Hohl).
 
 To contribute to an issue, you need to create a new branch (for example:
-`0-example-issue`) from master to do your changes.
+`0-example-issue`) from main to do your changes.
 
 If you don't have `git` installed yet, install it via your package manager. On Debian or
 Ubuntu:
@@ -20,17 +20,38 @@ Ubuntu:
 sudo apt install git
 ```
 
+Configure `git` to rebase when pulling:
+
+```commandline
+git config --global pull.rebase true
+```
+
+Configure your name and email (the email you have signed up with at Gitlab):
+
+```commandline
+git config --global user.name "FIRST_NAME LAST_NAME"
+git config --global user.email "MY_NAME@example.com"
+```
+
+Go to the Gitlab issues page and select your issue. In the upper right corner, click
+the button to create a merge request. Mark the merge request as draft if it is not yet
+ready. Then press "compare branches and continue". The Asignee of the merge request
+should be the maintainer (Elias Hohl). Otherwise, no notification to review your work
+will be sent.
+
 To contribute for the first time, execute these commands:
 ```commandline
 git clone https://git.ehtec.co/research/pie-chart-ocr
-git checkout -b 0-example-issue
+git checkout 0-example-issue
 ```
 
-Replace `0-example-issue` with your own branch name. If you have already cloned the
-directory before, execute these command instead:
+Replace `0-example-issue` with the new branch name shown in the merge request you just
+created. If you have already cloned the directory before, execute these command instead:
+
 ```commandline
+git fetch
 git pull
-git checkout -b 0-example-issue
+git checkout 0-example-issue
 ```
 
 Now you can start making your changes.
@@ -71,13 +92,7 @@ You are ready now to push your changes:
 git push -u origin 0-example-issue
 ```
 
-Go to the Gitlab issues page and select your issue. In the upper right corner, click
-the button to create a merge request. Mark the merge request as draft if it is not yet
-ready. Then press "compare branches and continue". The Asignee of the merge request
-should be the maintainer (Elias Hohl). Otherwise, no notification to review your work
-will be sent.
-
-If Gitlab shows you that the branch is not up to date with master and needs to be
+If Gitlab shows you that the branch is not up to date with main and needs to be
 rebased, press the "Rebase" button. If you encounter any merge conflicts,
 resolve them. You can continue pushing commits that will automatically be
 integrated into the same merge request.
@@ -86,10 +101,10 @@ In case the "Rebase" button is greyed out and you are notified that you need to 
 locally, execute the following steps:
 
 ```commandline
-git checkout master
-git pull origin master
+git checkout main
+git pull origin main
 git checkout 0-example-issue
-git rebase origin/master
+git rebase origin/main
 ```
 
 Fix the rebase conflicts. The command will pause everytime a conflict occurs. Open the
@@ -99,7 +114,13 @@ affected file in a text editor, fix the conflict, and then execute
 git rebase --continue
 ```
 
-until the rebase succeeds. Then continue by pushing your changes:
+until the rebase succeeds. In case you messed something up and want to abort the rebase:
+
+```commandline
+git rebase --abort
+```
+
+Then continue by pushing your changes:
 
 ```commandline
 git push -u origin 0-example-issue
