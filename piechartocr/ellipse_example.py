@@ -32,7 +32,7 @@ def make_test_ellipse(center=(1, 1), width=1, height=.6, phi=3.14 / 5):
     return [ellipse_x, ellipse_y]
 
 
-if __name__ == '__main__':
+if __name__ == '__main__':  # pragma: no cover
     X1, X2 = make_test_ellipse()
 
     X = np.array(list(zip(X1, X2)))
