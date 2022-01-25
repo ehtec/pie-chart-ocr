@@ -1,4 +1,4 @@
-from setuptools import setup, Extension
+from setuptools import setup, Extension, find_packages
 
 
 # version parameters
@@ -32,7 +32,7 @@ polygoncalc_module = Extension(
 )
 
 setup(name="piechartocr",
-      packages=['piechartocr'],
+      packages=find_packages(),  # ['piechartocr'],
       version=VERSION,
       license="MIT",
       description="Pie Chart Optical Character Recognition",
