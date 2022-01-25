@@ -8,6 +8,7 @@ import logging
 import copy
 import re
 from .helperfunctions import isfloat
+from .errors.pdf_errors import TooManyPagesError, PagesNumberUnknownError
 import gc
 gc.enable()
 
@@ -100,10 +101,10 @@ def extract_tuples_from_pdf(path, max_pdf_pages=MAX_PDF_PAGES, return_unsorted_o
         logging.warning("pages_nr: {0}".format(pages_nr))
 
         if not pages_nr:
-            raise Exception("pages number could not be determined")
+            raise PagesNumberUnknownError
 
         if pages_nr > max_pdf_pages:
-            raise Exception("Too many pdf pages: {0}".format(pages_nr))
+            raise TooManyPagesError(pages_nr)
 
         output = []
         orig_output = []
