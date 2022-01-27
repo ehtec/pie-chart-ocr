@@ -40,7 +40,6 @@ class TestHelperFunctions(unittest.TestCase):
             self.assertIsInstance(i, int)
 
     def test_get_cv2_dominant_color(self):
-    
 
         image_path = os.path.join(helperfunctions.get_root_path(), 'test_data', 'test_1.png')
         image_path1 = os.path.join(helperfunctions.get_root_path(), 'test_data', 'test_2.jpg')
@@ -57,7 +56,6 @@ class TestHelperFunctions(unittest.TestCase):
 
     def test_get_cv2_dominant_color_2(self):
 
-
         image_path = os.path.join(helperfunctions.get_root_path(), 'test_data', 'test_1.png')
         image_path1 = os.path.join(helperfunctions.get_root_path(), 'test_data', 'test_2.jpg')
         image_path2 = os.path.join(helperfunctions.get_root_path(), 'test_data', 'image-019_1.png')
@@ -73,7 +71,6 @@ class TestHelperFunctions(unittest.TestCase):
 
     def test_get_cv2_dominant_color_3(self):
 
-
         image_path = os.path.join(helperfunctions.get_root_path(), 'test_data', 'test_1.png')
         image_path1 = os.path.join(helperfunctions.get_root_path(), 'test_data', 'test_2.jpg')
         image_path2 = os.path.join(helperfunctions.get_root_path(), 'test_data', 'image-019_1.png')
@@ -87,9 +84,7 @@ class TestHelperFunctions(unittest.TestCase):
         self.assertEqual(dominant_color2, [254, 254, 254])
         self.assertEqual(dominant_color3, [38, 38, 38])
 
-
     def test_get_cv2_dominant_color_4(self):
-
 
         image_path = os.path.join(helperfunctions.get_root_path(), 'test_data', 'test_1.png')
         image_path1 = os.path.join(helperfunctions.get_root_path(), 'test_data', 'test_2.jpg')
@@ -104,9 +99,7 @@ class TestHelperFunctions(unittest.TestCase):
         self.assertEqual(dominant_color2, [254, 254, 254])
         self.assertEqual(dominant_color3, [38, 37, 38])
 
-
     def test_get_cv2_dominant_color_5(self):
-
 
         image_path = os.path.join(helperfunctions.get_root_path(), 'test_data', 'test_1.png')
         image_path1 = os.path.join(helperfunctions.get_root_path(), 'test_data', 'test_2.jpg')
