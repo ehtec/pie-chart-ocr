@@ -94,7 +94,7 @@ class TestHelperFunctions(unittest.TestCase):
         dominant_color1 = helperfunctions.get_cv2_dominant_color_4(cv2.imread(image_path1), 5)
         dominant_color2 = helperfunctions.get_cv2_dominant_color_4(cv2.imread(image_path2), 5)
         dominant_color3 = helperfunctions.get_cv2_dominant_color_4(cv2.imread(image_path3), 5)
-        self.assertEqual(dominant_color, [253, 253, 253])
+        self.assertEqual(dominant_color, [252, 252, 252])
         self.assertEqual(dominant_color1, [253, 253, 253])
         self.assertEqual(dominant_color2, [252, 252, 252])
         self.assertEqual(dominant_color3, [38, 37, 38])
