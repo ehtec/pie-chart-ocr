@@ -1,5 +1,7 @@
 import unittest
 import os
+import cv2
+
 from piechartocr import helperfunctions
 
 
@@ -36,3 +38,85 @@ class TestHelperFunctions(unittest.TestCase):
         self.assertEqual(list1, list2)
         for i in list1:
             self.assertIsInstance(i, int)
+
+    def test_get_cv2_dominant_color(self):
+    
+
+        image_path = os.path.join(helperfunctions.get_root_path(), 'test_data', 'test_1.png')
+        image_path1 = os.path.join(helperfunctions.get_root_path(), 'test_data', 'test_2.jpg')
+        image_path2 = os.path.join(helperfunctions.get_root_path(), 'test_data', 'image-019_1.png')
+        image_path3 = os.path.join(helperfunctions.get_root_path(), 'test_data', '262626.png')
+        dominant_color = helperfunctions.get_cv2_dominant_color(cv2.imread(image_path), (5))
+        dominant_color1 = helperfunctions.get_cv2_dominant_color(cv2.imread(image_path1), (5))
+        dominant_color2 = helperfunctions.get_cv2_dominant_color(cv2.imread(image_path2), (5))
+        dominant_color3 = helperfunctions.get_cv2_dominant_color(cv2.imread(image_path3), (5))
+        self.assertEqual(dominant_color, (255, 255, 255))
+        self.assertEqual(dominant_color1, (255, 255, 255))
+        self.assertEqual(dominant_color2, (255, 255, 255))
+        self.assertEqual(dominant_color3, (51, 51, 51))
+
+    def test_get_cv2_dominant_color_2(self):
+
+
+        image_path = os.path.join(helperfunctions.get_root_path(), 'test_data', 'test_1.png')
+        image_path1 = os.path.join(helperfunctions.get_root_path(), 'test_data', 'test_2.jpg')
+        image_path2 = os.path.join(helperfunctions.get_root_path(), 'test_data', 'image-019_1.png')
+        image_path3 = os.path.join(helperfunctions.get_root_path(), 'test_data', '262626.png')
+        dominant_color = helperfunctions.get_cv2_dominant_color_2(cv2.imread(image_path), (5))
+        dominant_color1 = helperfunctions.get_cv2_dominant_color_2(cv2.imread(image_path1), (5))
+        dominant_color2 = helperfunctions.get_cv2_dominant_color_2(cv2.imread(image_path2), (5))
+        dominant_color3 = helperfunctions.get_cv2_dominant_color_2(cv2.imread(image_path3), (5))
+        self.assertEqual(dominant_color, (250, 250, 250))
+        self.assertEqual(dominant_color1, (251, 251, 250))
+        self.assertEqual(dominant_color2, (242, 251, 230))
+        self.assertEqual(dominant_color3, (36, 36, 36))
+
+    def test_get_cv2_dominant_color_3(self):
+
+
+        image_path = os.path.join(helperfunctions.get_root_path(), 'test_data', 'test_1.png')
+        image_path1 = os.path.join(helperfunctions.get_root_path(), 'test_data', 'test_2.jpg')
+        image_path2 = os.path.join(helperfunctions.get_root_path(), 'test_data', 'image-019_1.png')
+        image_path3 = os.path.join(helperfunctions.get_root_path(), 'test_data', '262626.png')
+        dominant_color = helperfunctions.get_cv2_dominant_color_3(cv2.imread(image_path), (5))
+        dominant_color1 = helperfunctions.get_cv2_dominant_color_3(cv2.imread(image_path1), (5))
+        dominant_color2 = helperfunctions.get_cv2_dominant_color_3(cv2.imread(image_path2), (5))
+        dominant_color3 = helperfunctions.get_cv2_dominant_color_3(cv2.imread(image_path3), (5))
+        self.assertEqual(dominant_color, [254, 254, 254])
+        self.assertEqual(dominant_color1, [254, 254, 254])
+        self.assertEqual(dominant_color2, [254, 254, 254])
+        self.assertEqual(dominant_color3, [38, 38, 38])
+
+
+    def test_get_cv2_dominant_color_4(self):
+
+
+        image_path = os.path.join(helperfunctions.get_root_path(), 'test_data', 'test_1.png')
+        image_path1 = os.path.join(helperfunctions.get_root_path(), 'test_data', 'test_2.jpg')
+        image_path2 = os.path.join(helperfunctions.get_root_path(), 'test_data', 'image-019_1.png')
+        image_path3 = os.path.join(helperfunctions.get_root_path(), 'test_data', '262626.png')
+        dominant_color = helperfunctions.get_cv2_dominant_color_4(cv2.imread(image_path), (5))
+        dominant_color1 = helperfunctions.get_cv2_dominant_color_4(cv2.imread(image_path1), (5))
+        dominant_color2 = helperfunctions.get_cv2_dominant_color_4(cv2.imread(image_path2), (5))
+        dominant_color3 = helperfunctions.get_cv2_dominant_color_4(cv2.imread(image_path3), (5))
+        self.assertEqual(dominant_color, [252, 252, 252])
+        self.assertEqual(dominant_color1, [253, 253, 253])
+        self.assertEqual(dominant_color2, [254, 254, 254])
+        self.assertEqual(dominant_color3, [38, 37, 38])
+
+
+    def test_get_cv2_dominant_color_5(self):
+
+
+        image_path = os.path.join(helperfunctions.get_root_path(), 'test_data', 'test_1.png')
+        image_path1 = os.path.join(helperfunctions.get_root_path(), 'test_data', 'test_2.jpg')
+        image_path2 = os.path.join(helperfunctions.get_root_path(), 'test_data', 'image-019_1.png')
+        image_path3 = os.path.join(helperfunctions.get_root_path(), 'test_data', '262626.png')
+        dominant_color = helperfunctions.get_cv2_dominant_color_5(cv2.imread(image_path), (5))
+        dominant_color1 = helperfunctions.get_cv2_dominant_color_5(cv2.imread(image_path1), (5))
+        dominant_color2 = helperfunctions.get_cv2_dominant_color_5(cv2.imread(image_path2), (5))
+        dominant_color3 = helperfunctions.get_cv2_dominant_color_5(cv2.imread(image_path3), (5))
+        self.assertEqual(dominant_color, [196, 218, 215])
+        self.assertEqual(dominant_color1, [232, 235, 230])
+        self.assertEqual(dominant_color2, [231, 249, 219])
+        self.assertEqual(dominant_color3, [38, 38, 38])
