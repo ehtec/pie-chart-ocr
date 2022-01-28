@@ -281,7 +281,7 @@ def get_cv2_dominant_color(img, colors_num):
 
 
 # get dominant color from cv2 image using colorthief
-def get_cv2_dominant_color_2(img, colors_num):
+def get_cv2_dominant_color_2(img, colors_num):  # pragma: no cover
 
     shape = img.shape
 
@@ -343,7 +343,7 @@ def get_cv2_dominant_color_3(img, colors_num, reshape=True, return_integers=True
 
 
 # get dominant color from cv2 image using cie lab space
-def get_cv2_dominant_color_4(img, colors_num, return_integers=True):
+def get_cv2_dominant_color_4(img, colors_num, return_integers=True):  # pragma: no cover
 
     shape = img.shape
 

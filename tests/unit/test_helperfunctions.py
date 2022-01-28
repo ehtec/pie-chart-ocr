@@ -72,16 +72,15 @@ class TestHelperFunctions(unittest.TestCase):
     def test_get_cv2_dominant_color_3(self):
 
         image_path = os.path.join(helperfunctions.get_root_path(), 'test_data', 'test_1.png')
-        image_path1 = os.path.join(helperfunctions.get_root_path(), 'test_data', 'test_2.jpg')
-        image_path2 = os.path.join(helperfunctions.get_root_path(), 'test_data', 'image-019_1.png')
+        image_path2 = os.path.join(helperfunctions.get_root_path(), 'test_data', 'test_3.jpg')
         image_path3 = os.path.join(helperfunctions.get_root_path(), 'test_data', '262626.png')
         dominant_color = helperfunctions.get_cv2_dominant_color_3(cv2.imread(image_path), 5)
-        dominant_color1 = helperfunctions.get_cv2_dominant_color_3(cv2.imread(image_path1), 5)
         dominant_color2 = helperfunctions.get_cv2_dominant_color_3(cv2.imread(image_path2), 5)
         dominant_color3 = helperfunctions.get_cv2_dominant_color_3(cv2.imread(image_path3), 5)
         self.assertEqual(dominant_color, [254, 254, 254])
-        self.assertEqual(dominant_color1, [253, 253, 253])
-        self.assertEqual(dominant_color2, [254, 254, 254])
+        for rgb1, rgb2 in zip([253, 253, 253], [253, 254, 254]):
+            self.assertAlmostEqual(rgb1, rgb2, delta=1.0)
+        self.assertEqual(dominant_color2, [241, 241, 241])
         self.assertEqual(dominant_color3, [38, 38, 38])
 
     # def test_get_cv2_dominant_color_4(self):
