@@ -1,5 +1,6 @@
 import unittest
 import os
+import cv2
 
 from piechartocr import helperfunctions
 
@@ -40,63 +41,57 @@ class TestHelperFunctions(unittest.TestCase):
 
     def test_get_cv2_dominant_color(self):
 
-        for rgb1, rgb2 in zip((255, 255, 255), (255, 255, 255)):
+        image_path = os.path.join(helperfunctions.get_root_path(), 'test_data', 'test_1.png')
+        image_path1 = os.path.join(helperfunctions.get_root_path(), 'test_data', 'test_2.jpg')
+        image_path2 = os.path.join(helperfunctions.get_root_path(), 'test_data', 'image-019_1.png')
+        image_path3 = os.path.join(helperfunctions.get_root_path(), 'test_data', '262626.png')
+        dominant_color = helperfunctions.get_cv2_dominant_color(cv2.imread(image_path), 5)
+        dominant_color1 = helperfunctions.get_cv2_dominant_color(cv2.imread(image_path1), 5)
+        dominant_color2 = helperfunctions.get_cv2_dominant_color(cv2.imread(image_path2), 5)
+        dominant_color3 = helperfunctions.get_cv2_dominant_color(cv2.imread(image_path3), 5)
+        for rgb1, rgb2 in zip(dominant_color, (255, 255, 255)):
             self.assertAlmostEqual(rgb1, rgb2, delta=1.0)
-        for rgb1, rgb2 in zip((55, 255, 255), (55, 255, 255)):
+        for rgb1, rgb2 in zip(dominant_color1, (255, 255, 255)):
             self.assertAlmostEqual(rgb1, rgb2, delta=1.0)
-        for rgb1, rgb2 in zip((55, 255, 255), (55, 255, 255)):
+        for rgb1, rgb2 in zip(dominant_color2, (255, 255, 255)):
             self.assertAlmostEqual(rgb1, rgb2, delta=1.0)
-        for rgb1, rgb2 in zip((51, 51, 51), (51, 51, 51)):
+        for rgb1, rgb2 in zip(dominant_color3, (51, 51, 51)):
             self.assertAlmostEqual(rgb1, rgb2, delta=1.0)
-
-    # def test_get_cv2_dominant_color_2(self):
-
-    #     image_path = os.path.join(helperfunctions.get_root_path(), 'test_data', 'test_1.png')
-    #     image_path1 = os.path.join(helperfunctions.get_root_path(), 'test_data', 'test_2.jpg')
-    #     image_path2 = os.path.join(helperfunctions.get_root_path(), 'test_data', 'image-019_1.png')
-    #     image_path3 = os.path.join(helperfunctions.get_root_path(), 'test_data', '262626.png')
-    #     dominant_color = helperfunctions.get_cv2_dominant_color_2(cv2.imread(image_path), 5)
-    #     dominant_color1 = helperfunctions.get_cv2_dominant_color_2(cv2.imread(image_path1), 5)
-    #     dominant_color2 = helperfunctions.get_cv2_dominant_color_2(cv2.imread(image_path2), 5)
-    #     dominant_color3 = helperfunctions.get_cv2_dominant_color_2(cv2.imread(image_path3), 5)
-    #     self.assertEqual(dominant_color, (250, 250, 250))
-    #     self.assertEqual(dominant_color1, (251, 251, 250))
-    #     self.assertEqual(dominant_color2, (242, 251, 230))
-    #     self.assertEqual(dominant_color3, (36, 36, 36))
 
     def test_get_cv2_dominant_color_3(self):
 
-        for rgb1, rgb2 in zip([254, 254, 254], [254, 254, 254]):
+        image_path = os.path.join(helperfunctions.get_root_path(), 'test_data', 'test_1.png')
+        image_path1 = os.path.join(helperfunctions.get_root_path(), 'test_data', 'test_2.jpg')
+        image_path2 = os.path.join(helperfunctions.get_root_path(), 'test_data', 'image-019_1.png')
+        image_path3 = os.path.join(helperfunctions.get_root_path(), 'test_data', '262626.png')
+        dominant_color = helperfunctions.get_cv2_dominant_color_3(cv2.imread(image_path), 5)
+        dominant_color1 = helperfunctions.get_cv2_dominant_color_3(cv2.imread(image_path1), 5)
+        dominant_color2 = helperfunctions.get_cv2_dominant_color_3(cv2.imread(image_path2), 5)
+        dominant_color3 = helperfunctions.get_cv2_dominant_color_3(cv2.imread(image_path3), 5)
+        for rgb1, rgb2 in zip(dominant_color, [254, 254, 254]):
             self.assertAlmostEqual(rgb1, rgb2, delta=1.0)
-        for rgb1, rgb2 in zip([253, 253, 253], [253, 254, 254]):
+        for rgb1, rgb2 in zip(dominant_color1, [253, 254, 254]):
             self.assertAlmostEqual(rgb1, rgb2, delta=1.0)
-        for rgb1, rgb2 in zip([241, 241, 241], [241, 241, 241]):
+        for rgb1, rgb2 in zip(dominant_color2, [254, 254, 254]):
             self.assertAlmostEqual(rgb1, rgb2, delta=1.0)
-        for rgb1, rgb2 in zip([38, 38, 38], [38, 38, 38]):
+        for rgb1, rgb2 in zip(dominant_color3, [38, 38, 38]):
             self.assertAlmostEqual(rgb1, rgb2, delta=1.0)
-
-    # def test_get_cv2_dominant_color_4(self):
-
-    #     image_path = os.path.join(helperfunctions.get_root_path(), 'test_data', 'test_1.png')
-    #     image_path1 = os.path.join(helperfunctions.get_root_path(), 'test_data', 'test_2.jpg')
-    #     image_path2 = os.path.join(helperfunctions.get_root_path(), 'test_data', 'image-019_1.png')
-    #     image_path3 = os.path.join(helperfunctions.get_root_path(), 'test_data', '262626.png')
-    #     dominant_color = helperfunctions.get_cv2_dominant_color_4(cv2.imread(image_path), 5)
-    #     dominant_color1 = helperfunctions.get_cv2_dominant_color_4(cv2.imread(image_path1), 5)
-    #     dominant_color2 = helperfunctions.get_cv2_dominant_color_4(cv2.imread(image_path2), 5)
-    #     dominant_color3 = helperfunctions.get_cv2_dominant_color_4(cv2.imread(image_path3), 5)
-    #     self.assertEqual(dominant_color, [252, 252, 252])
-    #     self.assertEqual(dominant_color1, [254, 254, 254])
-    #     self.assertEqual(dominant_color2, [252, 252, 252])
-    #     self.assertEqual(dominant_color3, [38, 37, 38])
 
     def test_get_cv2_dominant_color_5(self):
 
-        for rgb1, rgb2 in zip([196, 218, 215], [196, 218, 215]):
+        image_path = os.path.join(helperfunctions.get_root_path(), 'test_data', 'test_1.png')
+        image_path1 = os.path.join(helperfunctions.get_root_path(), 'test_data', 'test_2.jpg')
+        image_path2 = os.path.join(helperfunctions.get_root_path(), 'test_data', 'image-019_1.png')
+        image_path3 = os.path.join(helperfunctions.get_root_path(), 'test_data', '262626.png')
+        dominant_color = helperfunctions.get_cv2_dominant_color_5(cv2.imread(image_path), 5)
+        dominant_color1 = helperfunctions.get_cv2_dominant_color_5(cv2.imread(image_path1), 5)
+        dominant_color2 = helperfunctions.get_cv2_dominant_color_5(cv2.imread(image_path2), 5)
+        dominant_color3 = helperfunctions.get_cv2_dominant_color_5(cv2.imread(image_path3), 5)
+        for rgb1, rgb2 in zip(dominant_color, [196, 218, 215]):
             self.assertAlmostEqual(rgb1, rgb2, delta=1.0)
-        for rgb1, rgb2 in zip([232, 235, 230], [232, 235, 230]):
+        for rgb1, rgb2 in zip(dominant_color1, [232, 235, 230]):
             self.assertAlmostEqual(rgb1, rgb2, delta=1.0)
-        for rgb1, rgb2 in zip([231, 249, 219], [231, 249, 219]):
+        for rgb1, rgb2 in zip(dominant_color2, [231, 249, 219]):
             self.assertAlmostEqual(rgb1, rgb2, delta=1.0)
-        for rgb1, rgb2 in zip([38, 38, 38], [38, 38, 38]):
+        for rgb1, rgb2 in zip(dominant_color3, [38, 38, 38]):
             self.assertAlmostEqual(rgb1, rgb2, delta=1.0)
