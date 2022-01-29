@@ -1,8 +1,11 @@
 import unittest
 import os
 import cv2
-
 from piechartocr import helperfunctions
+
+
+# delta for color tests
+COLOR_DELTA = 2.0
 
 
 class TestHelperFunctions(unittest.TestCase):
@@ -50,13 +53,13 @@ class TestHelperFunctions(unittest.TestCase):
         dominant_color2 = helperfunctions.get_cv2_dominant_color(cv2.imread(image_path2), 5)
         dominant_color3 = helperfunctions.get_cv2_dominant_color(cv2.imread(image_path3), 5)
         for rgb1, rgb2 in zip(dominant_color, (255, 255, 255)):
-            self.assertAlmostEqual(rgb1, rgb2, delta=1.0)
+            self.assertAlmostEqual(rgb1, rgb2, delta=COLOR_DELTA)
         for rgb1, rgb2 in zip(dominant_color1, (255, 255, 255)):
-            self.assertAlmostEqual(rgb1, rgb2, delta=1.0)
+            self.assertAlmostEqual(rgb1, rgb2, delta=COLOR_DELTA)
         for rgb1, rgb2 in zip(dominant_color2, (255, 255, 255)):
-            self.assertAlmostEqual(rgb1, rgb2, delta=1.0)
+            self.assertAlmostEqual(rgb1, rgb2, delta=COLOR_DELTA)
         for rgb1, rgb2 in zip(dominant_color3, (51, 51, 51)):
-            self.assertAlmostEqual(rgb1, rgb2, delta=1.0)
+            self.assertAlmostEqual(rgb1, rgb2, delta=COLOR_DELTA)
 
     def test_get_cv2_dominant_color_3(self):
 
@@ -69,13 +72,13 @@ class TestHelperFunctions(unittest.TestCase):
         dominant_color2 = helperfunctions.get_cv2_dominant_color_3(cv2.imread(image_path2), 5)
         dominant_color3 = helperfunctions.get_cv2_dominant_color_3(cv2.imread(image_path3), 5)
         for rgb1, rgb2 in zip(dominant_color, [254, 254, 254]):
-            self.assertAlmostEqual(rgb1, rgb2, delta=1.0)
+            self.assertAlmostEqual(rgb1, rgb2, delta=COLOR_DELTA)
         for rgb1, rgb2 in zip(dominant_color1, [253, 254, 254]):
-            self.assertAlmostEqual(rgb1, rgb2, delta=1.0)
+            self.assertAlmostEqual(rgb1, rgb2, delta=COLOR_DELTA)
         for rgb1, rgb2 in zip(dominant_color2, [254, 254, 254]):
-            self.assertAlmostEqual(rgb1, rgb2, delta=1.0)
+            self.assertAlmostEqual(rgb1, rgb2, delta=COLOR_DELTA)
         for rgb1, rgb2 in zip(dominant_color3, [38, 38, 38]):
-            self.assertAlmostEqual(rgb1, rgb2, delta=1.0)
+            self.assertAlmostEqual(rgb1, rgb2, delta=COLOR_DELTA)
 
     def test_get_cv2_dominant_color_5(self):
 
@@ -88,10 +91,10 @@ class TestHelperFunctions(unittest.TestCase):
         dominant_color2 = helperfunctions.get_cv2_dominant_color_5(cv2.imread(image_path2), 5)
         dominant_color3 = helperfunctions.get_cv2_dominant_color_5(cv2.imread(image_path3), 5)
         for rgb1, rgb2 in zip(dominant_color, [196, 218, 215]):
-            self.assertAlmostEqual(rgb1, rgb2, delta=1.0)
+            self.assertAlmostEqual(rgb1, rgb2, delta=COLOR_DELTA)
         for rgb1, rgb2 in zip(dominant_color1, [232, 235, 230]):
-            self.assertAlmostEqual(rgb1, rgb2, delta=1.0)
+            self.assertAlmostEqual(rgb1, rgb2, delta=COLOR_DELTA)
         for rgb1, rgb2 in zip(dominant_color2, [231, 249, 219]):
-            self.assertAlmostEqual(rgb1, rgb2, delta=1.0)
+            self.assertAlmostEqual(rgb1, rgb2, delta=COLOR_DELTA)
         for rgb1, rgb2 in zip(dominant_color3, [38, 38, 38]):
-            self.assertAlmostEqual(rgb1, rgb2, delta=1.0)
+            self.assertAlmostEqual(rgb1, rgb2, delta=COLOR_DELTA)
