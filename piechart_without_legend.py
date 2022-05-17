@@ -32,17 +32,16 @@ def fix_labels(mylabels, tooclose=0.1, sepfactor=2):
 for _ in range(10):
     fig, ax1 = plt.subplots()
     ax1.axis('equal')
-    n = 5
-    m = 100
-    sizes = numbers_sum(n, m)
-    print(sizes)
+    numbers = 5
+    sum_number = 100
+    areas = numbers_sum(numbers, sum_number)
     word_list = words.words()
     groups = [word_list[randint(1, 100000)] for i in range(5)]
     print(groups)
     filename = uuid.uuid4().hex
-    wedges, labels, autopct = ax1.pie(sizes, labels=groups, autopct='%1.1f%%',
-                                      shadow=False, startangle=90)
-    fix_labels(autopct, sepfactor=3)
+    wedges, labels, autopcts = ax1.pie(areas, labels=groups, autopct='%1.1f%%',
+                                       shadow=False, startangle=90)
+    fix_labels(autopcts, sepfactor=3)
     fix_labels(labels, sepfactor=2)
     plt.tight_layout()
     plt.savefig(filename[:6] + ".png")

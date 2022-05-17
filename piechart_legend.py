@@ -34,7 +34,7 @@ def pie_chart_generator_legend(labels, data, legend=True):
         plt.savefig(filename[:6] + "_legend.png")
         plt.close()
     else:
-        pie = ax.pie(data, startangle=90, autopct='%1.2f%%', pctdistance=1.5)
+        ax.pie(data, startangle=90, autopct='%1.2f%%', pctdistance=1.5)
         plt.tight_layout()
         plt.savefig(filename[:6] + ".png")
         plt.close()
@@ -43,8 +43,8 @@ def pie_chart_generator_legend(labels, data, legend=True):
 for _ in range(10):
     word_list = words.words()
     labels_1 = [word_list[randint(1, 100000)] for i in range(5)]
-    n = 5
-    m = 100
-    sizes = numbers_sum(n, m)
-    labels = [f'{l}, {s:0.1f}%' for l, s in zip(labels_1, sizes)]
-    pie_chart_generator_legend(labels=labels, data=sizes)
+    numbers = 5
+    sum_number = 100
+    areas = numbers_sum(numbers, sum_number)
+    data_label = [f'{label}, {size:0.1f}%' for label, size in zip(labels_1, areas)]
+    pie_chart_generator_legend(labels=data_label, data=areas)
