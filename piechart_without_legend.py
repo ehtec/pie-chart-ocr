@@ -44,5 +44,5 @@ for _ in range(10):
     fix_labels(autopcts, sepfactor=3)
     fix_labels(labels, sepfactor=2)
     plt.tight_layout()
-    plt.savefig(filename[:6] + ".png")
+    plt.savefig("generated_pie_charts/generated_pie_charts_without_legend"+filename[:6] + ".png")
     plt.close()
