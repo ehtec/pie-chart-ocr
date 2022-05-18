@@ -36,7 +36,7 @@ def pie_chart_generator_legend(labels, data, legend=True):
     else:
         ax.pie(data, startangle=90, autopct='%1.2f%%', pctdistance=1.5)
         plt.tight_layout()
-        plt.savefig("generated_pie_charts/generated_pie_charts_legend"+filename[:6] + ".png")
+        plt.savefig("generated_pie_charts/generated_pie_charts_legend" + filename[:6] + ".png")
         plt.close()
 
 
