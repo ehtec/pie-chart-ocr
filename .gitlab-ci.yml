@@ -34,7 +34,9 @@ flake8:
     - python3 -m coverage xml --fail-under 0
   artifacts:
     reports:
-      cobertura: coverage.xml
+      coverage_report:
+        coverage_format: cobertura
+        path: coverage.xml
 #  only:
 #    - merge_requests
 #    - tags
