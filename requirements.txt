@@ -21,3 +21,4 @@ pebble
 fuzzywuzzy
 # install debian package python3-pdfminer. Requirement problems with pip version
 pdfminer.six
+nltk
