@@ -1,7 +1,6 @@
 import random
 from matplotlib import pyplot as plt
 import numpy as np
-from random import randint
 from nltk.corpus import words
 import uuid
 import os
@@ -25,19 +24,38 @@ def clean_folder_contents(folder):
             logging.exception(e)
 
 
-def numbers_sum(n, m):
-    sizes = np.random.dirichlet(np.ones(n)) * m
-    for size in sizes:
-        if size < 3.0:
-            sizes = numbers_sum(n, m)
-    return sizes
+def linebreak_words(labels):
+
+    if len(labels) < 3:
+        return ' '.join(labels)
+
+    elif len(labels) < 5:
+        return ' '.join(labels[:2]) + '\n' + ' '.join(labels[2:])
+
+    elif len(labels) < 7:
+        return ' '.join(labels[:3]) + '\n' + ' '.join(labels[3:])
+
+    return ValueError("len(labels) is too large")
+
+
+def split_number(count, total_value, min_size=0.0):
+
+    if total_value < count * min_size:
+        raise ValueError("total_value < count * min_size")
+
+    variable_total_size = total_value - count * min_size
+
+    sizes = np.random.dirichlet(np.ones(count)) * variable_total_size
+
+    res_sizes = [size + min_size for size in sizes]
+
+    return res_sizes
 
 
 def pie_chart_generator_legend(labels, data, legend=True):
     fig = plt.figure(4, figsize=(10, 10))
     plt.rcParams['font.size'] = 18.0
     ax = fig.add_subplot(211)
-    ax.set_title("Piechart", loc="left", fontstyle='italic')
     ax.set_title('Random title')
     ax.axis("equal")
     ax2 = fig.add_subplot(212)
@@ -56,25 +74,30 @@ def pie_chart_generator_legend(labels, data, legend=True):
         plt.close()
 
 
-def num_of_piecharts(number_of_labels):
-    word_list = words.words()
-    labels_1 = [word_list[randint(1, 100000)] for _ in range(number_of_labels)]
-    numbers = number_of_labels
-    sum_number = 100
-    areas = numbers_sum(numbers, sum_number)
-    data_label = [f'{label}, {size:0.1f}%' for label, size in zip(labels_1, areas)]
+def num_of_piecharts(num_sectors):
+    word_list = words.words()[100000:]
+    all_label_list = []
+    for i in range(num_sectors):
+        label_list = [random.choice(word_list) for j in range(random.randint(1, 5))]
+        label_string = linebreak_words(label_list)
+        all_label_list.append(label_string)
+
+    sum_number = 100.0
+    areas = split_number(num_sectors, sum_number, 4.0)
+    data_label = [f'{label}, {size:0.1f}%' for label, size in zip(all_label_list, areas)]
     pie_chart_generator_legend(labels=data_label, data=areas)
 
 
 # clean_folder_contents("generated_pie_charts/generated_pie_charts_without_legend/")
 # clean_folder_contents("generated_pie_charts/generated_pie_charts_legend/")
 
-path = "generated_pie_charts/generated_pie_charts_legend/"
-dir_list = os.listdir(path)
-if len(dir_list) != 0:
+def main():
+    path = "generated_pie_charts/generated_pie_charts_legend/"
     clean_folder_contents(path)
-num_labels = random.randint(1, 9)
-count = 15
-logging.info(num_labels)
-for i in range(count):
-    num_of_piecharts(num_labels)
+    count = 15
+    for counter in range(count):
+        num_of_piecharts(random.randint(3, 8))
+
+
+if __name__ == "__main__":
+    main()
