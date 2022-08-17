@@ -7,10 +7,6 @@ import os
 import shutil
 import logging
 
-plt.title(label="Society Food Preference",
-          loc="left",
-          fontstyle='italic')
-
 
 def clean_folder_contents(folder):
     for filename in os.listdir(folder):
@@ -55,6 +51,7 @@ def split_number(count, total_value, min_size=0.0):
 def pie_chart_generator_legend(labels, data, legend=True):
     if legend:
         fig = plt.figure(4, figsize=(12, 12))
+        ax = fig.add_subplot(211)
     else:
         fig, ax = plt.subplots(figsize=(17, 15))
     plt.rcParams['font.size'] = 20.0
@@ -65,8 +62,10 @@ def pie_chart_generator_legend(labels, data, legend=True):
     # ax2.axis("off")
     filename = uuid.uuid4().hex
     if legend:
+        ax2 = fig.add_subplot(212)
+        ax2.axis("off")
         pie = ax.pie(data, startangle=90, autopct='%1.1f%%', pctdistance=1.3)
-        plt.legend(pie[0], labels, loc='upper left', labelspacing=1)
+        plt.legend(pie[0], labels, labelspacing=1.0, loc="upper left")
         plt.tight_layout()
         plt.savefig("generated_pie_charts/generated_pie_charts_legend/" + filename[:6] + "_legend.png")
         plt.close()
@@ -97,9 +96,11 @@ def num_of_piecharts(num_sectors, legend=True):
 def main():
     path = "generated_pie_charts/generated_pie_charts_without_legend/"
     clean_folder_contents(path)
+    path = "generated_pie_charts/generated_pie_charts_legend/"
+    clean_folder_contents(path)
     count = 15
     for counter in range(count):
-        num_of_piecharts(random.randint(3, 8), legend=False)
+        num_of_piecharts(random.randint(3, 8), legend=True)
 
 
 if __name__ == "__main__":
