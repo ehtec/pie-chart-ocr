@@ -53,17 +53,17 @@ def split_number(count, total_value, min_size=0.0):
 
 
 def pie_chart_generator_legend(labels, data, legend=True):
-    fig = plt.figure(4, figsize=(10, 10))
-    plt.rcParams['font.size'] = 18.0
+    fig = plt.figure(4, figsize=(12, 12))
+    plt.rcParams['font.size'] = 20.0
     ax = fig.add_subplot(211)
-    ax.set_title('Random title')
+    # ax.set_title('Random title')
     ax.axis("equal")
     ax2 = fig.add_subplot(212)
     ax2.axis("off")
     filename = uuid.uuid4().hex
     if legend:
-        pie = ax.pie(data, startangle=90)
-        plt.legend(pie[0], labels, loc='upper left')
+        pie = ax.pie(data, startangle=90, autopct='%1.1f%%', pctdistance=1.3)
+        plt.legend(pie[0], labels, loc='upper left', labelspacing=1)
         plt.tight_layout()
         plt.savefig("generated_pie_charts/generated_pie_charts_legend/" + filename[:6] + "_legend.png")
         plt.close()
@@ -84,7 +84,7 @@ def num_of_piecharts(num_sectors):
 
     sum_number = 100.0
     areas = split_number(num_sectors, sum_number, 4.0)
-    data_label = [f'{label}, {size:0.1f}%' for label, size in zip(all_label_list, areas)]
+    data_label = [f'{label}' for label, size in zip(all_label_list, areas)]
     pie_chart_generator_legend(labels=data_label, data=areas)
 
 
