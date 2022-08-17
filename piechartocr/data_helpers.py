@@ -42,7 +42,7 @@ def get_upscaled_steph_test_path(n, existence_check=False):
 
     upscaled_base_foldername = os.getenv("PIECHARTOCR_UPSCALED_BASE_FOLDERNAME") or "charts_steph_upscaled"
 
-    basepath = os.path.join(get_root_path(), "data", "charts_steph_upscaled", "Chart_{0}".format(n))
+    basepath = os.path.join(get_root_path(), "data", upscaled_base_foldername, "Chart_{0}".format(n))
 
     logging.debug("basepath: {0}".format(basepath))
 
