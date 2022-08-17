@@ -114,10 +114,16 @@ def generate_random_pie_chart(num_sectors, legend=True):
 def main():
 
     path = os.path.join(DATA_ROOT, "generated_pie_charts_without_legend")
-    clean_folder_contents(path)
+    if not os.path.isdir(path):
+        os.mkdir(path)
+    else:
+        clean_folder_contents(path)
 
     path = os.path.join(DATA_ROOT, "generated_pie_charts_legend")
-    clean_folder_contents(path)
+    if not os.path.isdir(path):
+        os.mkdir(path)
+    else:
+        clean_folder_contents(path)
 
     for counter in range(TOTAL_CHARTS_COUNT):
         generate_random_pie_chart(random.randint(MIN_SECTOR_COUNT, MAX_SECTOR_COUNT), legend=False)
