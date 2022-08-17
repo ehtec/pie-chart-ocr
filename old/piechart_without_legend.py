@@ -65,7 +65,7 @@ def num_of_piecharts(number_of_labels):
     plt.close()
 
 
-path = "generated_pie_charts/generated_pie_charts_legend/"
+path = "../generated_pie_charts/generated_pie_charts_legend/"
 dir_list = os.listdir(path)
 if len(dir_list) != 0:
     clean_folder_contents(path)
