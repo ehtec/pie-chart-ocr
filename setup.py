@@ -60,7 +60,8 @@ setup(name="piechartocr",
           "colorthief",
           "sklearn",
           "nose2",
-          "coverage"
+          "coverage",
+          "nltk"
       ],
       classifiers=[
           'Development Status :: 4 - Beta',
