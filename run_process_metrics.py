@@ -18,6 +18,16 @@ def main():
 
         filename_without_extension = os.path.splitext(filename)[0]
 
+        if 'mock_legend' in filename:
+            os.environ["PIECHARTOCR_BASE_FOLDERNAME"] = "generated_pie_charts_legend"
+            os.environ["PIECHARTOCR_UPSCALED_BASE_FOLDERNAME"] = "generated_pie_charts_legend"
+            os.environ["PIECHARTOCR_UPSCALED_FILENAME"] = "image.png"
+
+        elif 'mock_without_legend' in filename:
+            os.environ["PIECHARTOCR_BASE_FOLDERNAME"] = "generated_pie_charts_without_legend"
+            os.environ["PIECHARTOCR_UPSCALED_BASE_FOLDERNAME"] = "generated_pie_charts_without_legend"
+            os.environ["PIECHARTOCR_UPSCALED_FILENAME"] = "image.png"
+
         json_filename = f"{filename_without_extension}.json"
         png_filename = f"{filename_without_extension}.png"
 
