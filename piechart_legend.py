@@ -53,7 +53,7 @@ def pie_chart_generator_legend(labels, data, legend=True):
         fig = plt.figure(4, figsize=(12, 12))
         ax = fig.add_subplot(211)
     else:
-        fig, ax = plt.subplots(figsize=(17, 15))
+        fig, ax = plt.subplots(figsize=(20, 12))
     plt.rcParams['font.size'] = 20.0
     # ax = fig.add_subplot(211)
     # ax.set_title('Random title')
@@ -100,7 +100,7 @@ def main():
     clean_folder_contents(path)
     count = 15
     for counter in range(count):
-        num_of_piecharts(random.randint(3, 8), legend=True)
+        num_of_piecharts(random.randint(3, 8), legend=False)
 
 
 if __name__ == "__main__":
