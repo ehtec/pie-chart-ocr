@@ -7,13 +7,15 @@ from .helperfunctions import hash_file, get_root_path
 # get (csvpath, imagepath) by number from stephs first test dataset
 def get_steph_test_path(n):
 
-    basepath = os.path.join(get_root_path(), "data", "charts_steph", "Chart_{0}".format(n))
+    base_foldername = os.getenv("PIECHARTOCR_BASE_FOLDERNAME") or "charts_steph"
+
+    basepath = os.path.join(get_root_path(), "data", base_foldername, "Chart_{0}".format(n))
 
     logging.debug("basepath: {0}".format(basepath))
 
     li = os.listdir(basepath)
 
-    logging.debug("l: {0}".format(li))
+    logging.debug("li: {0}".format(li))
 
     imagefiles = [el for el in li if "image" in el]
 
@@ -38,11 +40,15 @@ def get_steph_test_path(n):
 # get (csvpath, imagepath) by number from the upscaled version of stephs first dataset
 def get_upscaled_steph_test_path(n, existence_check=False):
 
+    upscaled_base_foldername = os.getenv("PIECHARTOCR_UPSCALED_BASE_FOLDERNAME") or "charts_steph_upscaled"
+
     basepath = os.path.join(get_root_path(), "data", "charts_steph_upscaled", "Chart_{0}".format(n))
 
     logging.debug("basepath: {0}".format(basepath))
 
-    imagepath = os.path.join(basepath, 'upscaled.png')
+    upscaled_filename = os.getenv("PIECHARTOCR_UPSCALED_FILENAME") or "upscaled.png"
+
+    imagepath = os.path.join(basepath, upscaled_filename)
 
     csvpath = os.path.join(basepath, 'annotation.csv')
 
