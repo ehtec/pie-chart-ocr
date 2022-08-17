@@ -53,13 +53,16 @@ def split_number(count, total_value, min_size=0.0):
 
 
 def pie_chart_generator_legend(labels, data, legend=True):
-    fig = plt.figure(4, figsize=(12, 12))
+    if legend:
+        fig = plt.figure(4, figsize=(12, 12))
+    else:
+        fig, ax = plt.subplots(figsize=(17, 15))
     plt.rcParams['font.size'] = 20.0
-    ax = fig.add_subplot(211)
+    # ax = fig.add_subplot(211)
     # ax.set_title('Random title')
     ax.axis("equal")
-    ax2 = fig.add_subplot(212)
-    ax2.axis("off")
+    # ax2 = fig.add_subplot(212)
+    # ax2.axis("off")
     filename = uuid.uuid4().hex
     if legend:
         pie = ax.pie(data, startangle=90, autopct='%1.1f%%', pctdistance=1.3)
@@ -68,13 +71,13 @@ def pie_chart_generator_legend(labels, data, legend=True):
         plt.savefig("generated_pie_charts/generated_pie_charts_legend/" + filename[:6] + "_legend.png")
         plt.close()
     else:
-        ax.pie(data, startangle=90, autopct='%1.2f%%', pctdistance=1.5)
+        ax.pie(data, startangle=90, autopct='%1.1f%%', labels=labels, pctdistance=0.7, labeldistance=1.5, radius=0.5)
         plt.tight_layout()
-        plt.savefig("generated_pie_charts/generated_pie_charts_legend/" + filename[:6] + ".png")
+        plt.savefig("generated_pie_charts/generated_pie_charts_without_legend/" + filename[:6] + ".png")
         plt.close()
 
 
-def num_of_piecharts(num_sectors):
+def num_of_piecharts(num_sectors, legend=True):
     word_list = words.words()[100000:]
     all_label_list = []
     for i in range(num_sectors):
@@ -85,18 +88,18 @@ def num_of_piecharts(num_sectors):
     sum_number = 100.0
     areas = split_number(num_sectors, sum_number, 4.0)
     data_label = [f'{label}' for label, size in zip(all_label_list, areas)]
-    pie_chart_generator_legend(labels=data_label, data=areas)
+    pie_chart_generator_legend(labels=data_label, data=areas, legend=legend)
 
 
 # clean_folder_contents("generated_pie_charts/generated_pie_charts_without_legend/")
 # clean_folder_contents("generated_pie_charts/generated_pie_charts_legend/")
 
 def main():
-    path = "generated_pie_charts/generated_pie_charts_legend/"
+    path = "generated_pie_charts/generated_pie_charts_without_legend/"
     clean_folder_contents(path)
     count = 15
     for counter in range(count):
-        num_of_piecharts(random.randint(3, 8))
+        num_of_piecharts(random.randint(3, 8), legend=False)
 
 
 if __name__ == "__main__":
