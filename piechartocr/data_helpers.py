@@ -81,6 +81,16 @@ def load_annotations_from_csv(csvpath, load_reversed=False):
     return res_tuples
 
 
+# write annotations to csv
+def write_annotations_to_csv(csvpath, input_tuples, decimals=1):
+
+    with open(csvpath, 'w') as csvfile:
+        spamwriter = csv.writer(csvfile, delimiter=',')
+
+        for row in input_tuples:
+            spamwriter.writerow((row[0].strip(), str(round(100 * row[1], decimals))))
+
+
 # test for formatting errors in stephs work
 def test_data_format():
 
