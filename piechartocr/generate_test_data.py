@@ -25,6 +25,9 @@ MIN_SECTOR_PERCENTAGE = 4.0
 # total count of charts generated
 TOTAL_CHARTS_COUNT = 15
 
+# data root where results are stored
+DATA_ROOT = os.path.join(get_root_path(), 'data')
+
 
 # add linebreaks to words that will be used as pie chart captions
 def linebreak_words(labels):
@@ -79,13 +82,15 @@ def pie_chart_generator(labels, data, legend=True):
         pie = ax.pie(data, startangle=90, autopct='%1.1f%%', pctdistance=1.3)
         plt.legend(pie[0], labels, labelspacing=1.0, loc="upper left")
         plt.tight_layout()
-        plt.savefig("generated_pie_charts/generated_pie_charts_legend/" + filename + ".png")
+        output_path = os.path.join(DATA_ROOT, 'generated_pie_charts_legend', filename + '.png')
+        plt.savefig(output_path)
         plt.close()
 
     else:
         ax.pie(data, startangle=90, autopct='%1.1f%%', labels=labels, pctdistance=0.7, labeldistance=1.5, radius=0.5)
         plt.tight_layout()
-        plt.savefig("generated_pie_charts/generated_pie_charts_without_legend/" + filename + ".png")
+        output_path = os.path.join(DATA_ROOT, 'generated_pie_charts_without_legend', filename + '.png')
+        plt.savefig(output_path)
         plt.close()
 
 
@@ -108,10 +113,10 @@ def generate_random_pie_chart(num_sectors, legend=True):
 
 def main():
 
-    path = os.path.join(get_root_path(), "generated_pie_charts", "generated_pie_charts_without_legend")
+    path = os.path.join(DATA_ROOT, "generated_pie_charts_without_legend")
     clean_folder_contents(path)
 
-    path = os.path.join(get_root_path(), "generated_pie_charts", "generated_pie_charts_legend")
+    path = os.path.join(DATA_ROOT, "generated_pie_charts_legend")
     clean_folder_contents(path)
 
     for counter in range(TOTAL_CHARTS_COUNT):
