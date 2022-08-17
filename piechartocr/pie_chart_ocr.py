@@ -435,7 +435,7 @@ def main(path, interactive=True):
     percent_sum = sum([elem[0] for elem in res])
 
     if percent_sum != 1.0:
-        logging.warning("Percentages sum does not add up to 100%!")
+        logging.warning("Percentages sum does not add up to 100%! (instead, it is {0})".format(percent_sum))
 
     if fallback_used:
         logging.warning("fallback_used: {0}".format(fallback_used))
