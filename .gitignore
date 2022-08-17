@@ -140,9 +140,9 @@ dmypy.json
 /temp2
 
 # test data charts
-data
+/data
 /artifacts
-!data/*.zip
+!/data/*.zip
 #!/data/charts_steph_upscaled.zip
 #!/data/charts_steph.zip
 #!/data/generated_pie_charts_legend.zip

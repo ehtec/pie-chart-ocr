@@ -37,10 +37,10 @@ flake8:
       coverage_report:
         coverage_format: cobertura
         path: coverage.xml
-#  only:
-#    - merge_requests
-#    - tags
-#    - main
+  #  only:
+  #    - merge_requests
+  #    - tags
+  #    - main
   rules:
     - if: '$CI_COMMIT_BRANCH == "main"'
     - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
@@ -92,17 +92,19 @@ generatemetrics:
     - mkdir temp2
     - unzip data/charts_steph.zip -d data
     - unzip data/charts_steph_upscaled.zip -d data
+    - unzip data/generated_pie_charts_legend.zip -d data
+    - unzip data/generated_pie_charts_without_legend.zip -d data
   script:
     - python3 run_generate_metrics.py
     - python3 run_process_metrics.py
   artifacts:
-    paths: [artifacts/ocr_test_metrics.json, artifacts/ocr_test_metrics.png]
+    paths: [ artifacts/ocr_test_metrics.json, artifacts/ocr_test_metrics.png, artifacts/ocr_test_metrics_mock_legend.json, artifacts/ocr_test_metrics_mock_legend.png, artifacts/ocr_test_metrics_mock_without_legend.json, artifacts/ocr_test_metrics_mock_without_legend.png ]
     expose_as: "Metrics"
     expire_in: never
-#  only:
-#    - merge_requests
-#    - tags
-#    - main
+  #  only:
+  #    - merge_requests
+  #    - tags
+  #    - main
   rules:
     - if: '$CI_COMMIT_BRANCH == "main"'
       when: manual

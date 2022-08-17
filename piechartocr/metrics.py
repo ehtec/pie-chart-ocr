@@ -426,7 +426,7 @@ def compute_metrics(test_metrics=None, filename=METRICS_FILENAME, interactive=Fa
 
 
 # create metrics plot
-def create_metrics_plot(metrics_dict):
+def create_metrics_plot(metrics_dict, filename='ocr_test_metrics.png'):
 
     plt.figure(figsize=(8.4, 4.8))
 
@@ -439,5 +439,5 @@ def create_metrics_plot(metrics_dict):
 
     plt.tight_layout()
 
-    path = os.path.join(get_root_path(), 'artifacts', 'ocr_test_metrics.png')
+    path = os.path.join(get_root_path(), 'artifacts', filename)
     plt.savefig(path)

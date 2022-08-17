@@ -23,8 +23,8 @@ MAX_SECTOR_COUNT = 8
 # minimum sector percentage
 MIN_SECTOR_PERCENTAGE = 4.0
 
-# total count of charts generated
-TOTAL_CHARTS_COUNT = 15
+# total count of charts generated (for each variant)
+TOTAL_CHARTS_COUNT = 500
 
 # data root where results are stored
 DATA_ROOT = os.path.join(get_root_path(), 'data')
