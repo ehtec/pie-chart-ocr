@@ -8,7 +8,7 @@ long_description = (this_directory / "README.md").read_text()
 # version parameters
 MAJOR_VERSION = "0"
 MINOR_VERSION = "6"
-SUB_MINOR_VERSION = "3"
+SUB_MINOR_VERSION = "4"
 
 
 # version of the package
