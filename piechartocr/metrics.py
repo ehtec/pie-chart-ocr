@@ -89,7 +89,7 @@ def check_simple_annotations_match(annotations1, data, ignorecase=True):
 
 # check if annotations match with fuzz ratio
 def check_fuzz_ratio_annotations_match(annotations1, data, ignorecase=True, min_score=DEFAULT_FUZZ_MIN_SCORE,
-                                       mode='ratio'):
+                                       mode='ratio', method='default'):
 
     if mode == 'ratio':
         score_func = fuzz.ratio
@@ -123,21 +123,33 @@ def check_fuzz_ratio_annotations_match(annotations1, data, ignorecase=True, min_
 
     correct_count = 0
 
+    all_scores = []
+
     for a, b in annotations1_copy:
 
         valid = [el[1] for el in annotations2_copy if el[0] == a]
 
         if not bool(valid):
+            logging.warning("valid list is empty for a={0}, this should not happen!".format(a))
             continue
 
         scores = [score_func(b, el) for el in valid]
 
         max_score = max(scores)
 
+        all_scores.append(max_score)
+
         if max_score >= min_score:
             correct_count += 1
 
-    return correct_count == len(annotations1)
+    if method == 'default':
+        return correct_count == len(annotations1)
+
+    elif method == 'avg':
+        return sum(all_scores) / len(all_scores) > min_score
+
+    else:
+        raise NotImplementedError("Method {0} not implemented".format(method))
 
 
 # wrapper for check_fuzz_ratio_annotations_match with min_score=90
