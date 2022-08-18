@@ -17,7 +17,7 @@ python3 -m pip install --upgrade piechartocr
 Note: You cannot run tests and examples from the PyPi installation. The required
 files need to be downloaded from Gitlab.
 
-### Install from source
+### Build from source
 
 Install Boost and Tesseract:
 
@@ -77,7 +77,22 @@ python3 run_examples.py
 Generate test data (mock pie charts):
 
 ```commandline
-python3 run_generate_test_data
+python3 run_generate_test_data.py
+```
+
+To extract data from any pie chart:
+
+```python
+from piechartocr import pie_chart_ocr
+
+# Path to pie chart
+path = "/path/to/my/chart.png"
+
+# Extract data
+data = pie_chart_ocr.main(path, interactive=False)
+
+# Print the extracted list of tuples of the form [(percentage / 100, label)]
+print(data["res"])
 ```
 
 # Metrics
