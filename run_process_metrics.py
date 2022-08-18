@@ -2,7 +2,7 @@ import logging
 logging.basicConfig(level=logging.DEBUG)
 from piechartocr.metrics import compare_test_metrics, load_test_metrics_json, compute_metrics, create_metrics_plot
 import os
-from piechartocr.helperfunctions import get_root_path
+# from piechartocr.helperfunctions import get_root_path
 
 
 def main():
