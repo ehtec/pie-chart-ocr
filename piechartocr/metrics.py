@@ -212,6 +212,69 @@ def check_fuzz_partial_ratio_reversed_annotations_match_70(annotations1, data, i
                                               mode='partial_ratio_reversed')
 
 
+# wrapper for check_fuzz_ratio_annotations_match with min_score=90 and average method
+def check_fuzz_ratio_annotations_match_avg_90(annotations1, data, ignorecase=True):
+
+    return check_fuzz_ratio_annotations_match(annotations1, data, ignorecase=ignorecase, min_score=90, mode='ratio',
+                                              method='avg')
+
+
+# wrapper for check_fuzz_ratio_annotations_match with min_score=80 and average method
+def check_fuzz_ratio_annotations_match_avg_80(annotations1, data, ignorecase=True):
+
+    return check_fuzz_ratio_annotations_match(annotations1, data, ignorecase=ignorecase, min_score=80, mode='ratio',
+                                              method='avg')
+
+
+# wrapper for check_fuzz_ratio_annotations_match with min_score=70 and average method
+def check_fuzz_ratio_annotations_match_avg_70(annotations1, data, ignorecase=True):
+
+    return check_fuzz_ratio_annotations_match(annotations1, data, ignorecase=ignorecase, min_score=70, mode='ratio',
+                                              method='avg')
+
+
+# wrapper for check_fuzz_ratio_annotations_match with min_score=90 and mode='partial_ratio' and average method
+def check_fuzz_partial_ratio_annotations_match_avg_90(annotations1, data, ignorecase=True):
+
+    return check_fuzz_ratio_annotations_match(annotations1, data, ignorecase=ignorecase, min_score=90,
+                                              mode='partial_ratio', method='avg')
+
+
+# wrapper for check_fuzz_ratio_annotations_match with min_score=80 and mode='partial_ratio' and average method
+def check_fuzz_partial_ratio_annotations_match_avg_80(annotations1, data, ignorecase=True):
+
+    return check_fuzz_ratio_annotations_match(annotations1, data, ignorecase=ignorecase, min_score=80,
+                                              mode='partial_ratio', method='avg')
+
+
+# wrapper for check_fuzz_ratio_annotations_match with min_score=70 and mode='partial_ratio' and average method
+def check_fuzz_partial_ratio_annotations_match_avg_70(annotations1, data, ignorecase=True):
+
+    return check_fuzz_ratio_annotations_match(annotations1, data, ignorecase=ignorecase, min_score=70,
+                                              mode='partial_ratio', method='avg')
+
+
+# wrapper for check_fuzz_ratio_annotations_match with min_score=90 and mode='partial_ratio_reversed' and average method
+def check_fuzz_partial_ratio_reversed_annotations_match_avg_90(annotations1, data, ignorecase=True):
+
+    return check_fuzz_ratio_annotations_match(annotations1, data, ignorecase=ignorecase, min_score=90,
+                                              mode='partial_ratio_reversed', method='avg')
+
+
+# wrapper for check_fuzz_ratio_annotations_match with min_score=80 and mode='partial_ratio' and average method
+def check_fuzz_partial_ratio_reversed_annotations_match_avg_80(annotations1, data, ignorecase=True):
+
+    return check_fuzz_ratio_annotations_match(annotations1, data, ignorecase=ignorecase, min_score=80,
+                                              mode='partial_ratio_reversed', method='avg')
+
+
+# wrapper for check_fuzz_ratio_annotations_match with min_score=70 and mode='partial_ratio' and average method
+def check_fuzz_partial_ratio_reversed_annotations_match_avg_70(annotations1, data, ignorecase=True):
+
+    return check_fuzz_ratio_annotations_match(annotations1, data, ignorecase=ignorecase, min_score=70,
+                                              mode='partial_ratio_reversed', method='avg')
+
+
 # check if annotations match exactly apart from one element
 def check_simple_annotations_match_but_one(annotations1, data, ignorecase=True):
 
@@ -388,7 +451,16 @@ def compute_metrics(test_metrics=None, filename=METRICS_FILENAME, interactive=Fa
         check_fuzz_partial_ratio_annotations_match_90,
         check_fuzz_partial_ratio_reversed_annotations_match_70,
         check_fuzz_partial_ratio_reversed_annotations_match_80,
-        check_fuzz_partial_ratio_reversed_annotations_match_90
+        check_fuzz_partial_ratio_reversed_annotations_match_90,
+        check_fuzz_ratio_annotations_match_avg_70,
+        check_fuzz_ratio_annotations_match_avg_80,
+        check_fuzz_ratio_annotations_match_avg_90,
+        check_fuzz_partial_ratio_annotations_match_avg_70,
+        check_fuzz_partial_ratio_annotations_match_avg_80,
+        check_fuzz_partial_ratio_annotations_match_avg_90,
+        check_fuzz_partial_ratio_reversed_annotations_match_avg_70,
+        check_fuzz_partial_ratio_reversed_annotations_match_avg_80,
+        check_fuzz_partial_ratio_reversed_annotations_match_avg_90
     ]
 
     res_dict = {func.__name__: [] for func in metric_functions}
