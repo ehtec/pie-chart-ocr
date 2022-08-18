@@ -1,10 +1,15 @@
 from setuptools import setup, Extension, find_packages
+# read the contents of your README file
+from pathlib import Path
+this_directory = Path(__file__).parent
+long_description = (this_directory / "README.md").read_text()
 
 
 # version parameters
 MAJOR_VERSION = "0"
 MINOR_VERSION = "6"
 SUB_MINOR_VERSION = "3"
+
 
 # version of the package
 # VERSION = "0.5.7"
@@ -36,6 +41,8 @@ setup(name="piechartocr",
       version=VERSION,
       license="MIT",
       description="Pie Chart Optical Character Recognition",
+      long_description=long_description,
+      long_description_content_type='text/markdown',
       author="Elias Hohl",
       author_email="elias.hohl@ehtec.co",
       url="https://git.ehtec.co/research/pie-chart-ocr",
