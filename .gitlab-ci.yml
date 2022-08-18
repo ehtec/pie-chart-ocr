@@ -95,6 +95,22 @@ generatemetrics:
     - unzip data/generated_pie_charts_legend.zip -d data
     - unzip data/generated_pie_charts_without_legend.zip -d data
   script:
+    - export PIECHARTOCR_METRICS_JSON_FILENAME=ocr_test_metrics_mock_legend.json
+    - export PIECHARTOCR_BASE_FOLDERNAME=generated_pie_charts_legend
+    - export PIECHARTOCR_UPSCALED_BASE_FOLDERNAME=generated_pie_charts_legend
+    - export PIECHARTOCR_UPSCALED_FILENAME=image.png
+    - python3 run_generate_metrics.py
+    - python3 run_process_metrics.py
+    - export PIECHARTOCR_METRICS_JSON_FILENAME=ocr_test_metrics_mock_without_legend.json
+    - export PIECHARTOCR_BASE_FOLDERNAME=generated_pie_charts_without_legend
+    - export PIECHARTOCR_UPSCALED_BASE_FOLDERNAME=generated_pie_charts_without_legend
+    - export PIECHARTOCR_UPSCALED_FILENAME=image.png
+    - python3 run_generate_metrics.py
+    - python3 run_process_metrics.py
+    - export PIECHARTOCR_METRICS_JSON_FILENAME=ocr_test_metrics.json
+    - unset PIECHARTOCR_BASE_FOLDERNAME
+    - unset PIECHARTOCR_UPSCALED_BASE_FOLDERNAME
+    - unset PIECHARTOCR_UPSCALED_FILENAME
     - python3 run_generate_metrics.py
     - python3 run_process_metrics.py
   artifacts:

@@ -7,39 +7,41 @@ from piechartocr.helperfunctions import get_root_path
 
 def main():
 
-    artifacts_path = os.path.join(get_root_path(), 'artifacts')
+    # artifacts_path = os.path.join(get_root_path(), 'artifacts')
 
-    for filename in os.listdir(artifacts_path):
+    filename = os.getenv("PIECHARTOCR_METRICS_JSON_FILENAME")
 
-        if not filename.endswith('.json'):
-            continue
+    # for filename in os.listdir(artifacts_path):
 
-        logging.info("Processing {0}...".format(filename))
+    if not filename.endswith('.json'):
+        raise ValueError("File {0} is not a JSON file".format(filename))
 
-        filename_without_extension = os.path.splitext(filename)[0]
+    logging.info("Processing {0}...".format(filename))
 
-        if 'mock_legend' in filename:
-            os.environ["PIECHARTOCR_BASE_FOLDERNAME"] = "generated_pie_charts_legend"
-            os.environ["PIECHARTOCR_UPSCALED_BASE_FOLDERNAME"] = "generated_pie_charts_legend"
-            os.environ["PIECHARTOCR_UPSCALED_FILENAME"] = "image.png"
+    filename_without_extension = os.path.splitext(filename)[0]
 
-        elif 'mock_without_legend' in filename:
-            os.environ["PIECHARTOCR_BASE_FOLDERNAME"] = "generated_pie_charts_without_legend"
-            os.environ["PIECHARTOCR_UPSCALED_BASE_FOLDERNAME"] = "generated_pie_charts_without_legend"
-            os.environ["PIECHARTOCR_UPSCALED_FILENAME"] = "image.png"
+    # if 'mock_legend' in filename:
+    #     os.environ["PIECHARTOCR_BASE_FOLDERNAME"] = "generated_pie_charts_legend"
+    #     os.environ["PIECHARTOCR_UPSCALED_BASE_FOLDERNAME"] = "generated_pie_charts_legend"
+    #     os.environ["PIECHARTOCR_UPSCALED_FILENAME"] = "image.png"
+    #
+    # elif 'mock_without_legend' in filename:
+    #     os.environ["PIECHARTOCR_BASE_FOLDERNAME"] = "generated_pie_charts_without_legend"
+    #     os.environ["PIECHARTOCR_UPSCALED_BASE_FOLDERNAME"] = "generated_pie_charts_without_legend"
+    #     os.environ["PIECHARTOCR_UPSCALED_FILENAME"] = "image.png"
 
-        json_filename = f"{filename_without_extension}.json"
-        png_filename = f"{filename_without_extension}.png"
+    json_filename = f"{filename_without_extension}.json"
+    png_filename = f"{filename_without_extension}.png"
 
-        test_metrics = load_test_metrics_json(filename=json_filename)
+    test_metrics = load_test_metrics_json(filename=json_filename)
 
-        compare_test_metrics(error_on_diff=False, error_on_miss=False, test_metrics=test_metrics)
+    compare_test_metrics(error_on_diff=False, error_on_miss=False, test_metrics=test_metrics)
 
-        metrics_dict = compute_metrics(test_metrics=test_metrics, interactive=False)
+    metrics_dict = compute_metrics(test_metrics=test_metrics, interactive=False)
 
-        create_metrics_plot(metrics_dict, filename=png_filename)
+    create_metrics_plot(metrics_dict, filename=png_filename)
 
-        logging.debug("Wrote {0}".format(png_filename))
+    logging.debug("Wrote {0}".format(png_filename))
 
 
 if __name__ == "__main__":
