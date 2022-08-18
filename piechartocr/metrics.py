@@ -428,14 +428,19 @@ def compute_metrics(test_metrics=None, filename=METRICS_FILENAME, interactive=Fa
 # create metrics plot
 def create_metrics_plot(metrics_dict, filename='ocr_test_metrics.png'):
 
-    plt.figure(figsize=(8.4, 4.8))
+    plt.figure(figsize=(8.4, 9))
 
-    plt.barh(range(len(metrics_dict)), metrics_dict.values())
+    labels = [str(round(v, 2)) + '%' for v in metrics_dict.values()]
+
+    c = plt.barh(range(len(metrics_dict)), metrics_dict.values())
+
+    plt.bar_label(c, labels)
 
     plt.yticks(range(len(metrics_dict)), metrics_dict.keys())
 
     plt.xlabel('Percentage')
     plt.ylabel('Metric')
+    plt.xlim(right=120)
 
     plt.tight_layout()
 
