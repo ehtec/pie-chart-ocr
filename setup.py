@@ -65,7 +65,7 @@ setup(name="piechartocr",
           "tqdm",
           "colormath",
           "colorthief",
-          "sklearn",
+          "scikit-learn",
           "nose2",
           "coverage",
           "nltk"
