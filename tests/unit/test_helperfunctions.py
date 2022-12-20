@@ -1,6 +1,8 @@
 import unittest
 import os
 import cv2
+import random
+import shutil
 from piechartocr import helperfunctions
 
 
@@ -98,3 +100,71 @@ class TestHelperFunctions(unittest.TestCase):
             self.assertAlmostEqual(rgb1, rgb2, delta=COLOR_DELTA)
         for rgb1, rgb2 in zip(dominant_color3, [38, 38, 38]):
             self.assertAlmostEqual(rgb1, rgb2, delta=COLOR_DELTA)
+
+    def test_group_pairs_to_nested_list(self):
+        # random test
+        edges = [random.sample(range(0, 100), 2) for _ in range(1, 70)]
+        print(edges)
+        components = helperfunctions.group_pairs_to_nested_list(edges)
+        print(components)
+        for edge in edges:
+            occ_first_vert = 0
+            occ_second_vert = 0
+            for comp in components:
+                f = comp.count(edge[0])
+                s = comp.count(edge[1])
+                self.assertTrue((s > 0 and f > 0) or (s == 0 and f == 0))
+                occ_first_vert += f
+                occ_second_vert += s
+            self.assertEqual(occ_first_vert, 1)
+            self.assertEqual(occ_second_vert, 1)
+
+    def test_pre_rectangle_center(self):
+        p1 = [0.0, 5, 2.2, 6]
+        x, y = helperfunctions.pre_rectangle_center(p1)
+        self.assertAlmostEqual(x, 1.1)
+        self.assertAlmostEqual(y, 5.5)
+
+        p1 = [-3.5, 3.28, 8, 2390.6]
+        x, y = helperfunctions.pre_rectangle_center(p1)
+        self.assertAlmostEqual(x, 2.25)
+        self.assertAlmostEqual(y, 1196.94)
+
+    def test_clean_folder_contents(self):
+        # create garbage
+        path = os.path.join(helperfunctions.get_root_path(), 'data', "test_folder")  # ! also using get_root_path
+        if not os.path.isdir(path):
+            os.mkdir(path)
+        folder1 = os.path.join(path, "1")
+        if not os.path.isdir(folder1):
+            os.mkdir(folder1)
+        folder2 = os.path.join(path, "2")
+        if not os.path.isdir(folder2):
+            os.mkdir(folder2)
+        folder1_1 = os.path.join(folder1, "1_1")
+        if not os.path.isdir(folder1_1):
+            os.mkdir(folder1_1)
+
+        textfile1 = os.path.join(path, "trash1.txt")
+        trash1 = open(textfile1, "w+")
+        trash1.write("this is basic garbage")
+        trash1.close()
+
+        textfile2 = os.path.join(folder2, "trash2.txt")
+        trash2 = open(textfile2, "w+")
+        trash2.write("this is level 2 garbage")
+        trash2.close()
+
+        textfile3 = os.path.join(folder1_1, "trash3.txt")
+        trash3 = open(textfile3, "w+")
+        trash3.write("this is level 3 garbage")
+        trash3.close()
+
+        # clean
+        helperfunctions.clean_folder_contents(path)
+
+        # inspect results
+        self.assertTrue(not os.path.isdir(folder1) and not os.path.isdir(folder2) and not os.path.isdir(textfile1))
+
+        # remove test folder
+        shutil.rmtree(path)
