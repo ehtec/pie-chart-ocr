@@ -1,3 +1,7 @@
+import logging
+logger = logging.getLogger()
+logger.level = logging.DEBUG
+
 import unittest
 import unittest.mock
 import os
@@ -6,15 +10,11 @@ import random
 import shutil
 from piechartocr import helperfunctions
 import sys
-import logging
 import io
 
 
 # delta for color tests
 COLOR_DELTA = 2.0
-
-logger = logging.getLogger()
-logger.level = logging.DEBUG
 
 
 class TestHelperFunctions(unittest.TestCase):
