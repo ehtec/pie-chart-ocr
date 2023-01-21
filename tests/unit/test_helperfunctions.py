@@ -111,9 +111,7 @@ class TestHelperFunctions(unittest.TestCase):
     def test_group_pairs_to_nested_list(self):
         # random test
         edges = [random.sample(range(0, 100), 2) for _ in range(1, 70)]
-        print(edges)
         components = helperfunctions.group_pairs_to_nested_list(edges)
-        print(components)
         for edge in edges:
             occ_first_vert = 0
             occ_second_vert = 0
