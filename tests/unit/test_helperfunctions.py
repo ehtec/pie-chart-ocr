@@ -5,9 +5,6 @@ import cv2
 import random
 import shutil
 from piechartocr import helperfunctions
-import sys
-import io
-
 
 # delta for color tests
 COLOR_DELTA = 2.0
