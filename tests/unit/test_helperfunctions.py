@@ -1,14 +1,22 @@
 import unittest
+import unittest.mock
 import os
 import cv2
 import random
 import shutil
 from piechartocr import helperfunctions
+import sys
+import logging
+import io
 
 
 # delta for color tests
 COLOR_DELTA = 2.0
 
+logger = logging.getLogger()
+logger.level = logging.DEBUG
+def fizzbuzz(n):
+    print(n)
 
 class TestHelperFunctions(unittest.TestCase):
 
@@ -130,7 +138,21 @@ class TestHelperFunctions(unittest.TestCase):
         self.assertAlmostEqual(x, 2.25)
         self.assertAlmostEqual(y, 1196.94)
 
+    @unittest.mock.patch('sys.stdout', new_callable=io.StringIO)
+    def assert_stdout(self, path, expected_output, mock_stdout):
+        stream_handler = logging.StreamHandler(sys.stdout)
+        logger.addHandler(stream_handler)
+        try:
+            helperfunctions.clean_folder_contents(path)
+
+        finally:
+            logger.removeHandler(stream_handler)
+        self.assertTrue(expected_output in mock_stdout.getvalue())
+
+
+
     def test_clean_folder_contents(self):
+
         # create garbage
         path = os.path.join(helperfunctions.get_root_path(), 'data', "test_folder")  # ! also using get_root_path
         if not os.path.isdir(path):
@@ -138,6 +160,7 @@ class TestHelperFunctions(unittest.TestCase):
         folder1 = os.path.join(path, "1")
         if not os.path.isdir(folder1):
             os.mkdir(folder1)
+        os.chmod(folder1, 0o777)
         folder2 = os.path.join(path, "2")
         if not os.path.isdir(folder2):
             os.mkdir(folder2)
@@ -159,6 +182,15 @@ class TestHelperFunctions(unittest.TestCase):
         trash3 = open(textfile3, "w+")
         trash3.write("this is level 3 garbage")
         trash3.close()
+
+        # removing permissions
+        os.chmod(folder1, 0o000)
+
+        # attempt clean without permissions
+        self.assert_stdout(path, "PermissionError")
+
+        # giving permissions back
+        os.chmod(folder1, 0o777)
 
         # clean
         helperfunctions.clean_folder_contents(path)
