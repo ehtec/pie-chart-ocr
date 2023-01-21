@@ -15,8 +15,7 @@ COLOR_DELTA = 2.0
 
 logger = logging.getLogger()
 logger.level = logging.DEBUG
-def fizzbuzz(n):
-    print(n)
+
 
 class TestHelperFunctions(unittest.TestCase):
 
@@ -148,8 +147,6 @@ class TestHelperFunctions(unittest.TestCase):
         finally:
             logger.removeHandler(stream_handler)
         self.assertTrue(expected_output in mock_stdout.getvalue())
-
-
 
     def test_clean_folder_contents(self):
 
