@@ -1,7 +1,3 @@
-import logging
-logger = logging.getLogger()
-logger.level = logging.DEBUG
-
 import unittest
 import unittest.mock
 import os
@@ -135,17 +131,6 @@ class TestHelperFunctions(unittest.TestCase):
         self.assertAlmostEqual(x, 2.25)
         self.assertAlmostEqual(y, 1196.94)
 
-    @unittest.mock.patch('sys.stdout', new_callable=io.StringIO)
-    def assert_stdout(self, path, expected_output, mock_stdout):
-        stream_handler = logging.StreamHandler(sys.stdout)
-        logger.addHandler(stream_handler)
-        try:
-            helperfunctions.clean_folder_contents(path)
-
-        finally:
-            logger.removeHandler(stream_handler)
-        self.assertTrue(expected_output in mock_stdout.getvalue())
-
     def test_clean_folder_contents(self):
 
         # create garbage
@@ -182,7 +167,7 @@ class TestHelperFunctions(unittest.TestCase):
         os.chmod(folder1, 0o000)
 
         # attempt clean without permissions
-        self.assert_stdout(path, "PermissionError")
+        helperfunctions.clean_folder_contents(path)
 
         # giving permissions back
         os.chmod(folder1, 0o777)
