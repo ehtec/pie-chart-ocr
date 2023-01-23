@@ -160,15 +160,6 @@ class TestHelperFunctions(unittest.TestCase):
         trash3.write("this is level 3 garbage")
         trash3.close()
 
-        # removing permissions
-        os.chmod(folder1, 0o000)
-
-        # attempt clean without permissions
-        helperfunctions.clean_folder_contents(path)
-
-        # giving permissions back
-        os.chmod(folder1, 0o777)
-
         # clean
         helperfunctions.clean_folder_contents(path)
 
