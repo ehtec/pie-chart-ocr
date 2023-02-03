@@ -17,7 +17,8 @@ To contribute to an issue, you need to create a new branch (for example:
 If you don't have `git` installed yet, install it via your package manager. On Debian or
 Ubuntu:
 ```commandline
-sudo apt install git
+sudo apt update
+sudo apt install git git-lfs
 ```
 
 Configure `git` to rebase when pulling:
@@ -42,6 +43,9 @@ will be sent.
 To contribute for the first time, execute these commands:
 ```commandline
 git clone https://git.ehtec.co/research/pie-chart-ocr
+cd pie-chart-ocr
+git lfs fetch --all
+git lfs pull
 git checkout 0-example-issue
 ```
 
