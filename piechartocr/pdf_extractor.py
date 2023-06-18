@@ -82,10 +82,11 @@ def get_textline_font(obj):
 # if sort_direction is specified, unsorted_output will be sorted. sort_direction can be top-to-bottom or left-to-right
 # x_coordinate, y_coordinate: coordinates used for sorting, x_coordinate = left | right, y_coordinate = top | bottom
 def extract_tuples_from_pdf(path, max_pdf_pages=MAX_PDF_PAGES, return_unsorted_output=False, sort_direction=None,
-                            x_coordinate='right', y_coordinate='top'):
+                            x_coordinate='right', y_coordinate='top', content=None):
 
-    with open(path, 'rb') as orig_fp:
-        content = orig_fp.read()
+    if path is not None:  # otherwise use specified content
+        with open(path, 'rb') as orig_fp:
+            content = orig_fp.read()
 
     with BytesIO(content) as fp:
         rsrcmgr = PDFResourceManager()
